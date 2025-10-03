@@ -36,7 +36,7 @@ export default function RootLayout({
         <Providers>
           <RegisterSW />
           <Header />
-          <main className="mx-auto max-w-6xl px-4 py-6 min-h-[calc(100dvh-7rem)]">
+          <main className="mx-auto max-w-6xl px-4 py-4 sm:py-6 lg:py-8 min-h-[calc(100dvh-7rem)]">
             {children}
           </main>
           <Footer />

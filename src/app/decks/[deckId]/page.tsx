@@ -71,96 +71,107 @@ export default function DeckDetailPage() {
 	}
 
 	return (
-		<div className="space-y-6">
-			{/* Header */}
-			<div className="flex flex-wrap items-center justify-between">
-				<div>
-					<div className="flex items-center gap-3 mb-2">
-						<Link
-							href="/decks"
-							className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
-						>
-							<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> Back to Decks</span>
-						</Link>
-					</div>
-					<h1 className="text-3xl font-bold">{currentDeckName}</h1>
+		<div className="space-y-4 sm:space-y-6">
+			{/* Mobile-first header */}
+			<div className="space-y-4">
+				{/* Back button */}
+				<Link
+					href="/decks"
+					className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-200 text-sm"
+				>
+					<ArrowLeft className="h-4 w-4" /> Back to Decks
+				</Link>
+
+				{/* Deck title and progress */}
+				<div className="space-y-3">
+					<h1 className="text-2xl sm:text-3xl font-bold">{currentDeckName}</h1>
 					{completion && (
-						<div className="flex mb-4 items-center gap-4 mt-2">
-							<div className="flex items-center gap-2">
-								<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 w-32">
-									<div
-										className="bg-green-500 h-3 rounded-full transition-all duration-300"
-										style={{ width: `${completion.completion}%` }}
-									/>
-								</div>
-								<span className="text-sm text-gray-600 dark:text-gray-400">
-									{completion.completion}% complete
-								</span>
+						<div className="space-y-2">
+							<div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+								<span>{completion.completion}% complete</span>
+								<span>{completion.total} cards • {completion.mastered} mastered</span>
 							</div>
-							<span className="text-sm text-gray-600 dark:text-gray-400">
-								{completion.total} cards • {completion.mastered} mastered
-							</span>
+							<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 w-full">
+								<div
+									className="bg-green-500 h-3 rounded-full transition-all duration-300"
+									style={{ width: `${completion.completion}%` }}
+								/>
+							</div>
 						</div>
 					)}
 				</div>
 
-				<div className="flex gap-3">
-					{cards && cards.length > 0 && (
-						<>
-							<button
-								onClick={() => openModal('renameDeck', { deckId, deckName: currentDeckName })}
-								className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
-								title="Rename this deck"
-							>
-								<CreditCard className="h-5 w-5" />
-								Rename Deck
-							</button>
+				{/* Responsive action buttons */}
+				<div className="space-y-3 sm:space-y-0 sm:flex sm:items-center sm:gap-3">
+					{/* Primary actions */}
+					<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-2">
+						<Link
+							href={`/decks/${deckId}/edit-card`}
+							className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+						>
+							<Plus className="h-4 w-4" />
+							Add Card
+						</Link>
+						{cards && cards.length > 0 && (
 							<button
 								onClick={handleStartStudy}
-								className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
+								className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 							>
-								<Brain className="h-5 w-5" />
-								Start Studying
+								<Brain className="h-4 w-4" />
+								Start Study
+							</button>
+						)}
+					</div>
+
+					{/* Secondary actions - only show if cards exist */}
+					{cards && cards.length > 0 && (
+						<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-2">
+							<button
+								onClick={() => openModal('renameDeck', { deckId, deckName: currentDeckName })}
+								className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+								title="Rename this deck"
+							>
+								<CreditCard className="h-4 w-4" />
+								Rename
 							</button>
 							<button
 								onClick={() => openModal('resetProgress', { deckId })}
-								className="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
+								className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 								title="Reset all learning progress for this deck"
 							>
-								<RotateCcw className="h-5 w-5" />
-								Reset Progress
+								<RotateCcw className="h-4 w-4" />
+								Reset
 							</button>
+						</div>
+					)}
+
+					{/* Tertiary actions */}
+					<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-2">
+						{cards && cards.length > 0 && (
 							<button
 								onClick={handleExportDeck}
 								disabled={exportDeckMutation.isPending}
-								className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
+								className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 							>
-								<Download className="h-5 w-5" />
-								{exportDeckMutation.isPending ? 'Exporting...' : 'Export CSV'}
+								<Download className="h-4 w-4" />
+								Export
 							</button>
-						</>
-					)}
-					<Link
-						href={`/decks/${deckId}/edit-card`}
-						className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
-					>
-						<Plus className="h-4 w-4" />
-						Add Card
-					</Link>
-					<button
-						onClick={() => setShowDeleteDialog(true)}
-						className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
-						disabled={deleteDeckMutation.isPending}
-					>
-						<Trash2 className="h-5 w-5" />
-						{deleteDeckMutation.isPending ? 'Deleting...' : 'Delete Deck'}
-					</button>
+						)}
+						<button
+							onClick={() => setShowDeleteDialog(true)}
+							className="bg-red-600 hover:bg-red-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+							disabled={deleteDeckMutation.isPending}
+						>
+							<Trash2 className="h-4 w-4" />
+							Delete
+						</button>
+					</div>
 				</div>
 			</div>
 
-			{/* Tabs */}
+			{/* Mobile-first tabs */}
 			<div className="border-b border-gray-200 dark:border-gray-700">
-				<nav className="flex space-x-8">
+				<nav className="flex">
 					{[
 						{ id: 'cards', label: 'Cards', icon: CreditCard },
 						{ id: 'study', label: 'Study', icon: Brain },
@@ -169,13 +180,13 @@ export default function DeckDetailPage() {
 						<button
 							key={tab.id}
 							onClick={() => setActiveTab(tab.id as TabType)}
-							className={`py-4 px-2 border-b-2 font-medium text-sm transition-colors duration-200 flex items-center gap-2 ${activeTab === tab.id
+							className={`flex-1 py-4 px-2 border-b-2 font-medium text-sm transition-colors duration-200 flex items-center justify-center gap-2 ${activeTab === tab.id
 								? 'border-blue-500 text-blue-600 dark:text-blue-400'
 								: 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
 								}`}
 						>
 							<tab.icon className="h-4 w-4" />
-							{tab.label}
+							<span className="hidden sm:inline">{tab.label}</span>
 						</button>
 					))}
 				</nav>
@@ -217,7 +228,7 @@ function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card
 				</p>
 				<Link
 					href={`/decks/${deckId}/edit-card`}
-					className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2"
+					className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 text-base sm:text-sm"
 				>
 					<Plus className="h-5 w-5" />
 					Add Your First Card
@@ -229,43 +240,43 @@ function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card
 	return (
 		<div className="space-y-4">
 			<div className="flex items-center justify-between">
-				<h2 className="text-xl font-semibold">Cards ({cards.length})</h2>
+				<h2 className="text-lg sm:text-xl font-semibold">Cards ({cards.length})</h2>
 				<Link
 					href={`/decks/${deckId}/edit-card`}
-					className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
+					className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 text-sm"
 				>
 					<Plus className="h-4 w-4" />
 					Add Card
 				</Link>
 			</div>
 
-			<div className="grid gap-4">
+			<div className="space-y-4">
 				{cards.map((card) => (
 					<div
 						key={card.id}
-						className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6"
+						className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sm:p-6"
 					>
-						<div className="flex items-start justify-between">
-							<div className="flex-1 space-y-3">
+						<div className="space-y-4">
+							<div className="space-y-3">
 								<div>
-									<h4 className="font-medium text-gray-900 dark:text-gray-100 mb-1">Question</h4>
-									<p className="text-gray-700 dark:text-gray-300">{card.question}</p>
+									<h4 className="font-medium text-gray-900 dark:text-gray-100 mb-1 text-sm">Question</h4>
+									<p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{card.question}</p>
 								</div>
 								<div>
-									<h4 className="font-medium text-gray-900 dark:text-gray-100 mb-1">Answer</h4>
-									<p className="text-gray-700 dark:text-gray-300">{card.answer}</p>
+									<h4 className="font-medium text-gray-900 dark:text-gray-100 mb-1 text-sm">Answer</h4>
+									<p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{card.answer}</p>
 								</div>
 							</div>
-							<div className="flex gap-2 ml-4">
+							<div className="flex gap-3 sm:gap-2">
 								<Link
 									href={`/decks/${deckId}/edit-card/${card.id}`}
-									className="bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-700 dark:text-blue-300 px-3 py-1 rounded transition-colors duration-200 text-sm"
+									className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-center text-sm"
 								>
 									Edit
 								</Link>
 								<button
 									onClick={() => onDeleteCard(card.id, card.question)}
-									className="bg-red-100 hover:bg-red-200 dark:bg-red-900 dark:hover:bg-red-800 text-red-700 dark:text-red-300 px-3 py-1 rounded transition-colors duration-200 text-sm"
+									className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 text-white px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
 								>
 									Delete
 								</button>
@@ -308,7 +319,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 				</p>
 				<Link
 					href={`/decks/${deckId}/edit-card`}
-					className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+					className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 				>
 					Add Cards
 				</Link>
@@ -330,18 +341,18 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 				<p className="text-gray-600 dark:text-gray-400 mb-6">
 					You have {cards.length} cards ready for studying
 				</p>
-				<div className="space-y-4">
+				<div className="space-y-3 max-w-sm mx-auto">
 					<button
 						onClick={() => startSession(deckId, true)}
-						className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-200 text-lg mx-2"
+						className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 					>
-						<span className="inline-flex items-center gap-2"><Shuffle className="h-5 w-5" /> Start Shuffled Study</span>
+						<span className="inline-flex items-center justify-center gap-2"><Shuffle className="h-5 w-5" /> Shuffled Study</span>
 					</button>
 					<button
 						onClick={() => startSession(deckId, false)}
-						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-200 text-lg mx-2"
+						className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 					>
-						<span className="inline-flex items-center gap-2"><ClipboardList className="h-5 w-5" /> Start Ordered Study</span>
+						<span className="inline-flex items-center justify-center gap-2"><ClipboardList className="h-5 w-5" /> Ordered Study</span>
 					</button>
 				</div>
 			</div>
@@ -350,16 +361,16 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 
 	// Active study session
 	return (
-		<div className="max-w-4xl mx-auto">
+		<div className="max-w-4xl mx-auto space-y-6">
 			{/* Progress Header */}
-			<div className="mb-8">
-				<div className="flex items-center justify-between mb-4">
+			<div className="space-y-4">
+				<div className="flex items-center justify-between">
 					<h3 className="text-lg font-semibold">
 						Card {studySession.currentIndex + 1} of {studySession.cardIds.length}
 					</h3>
 					<button
 						onClick={endStudySession}
-						className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-3 py-1 rounded transition-colors"
+						className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-3 py-2 rounded transition-colors text-sm"
 					>
 						End Session
 					</button>
@@ -373,17 +384,20 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 					/>
 				</div>
 
-				{/* Session Stats */}
-				<div className="flex justify-center gap-6 mt-4 text-sm">
-					<span className="text-green-600 dark:text-green-400 inline-flex items-center gap-1">
-						<CheckCircle className="h-4 w-4" /> Known: {studySession.sessionStats.knownCards}
-					</span>
-					<span className="text-red-600 dark:text-red-400">
-						✗ Unknown: {studySession.sessionStats.unknownCards}
-					</span>
-					<span className="text-gray-600 dark:text-gray-400">
-						Total Seen: {studySession.sessionStats.seenCards}
-					</span>
+				{/* Session Stats - Mobile responsive */}
+				<div className="grid grid-cols-3 gap-2 text-xs sm:text-sm">
+					<div className="text-center">
+						<div className="text-green-600 dark:text-green-400 font-semibold">{studySession.sessionStats.knownCards}</div>
+						<div className="text-gray-600 dark:text-gray-400">Known</div>
+					</div>
+					<div className="text-center">
+						<div className="text-red-600 dark:text-red-400 font-semibold">{studySession.sessionStats.unknownCards}</div>
+						<div className="text-gray-600 dark:text-gray-400">Unknown</div>
+					</div>
+					<div className="text-center">
+						<div className="text-gray-600 dark:text-gray-400 font-semibold">{studySession.sessionStats.seenCards}</div>
+						<div className="text-gray-600 dark:text-gray-400">Seen</div>
+					</div>
 				</div>
 			</div>
 
@@ -393,7 +407,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 					card={currentCard}
 					onResponse={handleCardResponse}
 					isFlipped={studySession.showAnswer}
-					className="mb-8"
+					className="mb-6"
 				/>
 			) : (
 				<div className="text-center py-16">
@@ -407,7 +421,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 				<div className="text-center">
 					<button
 						onClick={showAnswer}
-						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-200 text-lg"
+						className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:px-6 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 					>
 						Show Answer
 					</button>

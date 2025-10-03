@@ -58,46 +58,51 @@ export default function DecksPage() {
 	}
 
 	return (
-		<div className="space-y-6">
-			<div className="flex items-center justify-between">
+		<div className="space-y-4 sm:space-y-6">
+			{/* Mobile-first header */}
+			<div className="space-y-4">
 				<div>
-					<h1 className="text-3xl font-bold">Study Decks</h1>
-					<p className="text-gray-600 dark:text-gray-400 mt-1">
+					<h1 className="text-2xl sm:text-3xl font-bold">Study Decks</h1>
+					<p className="text-gray-600 dark:text-gray-400 mt-1 text-sm sm:text-base">
 						Organize your flashcards into decks and track your progress
 					</p>
 				</div>
 
-				<div className="flex items-center gap-3">
-					{/* Export All Button */}
-					{decks && decks.length > 0 && (
-						<button
-							onClick={handleExportAllDecks}
-							disabled={exportAllDecksMutation.isPending}
-							className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
-						>
-							<span>📤</span>
-							{exportAllDecksMutation.isPending ? 'Exporting...' : 'Export All'}
-						</button>
-					)}
-
-					{/* Import Button */}
-					<button
-						onClick={() => setShowImportModal(true)}
-						className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
-					>
-						<Download className="w-4 h-4" />
-						Import CSV
-					</button>
-
-					{/* Create Deck Button */}
+				{/* Responsive action buttons */}
+				<div className="flex flex-col sm:flex-row sm:items-center gap-3">
+					{/* Create Deck Button - Primary action */}
 					{!isCreating && (
 						<button
 							onClick={() => setIsCreating(true)}
-							className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
+							className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 						>
-							<span className="text-xl">+</span>
+							<span className="text-base sm:text-sm">+</span>
 							Create Deck
 						</button>
+					)}
+
+					{/* Secondary actions - only show if decks exist */}
+					{decks && decks.length > 0 && (
+						<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-3">
+							<button
+								onClick={handleExportAllDecks}
+								disabled={exportAllDecksMutation.isPending}
+								className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-3 py-3 sm:px-3 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+							>
+								<span>📤</span>
+								<span className="hidden sm:inline">{exportAllDecksMutation.isPending ? 'Exporting...' : 'Export All'}</span>
+								<span className="sm:hidden">Export</span>
+							</button>
+
+							<button
+								onClick={() => setShowImportModal(true)}
+								className="bg-green-600 hover:bg-green-700 text-white px-3 py-3 sm:px-3 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+							>
+								<Download className="w-4 h-4" />
+								<span className="hidden sm:inline">Import CSV</span>
+								<span className="sm:hidden">Import</span>
+							</button>
+						</div>
 					)}
 				</div>
 			</div>
@@ -153,14 +158,14 @@ export default function DecksPage() {
 					{!isCreating && (
 						<button
 							onClick={() => setIsCreating(true)}
-							className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+							className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 						>
 							Create Your First Deck
 						</button>
 					)}
 				</div>
 			) : (
-				<div className="grid gap-4">
+				<div className="space-y-4">
 					{decks.map((deck) => (
 						<DeckCard
 							key={deck.id}
@@ -206,54 +211,53 @@ function DeckCard({ deck, onDelete }: DeckCardProps) {
 	const { data: completion } = useDeckCompletion(deck.id);
 
 	return (
-		<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-lg transition-shadow duration-200">
-			<div className="flex items-center justify-between">
-				<div className="flex-1">
-					<div className="flex items-center gap-4">
-						<Link
-							href={`/decks/${deck.id}`}
-							className="text-xl font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200"
-						>
-							{deck.name}
-						</Link>
-						{completion && (
-							<div className="flex items-center gap-2">
-								<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-2 w-24">
-									<div
-										className="bg-green-500 h-2 rounded-full transition-all duration-300"
-										style={{ width: `${completion.completion}%` }}
-									/>
-								</div>
+		<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow duration-200">
+			{/* Mobile-first layout */}
+			<div className="space-y-4">
+				{/* Deck name and progress */}
+				<div className="space-y-3">
+					<Link
+						href={`/decks/${deck.id}`}
+						className="text-lg sm:text-xl font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200 block"
+					>
+						{deck.name}
+					</Link>
+
+					{completion && (
+						<div className="space-y-2">
+							<div className="flex items-center justify-between">
 								<span className="text-sm text-gray-600 dark:text-gray-400">
-									{completion.completion}%
+									{completion.completion}% complete
+								</span>
+								<span className="text-sm text-gray-600 dark:text-gray-400">
+									{completion.total} cards • {completion.mastered} mastered
 								</span>
 							</div>
-						)}
-					</div>
+							<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 w-full">
+								<div
+									className="bg-green-500 h-3 rounded-full transition-all duration-300"
+									style={{ width: `${completion.completion}%` }}
+								/>
+							</div>
+						</div>
+					)}
 
-					<div className="flex items-center gap-4 mt-2 text-sm text-gray-600 dark:text-gray-400">
-						{completion && (
-							<>
-								<span>{completion.total} cards</span>
-								<span>•</span>
-								<span>{completion.mastered} mastered</span>
-								<span>•</span>
-							</>
-						)}
-						<span>Updated {new Date(deck.updatedAt).toLocaleDateString()}</span>
+					<div className="text-xs text-gray-500 dark:text-gray-500">
+						Updated {new Date(deck.updatedAt).toLocaleDateString()}
 					</div>
 				</div>
 
-				<div className="flex items-center gap-2">
+				{/* Action buttons - responsive */}
+				<div className="flex gap-3 sm:gap-2">
 					<Link
 						href={`/decks/${deck.id}`}
-						className="bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-lg transition-colors duration-200"
+						className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-center text-sm"
 					>
 						Open
 					</Link>
 					<button
 						onClick={() => onDelete(deck.id, deck.name)}
-						className="bg-red-100 hover:bg-red-200 dark:bg-red-900 dark:hover:bg-red-800 text-red-700 dark:text-red-300 px-4 py-2 rounded-lg transition-colors duration-200"
+						className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
 					>
 						Delete
 					</button>

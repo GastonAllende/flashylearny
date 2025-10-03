@@ -26,16 +26,22 @@ export default function Header() {
 					>
 						FlashyLearny
 					</Link>
-					<div className="hidden sm:flex items-center gap-6 text-sm font-medium">
+					<div className="hidden md:flex items-center gap-6 text-sm font-medium">
 						<Link
 							href="/decks"
 							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
 						>
 							Decks
 						</Link>
+						<button
+							onClick={handleCreateDeck}
+							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+						>
+							Create Deck
+						</button>
 					</div>
 				</div>
-				<div className="hidden sm:flex items-center gap-3">
+				<div className="hidden md:flex items-center gap-3">
 					<ThemeToggle />
 					<Link
 						href="/profile"
@@ -48,14 +54,14 @@ export default function Header() {
 					aria-label="Menu"
 					variant="outline"
 					size="sm"
-					className="sm:hidden"
+					className="md:hidden"
 					onClick={() => setOpen((v) => !v)}
 				>
 					{open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
 				</Button>
 			</nav>
 			{open && (
-				<div className="sm:hidden border-t border-black/[.08] dark:border-white/[.145] bg-white dark:bg-gray-900">
+				<div className="md:hidden border-t border-black/[.08] dark:border-white/[.145] bg-white dark:bg-gray-900">
 					<div className="mx-auto max-w-6xl px-4 py-4 flex flex-col gap-4">
 						<Link
 							href="/decks"

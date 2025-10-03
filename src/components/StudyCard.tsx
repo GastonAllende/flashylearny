@@ -55,7 +55,7 @@ export default function StudyCard({
 		<div className={`max-w-2xl mx-auto ${className}`}>
 			{/* Card Container */}
 			<div
-				className="relative w-full aspect-[3/2] perspective-1000 cursor-pointer mb-8"
+				className="relative w-full aspect-[4/3] sm:aspect-[3/2] perspective-1000 cursor-pointer mb-6"
 				onClick={handleFlip}
 				role="button"
 				tabIndex={0}
@@ -107,7 +107,7 @@ export default function StudyCard({
 			{/* Response Buttons - Only show when answer is revealed */}
 			{isFlipped && (
 				<div className="space-y-4">
-					<div className="text-center mb-6">
+					<div className="text-center mb-4">
 						<h3 className="text-lg font-semibold mb-2">
 							How well did you know this?
 						</h3>
@@ -116,11 +116,11 @@ export default function StudyCard({
 						</p>
 					</div>
 
-					<div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+					<div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4">
 						<ResponseButton
 							label="I didn't know it"
 							description="Show this more often"
-							icon={<Frown className="w-8 h-8" />}
+							icon={<Frown className="w-6 h-6 sm:w-8 sm:h-8" />}
 							color="red"
 							onClick={() => handleResponse('didnt')}
 						/>
@@ -128,7 +128,7 @@ export default function StudyCard({
 						<ResponseButton
 							label="Almost knew it"
 							description="Show occasionally"
-							icon={<Brain className="w-8 h-8" />}
+							icon={<Brain className="w-6 h-6 sm:w-8 sm:h-8" />}
 							color="yellow"
 							onClick={() => handleResponse('almost')}
 						/>
@@ -136,7 +136,7 @@ export default function StudyCard({
 						<ResponseButton
 							label="I knew it!"
 							description="Show less often"
-							icon={<PartyPopper className="w-8 h-8" />}
+							icon={<PartyPopper className="w-6 h-6 sm:w-8 sm:h-8" />}
 							color="green"
 							onClick={() => handleResponse('knew')}
 						/>
@@ -237,15 +237,17 @@ function ResponseButton({ label, description, icon, color, onClick }: ResponseBu
 			variant={getButtonVariant(color)}
 			size="lg"
 			className={cn(
-				"h-auto p-6 hover:scale-105 active:scale-95 transition-all duration-200",
+				"w-full h-auto p-4 sm:p-6 hover:scale-105 active:scale-95 transition-all duration-200",
 				"focus:ring-4 focus:ring-opacity-20",
 				getColorClasses(color)
 			)}
 		>
-			<div className="flex flex-col items-center text-center space-y-2">
+			<div className="flex items-center justify-center space-x-3 sm:flex-col sm:space-x-0 sm:space-y-2">
 				<div className="flex items-center justify-center">{icon}</div>
-				<div className="font-semibold text-lg">{label}</div>
-				<div className="text-sm opacity-80">{description}</div>
+				<div className="text-left sm:text-center">
+					<div className="font-semibold text-base sm:text-lg">{label}</div>
+					<div className="text-sm opacity-80">{description}</div>
+				</div>
 			</div>
 		</Button>
 	);
