@@ -21,7 +21,7 @@ export interface StudySession {
 }
 
 // Modal types
-export type ModalType = 'createDeck' | 'renameDeck' | 'deleteDeck' | 'deleteCard' | 'confirmExit' | null;
+export type ModalType = 'createDeck' | 'renameDeck' | 'deleteDeck' | 'deleteCard' | 'resetProgress' | 'confirmExit' | null;
 
 export interface ModalState {
   type: ModalType;

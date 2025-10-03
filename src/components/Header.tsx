@@ -33,12 +33,6 @@ export default function Header() {
 						>
 							Decks
 						</Link>
-						<button
-							onClick={handleCreateDeck}
-							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-						>
-							Create Deck
-						</button>
 					</div>
 				</div>
 				<div className="hidden sm:flex items-center gap-3">

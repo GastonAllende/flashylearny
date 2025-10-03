@@ -55,6 +55,24 @@ export async function deleteDeckCascade(deckId: string): Promise<void> {
 }
 
 /**
+ * Reset all learning progress for a deck by removing progress rows for its cards
+ * Missing progress rows are treated as NEW throughout the app.
+ */
+export async function resetDeckProgress(deckId: string): Promise<void> {
+  await db.transaction('rw', db.cards, db.progress, db.decks, async () => {
+    const cards = await db.cards.where('deckId').equals(deckId).toArray();
+    const cardIds = cards.map(card => card.id);
+
+    if (cardIds.length > 0) {
+      await db.progress.where('cardId').anyOf(cardIds).delete();
+    }
+
+    // Touch deck updatedAt timestamp
+    await db.decks.update(deckId, { updatedAt: Date.now() });
+  });
+}
+
+/**
  * Get all decks ordered by most recently updated
  */
 export async function getDecks(): Promise<Deck[]> {

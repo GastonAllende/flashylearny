@@ -7,6 +7,7 @@ import {
   getDeckProgress,
   getDeckCompletion,
   getDeckAnalytics,
+  resetDeckProgress,
 } from '../lib/db';
 import type { Progress } from '../lib/types';
 
@@ -108,4 +109,21 @@ export function useInvalidateDeckProgress() {
     queryClient.invalidateQueries({ queryKey: queryKeys.deckCompletion(deckId) });
     queryClient.invalidateQueries({ queryKey: queryKeys.deckAnalytics(deckId) });
   };
+}
+
+/**
+ * Hook to reset all progress for a deck
+ */
+export function useResetDeckProgress() {
+  const queryClient = useQueryClient();
+  
+  return useMutation({
+    mutationFn: (deckId: string) => resetDeckProgress(deckId),
+    onSuccess: (_data, deckId) => {
+      // Invalidate deck-related progress queries
+      queryClient.invalidateQueries({ queryKey: queryKeys.deckProgress(deckId) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.deckCompletion(deckId) });
+      queryClient.invalidateQueries({ queryKey: queryKeys.deckAnalytics(deckId) });
+    },
+  });
 }

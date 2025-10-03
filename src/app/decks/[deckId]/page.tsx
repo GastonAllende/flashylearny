@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useCards, useDeckCompletion, useDeckProgress, useDeckAnalytics, useStudySession, useDeleteDeck, useExportDeck } from '../../../../hooks';
+import { useCards, useDeckCompletion, useDeckProgress, useDeckAnalytics, useStudySession, useDeleteDeck, useExportDeck, useDecks } from '../../../../hooks';
 import { useUIStore } from '../../../../stores/ui';
 import StudyCard from '@/components/StudyCard';
 import { DeleteDeckDialog } from '@/components/ConfirmDialog';
@@ -19,6 +19,8 @@ export default function DeckDetailPage() {
 	const deckId = params.deckId as string;
 	const [activeTab, setActiveTab] = useState<TabType>('cards');
 	const [showDeleteDialog, setShowDeleteDialog] = useState(false);
+	const { data: decks } = useDecks();
+	const currentDeckName = decks?.find(d => d.id === deckId)?.name || 'Deck';
 
 	const { data: cards, isLoading: cardsLoading } = useCards(deckId);
 	const { data: completion } = useDeckCompletion(deckId);
@@ -29,10 +31,9 @@ export default function DeckDetailPage() {
 	const exportDeckMutation = useExportDeck();
 
 	const handleStartStudy = () => {
+		// Navigate to Study tab where the user can choose
+		// Shuffled or Ordered session per MVP optional shuffle
 		if (cards && cards.length > 0) {
-			const cardIds = cards.map(card => card.id);
-			startStudySession(deckId, cardIds);
-			// Navigate to study view
 			setActiveTab('study');
 		}
 	};
@@ -72,7 +73,7 @@ export default function DeckDetailPage() {
 	return (
 		<div className="space-y-6">
 			{/* Header */}
-			<div className="flex items-center justify-between">
+			<div className="flex flex-wrap items-center justify-between">
 				<div>
 					<div className="flex items-center gap-3 mb-2">
 						<Link
@@ -82,9 +83,9 @@ export default function DeckDetailPage() {
 							<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> Back to Decks</span>
 						</Link>
 					</div>
-					<h1 className="text-3xl font-bold">Deck Details</h1>
+					<h1 className="text-3xl font-bold">{currentDeckName}</h1>
 					{completion && (
-						<div className="flex items-center gap-4 mt-2">
+						<div className="flex mb-4 items-center gap-4 mt-2">
 							<div className="flex items-center gap-2">
 								<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 w-32">
 									<div
@@ -107,11 +108,27 @@ export default function DeckDetailPage() {
 					{cards && cards.length > 0 && (
 						<>
 							<button
+								onClick={() => openModal('renameDeck', { deckId, deckName: currentDeckName })}
+								className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
+								title="Rename this deck"
+							>
+								<CreditCard className="h-5 w-5" />
+								Rename Deck
+							</button>
+							<button
 								onClick={handleStartStudy}
 								className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
 							>
 								<Brain className="h-5 w-5" />
 								Start Studying
+							</button>
+							<button
+								onClick={() => openModal('resetProgress', { deckId })}
+								className="bg-yellow-600 hover:bg-yellow-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
+								title="Reset all learning progress for this deck"
+							>
+								<RotateCcw className="h-5 w-5" />
+								Reset Progress
 							</button>
 							<button
 								onClick={handleExportDeck}
