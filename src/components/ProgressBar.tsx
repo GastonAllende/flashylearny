@@ -1,5 +1,8 @@
 'use client';
 
+import { Progress } from '@/components/ui/progress';
+import { cn } from '@/lib/utils';
+
 interface ProgressBarProps {
 	value: number; // 0-100
 	max?: number; // default 100
@@ -31,65 +34,48 @@ export default function ProgressBar({
 		lg: 'h-4'
 	};
 
-	// Variant classes
+	// Variant classes for the progress fill
 	const variantClasses = {
-		default: 'bg-blue-500',
+		default: 'bg-primary',
 		success: 'bg-green-500',
 		warning: 'bg-amber-500',
-		danger: 'bg-red-500'
-	};
-
-	// Background classes
-	const backgroundClasses = {
-		default: 'bg-blue-100 dark:bg-blue-900/30',
-		success: 'bg-green-100 dark:bg-green-900/30',
-		warning: 'bg-amber-100 dark:bg-amber-900/30',
-		danger: 'bg-red-100 dark:bg-red-900/30'
+		danger: 'bg-destructive'
 	};
 
 	return (
-		<div className={`w-full ${className}`}>
+		<div className={cn("w-full", className)}>
 			{/* Label and Percentage */}
 			{(label || showPercentage) && (
 				<div className="flex justify-between items-center mb-2">
 					{label && (
-						<span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+						<span className="text-sm font-medium text-foreground">
 							{label}
 						</span>
 					)}
 					{showPercentage && (
-						<span className="text-sm font-medium text-gray-600 dark:text-gray-400">
+						<span className="text-sm font-medium text-muted-foreground">
 							{Math.round(percentage)}%
 						</span>
 					)}
 				</div>
 			)}
 
-			{/* Progress Bar Container */}
-			<div className={`
-        w-full ${sizeClasses[size]} ${backgroundClasses[variant]} 
-        rounded-full overflow-hidden
-      `}>
-				{/* Progress Bar Fill */}
-				<div
-					className={`
-            h-full ${variantClasses[variant]} rounded-full
-            transition-all duration-300 ease-out
-            ${animated ? 'animate-pulse' : ''}
-          `}
-					style={{ width: `${percentage}%` }}
-					role="progressbar"
-					aria-valuenow={value}
-					aria-valuemin={0}
-					aria-valuemax={max}
-					aria-label={label}
-				/>
-			</div>
+			{/* Progress Bar */}
+			<Progress
+				value={percentage}
+				className={cn(
+					sizeClasses[size],
+					animated && 'animate-pulse'
+				)}
+				style={{
+					'--progress-foreground': variant !== 'default' ? variantClasses[variant] : undefined
+				} as React.CSSProperties}
+			/>
 
 			{/* Value Display (for non-percentage cases) */}
 			{!showPercentage && max !== 100 && (
 				<div className="flex justify-between items-center mt-1">
-					<span className="text-xs text-gray-500 dark:text-gray-400">
+					<span className="text-xs text-muted-foreground">
 						{value} of {max}
 					</span>
 				</div>

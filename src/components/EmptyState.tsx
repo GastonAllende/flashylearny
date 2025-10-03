@@ -1,5 +1,8 @@
+import { Button } from '@/components/ui/button';
+import { FileText } from 'lucide-react';
+
 interface EmptyStateProps {
-	icon?: string;
+	icon?: React.ReactNode;
 	title: string;
 	description: string;
 	actionLabel?: string;
@@ -8,7 +11,7 @@ interface EmptyStateProps {
 }
 
 export default function EmptyState({
-	icon = "📝",
+	icon = <FileText className="w-20 h-20" />,
 	title,
 	description,
 	actionLabel,
@@ -17,25 +20,26 @@ export default function EmptyState({
 }: EmptyStateProps) {
 	return (
 		<div className={`text-center py-16 px-6 ${className}`}>
-			<div className="text-8xl mb-6 animate-bounce">
+			<div className="text-8xl mb-6 animate-bounce flex justify-center">
 				{icon}
 			</div>
 
-			<h3 className="text-2xl font-semibold text-gray-900 dark:text-gray-100 mb-3">
+			<h3 className="text-2xl font-semibold text-foreground mb-3">
 				{title}
 			</h3>
 
-			<p className="text-gray-600 dark:text-gray-400 text-lg mb-8 max-w-md mx-auto leading-relaxed">
+			<p className="text-muted-foreground text-lg mb-8 max-w-md mx-auto leading-relaxed">
 				{description}
 			</p>
 
 			{actionLabel && onAction && (
-				<button
+				<Button
 					onClick={onAction}
-					className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-all duration-200 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+					size="lg"
+					className="px-8 py-4 text-lg shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
 				>
 					{actionLabel}
-				</button>
+				</Button>
 			)}
 		</div>
 	);

@@ -1,7 +1,9 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { Button } from './ui/button';
 import { useImportCSV } from '../../hooks';
+import { CheckCircle, Folder, X, Download } from 'lucide-react';
 
 interface ImportCSVProps {
 	onSuccess?: (result: { decksCreated: number; cardsCreated: number; decksData: string[]; }) => void;
@@ -93,24 +95,25 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 
 				{selectedFile ? (
 					<div className="space-y-3">
-						<div className="text-4xl">✅</div>
+						<CheckCircle className="w-10 h-10 text-green-600" />
 						<div>
 							<h3 className="font-medium text-green-800 dark:text-green-200">File Selected</h3>
 							<p className="text-sm text-green-600 dark:text-green-300 mt-1">
 								{selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
 							</p>
 						</div>
-						<button
-							type="button"
+						<Button
+							variant="link"
+							size="sm"
+							className="text-sm text-muted-foreground hover:text-foreground underline"
 							onClick={handleReset}
-							className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 underline"
 						>
 							Choose different file
-						</button>
+						</Button>
 					</div>
 				) : (
 					<div className="space-y-3">
-						<div className="text-4xl">📁</div>
+						<Folder className="w-10 h-10 text-gray-600" />
 						<div>
 							<h3 className="font-medium">Drop CSV file here</h3>
 							<p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
@@ -147,7 +150,9 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 			{/* Error Display */}
 			{importMutation.error && (
 				<div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-					<h4 className="font-medium text-red-900 dark:text-red-100 mb-1">❌ Import Failed</h4>
+					<h4 className="font-medium text-red-900 dark:text-red-100 mb-1 flex items-center gap-2">
+						<X className="w-4 h-4" /> Import Failed
+					</h4>
 					<p className="text-sm text-red-800 dark:text-red-200">
 						{importMutation.error instanceof Error ? importMutation.error.message : 'Unknown error occurred'}
 					</p>
@@ -156,10 +161,10 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 
 			{/* Actions */}
 			<div className="flex flex-col sm:flex-row gap-3">
-				<button
+				<Button
 					onClick={handleImport}
 					disabled={!selectedFile || importMutation.isPending}
-					className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2"
+					className="flex items-center justify-center gap-2"
 				>
 					{importMutation.isPending ? (
 						<>
@@ -168,20 +173,20 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 						</>
 					) : (
 						<>
-							<span>📥</span>
+							<Download className="w-4 h-4" />
 							Import CSV
 						</>
 					)}
-				</button>
+				</Button>
 
 				{onCancel && (
-					<button
+					<Button
+						variant="outline"
 						onClick={onCancel}
 						disabled={importMutation.isPending}
-						className="bg-gray-500 hover:bg-gray-600 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
 					>
 						Cancel
-					</button>
+					</Button>
 				)}
 			</div>
 

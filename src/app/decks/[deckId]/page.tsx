@@ -9,6 +9,7 @@ import StudyCard from '@/components/StudyCard';
 import { DeleteDeckDialog } from '@/components/ConfirmDialog';
 import type { Card } from '../../../../lib/types';
 import type { StudySession } from '../../../../stores/ui';
+import { Brain, Trash2, CreditCard, BarChart3, PartyPopper, RotateCcw, CheckCircle, ArrowLeft, Shuffle, ClipboardList, Plus, Download } from 'lucide-react';
 
 type TabType = 'cards' | 'study' | 'stats';
 
@@ -78,7 +79,7 @@ export default function DeckDetailPage() {
 							href="/decks"
 							className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
 						>
-							← Back to Decks
+							<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> Back to Decks</span>
 						</Link>
 					</div>
 					<h1 className="text-3xl font-bold">Deck Details</h1>
@@ -109,7 +110,7 @@ export default function DeckDetailPage() {
 								onClick={handleStartStudy}
 								className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
 							>
-								<span>🧠</span>
+								<Brain className="h-5 w-5" />
 								Start Studying
 							</button>
 							<button
@@ -117,7 +118,7 @@ export default function DeckDetailPage() {
 								disabled={exportDeckMutation.isPending}
 								className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
 							>
-								<span>📤</span>
+								<Download className="h-5 w-5" />
 								{exportDeckMutation.isPending ? 'Exporting...' : 'Export CSV'}
 							</button>
 						</>
@@ -126,7 +127,7 @@ export default function DeckDetailPage() {
 						href={`/decks/${deckId}/edit-card`}
 						className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
 					>
-						<span>+</span>
+						<Plus className="h-4 w-4" />
 						Add Card
 					</Link>
 					<button
@@ -134,7 +135,7 @@ export default function DeckDetailPage() {
 						className="bg-red-600 hover:bg-red-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
 						disabled={deleteDeckMutation.isPending}
 					>
-						<span>🗑️</span>
+						<Trash2 className="h-5 w-5" />
 						{deleteDeckMutation.isPending ? 'Deleting...' : 'Delete Deck'}
 					</button>
 				</div>
@@ -144,9 +145,9 @@ export default function DeckDetailPage() {
 			<div className="border-b border-gray-200 dark:border-gray-700">
 				<nav className="flex space-x-8">
 					{[
-						{ id: 'cards', label: 'Cards', icon: '📇' },
-						{ id: 'study', label: 'Study', icon: '🧠' },
-						{ id: 'stats', label: 'Stats', icon: '📊' },
+						{ id: 'cards', label: 'Cards', icon: CreditCard },
+						{ id: 'study', label: 'Study', icon: Brain },
+						{ id: 'stats', label: 'Stats', icon: BarChart3 },
 					].map((tab) => (
 						<button
 							key={tab.id}
@@ -156,7 +157,7 @@ export default function DeckDetailPage() {
 								: 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
 								}`}
 						>
-							<span>{tab.icon}</span>
+							<tab.icon className="h-4 w-4" />
 							{tab.label}
 						</button>
 					))}
@@ -192,7 +193,7 @@ function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card
 	if (!cards || cards.length === 0) {
 		return (
 			<div className="text-center py-16">
-				<div className="text-6xl mb-4">📇</div>
+				<div className="mb-4 flex justify-center"><CreditCard className="h-16 w-16" /></div>
 				<h3 className="text-xl font-semibold mb-2">No cards yet</h3>
 				<p className="text-gray-600 dark:text-gray-400 mb-6">
 					Add your first card to start building your study deck
@@ -201,7 +202,7 @@ function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card
 					href={`/decks/${deckId}/edit-card`}
 					className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2"
 				>
-					<span>+</span>
+					<Plus className="h-5 w-5" />
 					Add Your First Card
 				</Link>
 			</div>
@@ -216,7 +217,7 @@ function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card
 					href={`/decks/${deckId}/edit-card`}
 					className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
 				>
-					<span>+</span>
+					<Plus className="h-4 w-4" />
 					Add Card
 				</Link>
 			</div>
@@ -283,7 +284,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 	if (!cards || cards.length === 0) {
 		return (
 			<div className="text-center py-16">
-				<div className="text-6xl mb-4">🧠</div>
+				<div className="mb-4 flex justify-center"><Brain className="h-16 w-16" /></div>
 				<h3 className="text-xl font-semibold mb-2">No cards to study</h3>
 				<p className="text-gray-600 dark:text-gray-400 mb-6">
 					Add some cards to this deck before you can start studying
@@ -307,7 +308,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 	if (!studySession || studySession.deckId !== deckId) {
 		return (
 			<div className="text-center py-16">
-				<div className="text-6xl mb-4">🧠</div>
+				<div className="mb-4 flex justify-center"><Brain className="h-16 w-16" /></div>
 				<h3 className="text-xl font-semibold mb-2">Ready to study?</h3>
 				<p className="text-gray-600 dark:text-gray-400 mb-6">
 					You have {cards.length} cards ready for studying
@@ -317,13 +318,13 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 						onClick={() => startSession(deckId, true)}
 						className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-200 text-lg mx-2"
 					>
-						🔀 Start Shuffled Study
+						<span className="inline-flex items-center gap-2"><Shuffle className="h-5 w-5" /> Start Shuffled Study</span>
 					</button>
 					<button
 						onClick={() => startSession(deckId, false)}
 						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition-colors duration-200 text-lg mx-2"
 					>
-						📋 Start Ordered Study
+						<span className="inline-flex items-center gap-2"><ClipboardList className="h-5 w-5" /> Start Ordered Study</span>
 					</button>
 				</div>
 			</div>
@@ -357,8 +358,8 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 
 				{/* Session Stats */}
 				<div className="flex justify-center gap-6 mt-4 text-sm">
-					<span className="text-green-600 dark:text-green-400">
-						✓ Known: {studySession.sessionStats.knownCards}
+					<span className="text-green-600 dark:text-green-400 inline-flex items-center gap-1">
+						<CheckCircle className="h-4 w-4" /> Known: {studySession.sessionStats.knownCards}
 					</span>
 					<span className="text-red-600 dark:text-red-400">
 						✗ Unknown: {studySession.sessionStats.unknownCards}
@@ -422,7 +423,7 @@ function StatsTab({
 	if (!deckProgress || deckProgress.length === 0) {
 		return (
 			<div className="text-center py-16">
-				<div className="text-6xl mb-4">📊</div>
+				<div className="mb-4 flex justify-center"><BarChart3 className="h-16 w-16" /></div>
 				<h3 className="text-xl font-semibold mb-2">No statistics yet</h3>
 				<p className="text-gray-600 dark:text-gray-400">
 					Study some cards to see your progress statistics
@@ -553,7 +554,7 @@ function StudyCompletionView({
 			{/* Conditional celebration based on deck mastery */}
 			{isDeckMastered ? (
 				<>
-					<div className="text-6xl mb-6">�</div>
+					<div className="mb-6 flex justify-center"><PartyPopper className="h-16 w-16" /></div>
 					<h2 className="text-3xl font-bold mb-4">Deck Mastered!</h2>
 					<p className="text-gray-600 dark:text-gray-400 mb-8">
 						Congratulations! You have mastered all cards in this deck.
@@ -562,7 +563,7 @@ function StudyCompletionView({
 				</>
 			) : (
 				<>
-					<div className="text-6xl mb-6">�🎉</div>
+					<div className="mb-6 flex justify-center"><PartyPopper className="h-16 w-16" /></div>
 					<h2 className="text-3xl font-bold mb-4">Session Complete!</h2>
 					<p className="text-gray-600 dark:text-gray-400 mb-8">
 						Great job studying your flashcards!
@@ -598,7 +599,7 @@ function StudyCompletionView({
 							onClick={onRestart}
 							className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
 						>
-							🔄 Study Again
+							<span className="inline-flex items-center gap-2"><RotateCcw className="h-5 w-5" /> Study Again</span>
 						</button>
 					)}
 					<Link
@@ -606,7 +607,7 @@ function StudyCompletionView({
 						onClick={onEnd}
 						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 text-center"
 					>
-						📊 View Stats
+						<span className="inline-flex items-center gap-2"><BarChart3 className="h-5 w-5" /> View Stats</span>
 					</Link>
 				</div>
 				<Link
@@ -614,7 +615,7 @@ function StudyCompletionView({
 					onClick={onEnd}
 					className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200"
 				>
-					← Back to All Decks
+					<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> Back to All Decks</span>
 				</Link>
 			</div>
 		</div>

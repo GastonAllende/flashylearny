@@ -1,11 +1,12 @@
 'use client';
 
 import Link from 'next/link';
+import { CheckCircle, BookOpen, Eye, Clock, Edit, Trash2 } from 'lucide-react';
 import { useProgress } from '../../hooks';
-import type { Card } from '../../lib/types';
+import type { Card as CardType } from '../../lib/types';
 
 interface CardRowProps {
-	card: Card;
+	card: CardType;
 	deckId: string;
 	onDelete?: (cardId: string, question: string) => void;
 	showProgress?: boolean;
@@ -34,12 +35,12 @@ export default function CardRow({
 	const getStatusIcon = (status?: string) => {
 		switch (status) {
 			case 'MASTERED':
-				return '✅';
+				return <CheckCircle className="w-3 h-3" />;
 			case 'LEARNING':
-				return '📚';
+				return <BookOpen className="w-3 h-3" />;
 			case 'NEW':
 			default:
-				return '🆕';
+				return <span className="w-3 h-3 bg-blue-500 rounded-full flex items-center justify-center text-[8px] text-white font-bold">N</span>;
 		}
 	};
 
@@ -55,7 +56,7 @@ export default function CardRow({
 							</h4>
 							{showProgress && progress && (
 								<span className={`inline-flex items-center gap-1 px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(progress.status)}`}>
-									<span>{getStatusIcon(progress.status)}</span>
+									{getStatusIcon(progress.status)}
 									{progress.status}
 								</span>
 							)}
@@ -79,14 +80,14 @@ export default function CardRow({
 					{showProgress && progress && (progress.timesSeen > 0 || progress.timesKnown > 0) && (
 						<div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-200 dark:border-gray-700">
 							<span className="flex items-center gap-1">
-								👁️ Seen {progress.timesSeen} time{progress.timesSeen !== 1 ? 's' : ''}
+								<Eye className="w-4 h-4" /> Seen {progress.timesSeen} time{progress.timesSeen !== 1 ? 's' : ''}
 							</span>
 							<span className="flex items-center gap-1">
-								✓ Known {progress.timesKnown} time{progress.timesKnown !== 1 ? 's' : ''}
+								<CheckCircle className="w-4 h-4" /> Known {progress.timesKnown} time{progress.timesKnown !== 1 ? 's' : ''}
 							</span>
 							{progress.lastReviewedAt && (
 								<span className="flex items-center gap-1">
-									🕐 Last reviewed {new Date(progress.lastReviewedAt).toLocaleDateString()}
+									<Clock className="w-4 h-4" /> Last reviewed {new Date(progress.lastReviewedAt).toLocaleDateString()}
 								</span>
 							)}
 						</div>
@@ -97,17 +98,17 @@ export default function CardRow({
 				<div className="flex flex-col gap-2 shrink-0">
 					<Link
 						href={`/decks/${deckId}/edit-card/${card.id}`}
-						className="bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 text-center"
+						className="bg-blue-100 hover:bg-blue-200 dark:bg-blue-900 dark:hover:bg-blue-800 text-blue-700 dark:text-blue-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 text-center flex items-center gap-1"
 					>
-						✏️ Edit
+						<Edit className="w-4 h-4" /> Edit
 					</Link>
 
 					{onDelete && (
 						<button
 							onClick={() => onDelete(card.id, card.question)}
-							className="bg-red-100 hover:bg-red-200 dark:bg-red-900 dark:hover:bg-red-800 text-red-700 dark:text-red-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200"
+							className="bg-red-100 hover:bg-red-200 dark:bg-red-900 dark:hover:bg-red-800 text-red-700 dark:text-red-300 px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 flex items-center gap-1"
 						>
-							🗑️ Delete
+							<Trash2 className="w-4 h-4" /> Delete
 						</button>
 					)}
 				</div>
