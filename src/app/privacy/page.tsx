@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { Lock, Smartphone, Save, CheckCircle, Database, AlertTriangle, X } from 'lucide-react';
 
 export default function PrivacyPage() {
 	return (
@@ -16,8 +17,9 @@ export default function PrivacyPage() {
 			<div className="grid gap-8">
 				{/* Overview */}
 				<section className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-4 text-blue-900 dark:text-blue-100">
-						🔒 Privacy Overview
+					<h2 className="text-2xl font-semibold mb-4 text-blue-900 dark:text-blue-100 flex items-center gap-2">
+						<Lock className="w-6 h-6" />
+						Privacy Overview
 					</h2>
 					<p className="text-blue-800 dark:text-blue-200 leading-relaxed">
 						FlashyLearny is designed with privacy at its core. All your study data stays on your device.
@@ -31,7 +33,10 @@ export default function PrivacyPage() {
 
 					<div className="space-y-6">
 						<div className="border-l-4 border-green-500 pl-4">
-							<h3 className="font-semibold text-green-700 dark:text-green-400 mb-2">✅ Data Stored Locally</h3>
+							<h3 className="font-semibold text-green-700 dark:text-green-400 mb-2 flex items-center gap-2">
+								<CheckCircle className="w-5 h-5" />
+								Data Stored Locally
+							</h3>
 							<ul className="space-y-2 text-gray-600 dark:text-gray-400">
 								<li>• Your flashcard decks and their content</li>
 								<li>• Study progress and statistics</li>
@@ -44,7 +49,10 @@ export default function PrivacyPage() {
 						</div>
 
 						<div className="border-l-4 border-red-500 pl-4">
-							<h3 className="font-semibold text-red-700 dark:text-red-400 mb-2">❌ Data We DON&apos;T Collect</h3>
+							<h3 className="font-semibold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
+								<X className="w-5 h-5" />
+								Data We DON&apos;T Collect
+							</h3>
 							<ul className="space-y-2 text-gray-600 dark:text-gray-400">
 								<li>• Personal information (name, email, phone)</li>
 								<li>• Usage analytics or tracking data</li>
@@ -63,7 +71,10 @@ export default function PrivacyPage() {
 					<div className="grid md:grid-cols-2 gap-6">
 						<div className="space-y-4">
 							<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-								<h3 className="font-semibold mb-2">🗄️ Local Storage</h3>
+								<h3 className="font-semibold mb-2 flex items-center gap-2">
+									<Database className="w-5 h-5" />
+									Local Storage
+								</h3>
 								<p className="text-sm text-gray-600 dark:text-gray-400">
 									All data is stored using IndexedDB in your browser. This is a client-side database that keeps
 									your information secure and accessible offline.
@@ -81,7 +92,10 @@ export default function PrivacyPage() {
 
 						<div className="space-y-4">
 							<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-								<h3 className="font-semibold mb-2">📱 Device Access</h3>
+								<h3 className="font-semibold mb-2 flex items-center gap-2">
+									<Smartphone className="w-5 h-5" />
+									Device Access
+								</h3>
 								<p className="text-sm text-gray-600 dark:text-gray-400">
 									Only you have access to your study data through this app on your device. No accounts or
 									sign-ups are required.
@@ -89,7 +103,10 @@ export default function PrivacyPage() {
 							</div>
 
 							<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
-								<h3 className="font-semibold mb-2">💾 Data Backup</h3>
+								<h3 className="font-semibold mb-2 flex items-center gap-2">
+									<Save className="w-5 h-5" />
+									Data Backup
+								</h3>
 								<p className="text-sm text-gray-600 dark:text-gray-400">
 									You can export your data as CSV files for backup purposes. These files remain under your control.
 								</p>
@@ -104,7 +121,10 @@ export default function PrivacyPage() {
 
 					<div className="space-y-4">
 						<div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-4 rounded-lg">
-							<h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2">⚠️ Hosting</h3>
+							<h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2 flex items-center gap-2">
+								<AlertTriangle className="w-5 h-5" />
+								Hosting
+							</h3>
 							<p className="text-yellow-800 dark:text-yellow-200 text-sm">
 								This application is hosted on Vercel. While Vercel may collect standard web server logs
 								(IP addresses, request times), they do not have access to your study data since it&apos;s stored locally.
@@ -112,7 +132,10 @@ export default function PrivacyPage() {
 						</div>
 
 						<div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-lg">
-							<h3 className="font-semibold text-green-900 dark:text-green-100 mb-2">✅ No Analytics</h3>
+							<h3 className="font-semibold text-green-900 dark:text-green-100 mb-2 flex items-center gap-2">
+								<CheckCircle className="w-5 h-5" />
+								No Analytics
+							</h3>
 							<p className="text-green-800 dark:text-green-200 text-sm">
 								We do not use Google Analytics, Facebook Pixel, or any other tracking services.
 								Your usage patterns and study habits remain private.

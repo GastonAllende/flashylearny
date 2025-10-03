@@ -6,6 +6,7 @@ import { useDecks, useCreateDeck, useExportAllDecks } from '../../../hooks';
 import { useDeckCompletion } from '../../../hooks';
 import { useUIStore } from '../../../stores/ui';
 import { ImportCSV } from '../../components/ImportCSV';
+import { Download, BookOpen, X } from 'lucide-react';
 
 export default function DecksPage() {
 	const [isCreating, setIsCreating] = useState(false);
@@ -84,7 +85,7 @@ export default function DecksPage() {
 						onClick={() => setShowImportModal(true)}
 						className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 rounded-lg font-medium transition-colors duration-200 flex items-center gap-2"
 					>
-						<span>📥</span>
+						<Download className="w-4 h-4" />
 						Import CSV
 					</button>
 
@@ -144,7 +145,7 @@ export default function DecksPage() {
 
 			{!decks || decks.length === 0 ? (
 				<div className="text-center py-16">
-					<div className="text-6xl mb-4">📚</div>
+					<BookOpen className="w-16 h-16 mb-4 text-gray-400" />
 					<h3 className="text-xl font-semibold mb-2">No decks yet</h3>
 					<p className="text-gray-600 dark:text-gray-400 mb-6">
 						Create your first deck to start studying with flashcards
@@ -181,7 +182,7 @@ export default function DecksPage() {
 									onClick={() => setShowImportModal(false)}
 									className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl"
 								>
-									×
+									<X className="w-4 h-4" />
 								</button>
 							</div>
 							<ImportCSV

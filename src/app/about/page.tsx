@@ -1,31 +1,35 @@
 import Link from 'next/link';
+import { Card, CardContent } from '@/components/ui/card';
+import { Brain, Smartphone, BarChart3, Moon, Save, FolderOpen } from 'lucide-react';
 
 export default function AboutPage() {
 	return (
 		<div className="max-w-4xl mx-auto space-y-8">
 			<div className="text-center space-y-4">
 				<h1 className="text-4xl font-bold">About FlashyLearny</h1>
-				<p className="text-xl text-gray-600 dark:text-gray-300">
+				<p className="text-xl text-muted-foreground">
 					Your offline-first study companion for mastering any subject
 				</p>
 			</div>
 
 			<div className="grid gap-8">
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-4">What is FlashyLearny?</h2>
-					<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-						FlashyLearny is a modern, offline-first flashcard application designed to help you learn and retain information effectively.
-						Built with spaced repetition principles and progressive web app technology, it works seamlessly both online and offline,
-						ensuring your study sessions are never interrupted.
-					</p>
-				</section>
+				<Card>
+					<CardContent className="p-8">
+						<h2 className="text-2xl font-semibold mb-4">What is FlashyLearny?</h2>
+						<p className="text-muted-foreground leading-relaxed">
+							FlashyLearny is a modern, offline-first flashcard application designed to help you learn and retain information effectively.
+							Built with spaced repetition principles and progressive web app technology, it works seamlessly both online and offline,
+							ensuring your study sessions are never interrupted.
+						</p>
+					</CardContent>
+				</Card>
 
 				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6">Key Features</h2>
 					<div className="grid md:grid-cols-2 gap-6">
 						<div className="space-y-4">
 							<div className="flex items-start gap-3">
-								<span className="text-2xl">🧠</span>
+								<Brain className="w-6 h-6 text-blue-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Smart Learning</h3>
 									<p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -35,7 +39,7 @@ export default function AboutPage() {
 							</div>
 
 							<div className="flex items-start gap-3">
-								<span className="text-2xl">📱</span>
+								<Smartphone className="w-6 h-6 text-green-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Offline First</h3>
 									<p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -45,7 +49,7 @@ export default function AboutPage() {
 							</div>
 
 							<div className="flex items-start gap-3">
-								<span className="text-2xl">📊</span>
+								<BarChart3 className="w-6 h-6 text-purple-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Progress Tracking</h3>
 									<p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -57,7 +61,7 @@ export default function AboutPage() {
 
 						<div className="space-y-4">
 							<div className="flex items-start gap-3">
-								<span className="text-2xl">🌙</span>
+								<Moon className="w-6 h-6 text-indigo-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Dark Mode</h3>
 									<p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -67,7 +71,7 @@ export default function AboutPage() {
 							</div>
 
 							<div className="flex items-start gap-3">
-								<span className="text-2xl">💾</span>
+								<Save className="w-6 h-6 text-orange-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Local Storage</h3>
 									<p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -77,7 +81,7 @@ export default function AboutPage() {
 							</div>
 
 							<div className="flex items-start gap-3">
-								<span className="text-2xl">📁</span>
+								<FolderOpen className="w-6 h-6 text-teal-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Import/Export</h3>
 									<p className="text-gray-600 dark:text-gray-400 text-sm">
@@ -126,25 +130,27 @@ export default function AboutPage() {
 					</div>
 				</section>
 
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-4">Technology</h2>
-					<p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-						FlashyLearny is built with modern web technologies to provide a fast, reliable, and accessible experience:
-					</p>
-					<ul className="text-gray-600 dark:text-gray-400 space-y-2">
-						<li>• <strong>Next.js 15</strong> - React framework for optimal performance</li>
-						<li>• <strong>IndexedDB</strong> - Client-side database for offline functionality</li>
-						<li>• <strong>Progressive Web App</strong> - Installable and works offline</li>
-						<li>• <strong>Tailwind CSS</strong> - Modern, responsive design</li>
-						<li>• <strong>TypeScript</strong> - Type-safe development</li>
-					</ul>
-				</section>
+				<Card>
+					<CardContent className="p-8">
+						<h2 className="text-2xl font-semibold mb-4">Technology</h2>
+						<p className="text-muted-foreground leading-relaxed mb-4">
+							FlashyLearny is built with modern web technologies to provide a fast, reliable, and accessible experience:
+						</p>
+						<ul className="text-muted-foreground space-y-2">
+							<li>• <strong>Next.js 15</strong> - React framework for optimal performance</li>
+							<li>• <strong>IndexedDB</strong> - Client-side database for offline functionality</li>
+							<li>• <strong>Progressive Web App</strong> - Installable and works offline</li>
+							<li>• <strong>Tailwind CSS</strong> - Modern, responsive design</li>
+							<li>• <strong>TypeScript</strong> - Type-safe development</li>
+						</ul>
+					</CardContent>
+				</Card>
 			</div>
 
 			<div className="text-center">
 				<Link
 					href="/decks"
-					className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-200 inline-block"
+					className="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 text-lg"
 				>
 					Start Learning Today
 				</Link>

@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { CheckCircle, X, AlertTriangle, Info } from 'lucide-react';
 
 export interface ToastProps {
 	id: string;
@@ -48,28 +49,28 @@ export default function Toast({
 	// Type styles
 	const typeStyles = {
 		success: {
-			icon: '✅',
+			icon: <CheckCircle className="w-5 h-5" />,
 			bg: 'bg-green-50 dark:bg-green-900/20',
 			border: 'border-green-200 dark:border-green-800',
 			text: 'text-green-800 dark:text-green-200',
 			button: 'text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200'
 		},
 		error: {
-			icon: '❌',
+			icon: <X className="w-5 h-5" />,
 			bg: 'bg-red-50 dark:bg-red-900/20',
 			border: 'border-red-200 dark:border-red-800',
 			text: 'text-red-800 dark:text-red-200',
 			button: 'text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200'
 		},
 		warning: {
-			icon: '⚠️',
+			icon: <AlertTriangle className="w-5 h-5" />,
 			bg: 'bg-amber-50 dark:bg-amber-900/20',
 			border: 'border-amber-200 dark:border-amber-800',
 			text: 'text-amber-800 dark:text-amber-200',
 			button: 'text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-200'
 		},
 		info: {
-			icon: 'ℹ️',
+			icon: <Info className="w-5 h-5" />,
 			bg: 'bg-blue-50 dark:bg-blue-900/20',
 			border: 'border-blue-200 dark:border-blue-800',
 			text: 'text-blue-800 dark:text-blue-200',
@@ -95,7 +96,7 @@ export default function Toast({
 		>
 			<div className="flex items-start gap-3">
 				{/* Icon */}
-				<span className="text-xl flex-shrink-0 mt-0.5">{styles.icon}</span>
+				<div className="flex-shrink-0 mt-0.5">{styles.icon}</div>
 
 				{/* Message */}
 				<div className="flex-1 min-w-0">

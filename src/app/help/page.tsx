@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { BookOpen, Lightbulb, CheckCircle, X, Settings, Keyboard, ArrowRight, ArrowLeft } from 'lucide-react';
 
 export default function HelpPage() {
 	return (
@@ -45,14 +46,14 @@ export default function HelpPage() {
 				{/* Study Tips */}
 				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-						<span className="text-3xl">💡</span>
-						Study Tips
-					</h2>
-
-					<div className="grid md:grid-cols-2 gap-6">
+						<Lightbulb className="w-8 h-8 text-yellow-600" />
+						Learning Tips
+					</h2>					<div className="grid md:grid-cols-2 gap-6">
 						<div className="space-y-4">
 							<div>
-								<h3 className="font-semibold text-green-600 mb-2">✅ Best Practices</h3>
+								<h3 className="font-semibold text-green-600 mb-2 flex items-center gap-1">
+									<CheckCircle className="w-4 h-4" /> Best Practices
+								</h3>
 								<ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
 									<li>• Study in short, regular sessions (15-30 minutes)</li>
 									<li>• Be honest when marking cards as known/unknown</li>
@@ -65,7 +66,9 @@ export default function HelpPage() {
 
 						<div className="space-y-4">
 							<div>
-								<h3 className="font-semibold text-red-600 mb-2">❌ Things to Avoid</h3>
+								<h3 className="font-semibold text-red-600 mb-2 flex items-center gap-1">
+									<X className="w-4 h-4" /> Things to Avoid
+								</h3>
 								<ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
 									<li>• Making cards too long or complex</li>
 									<li>• Studying when tired or distracted</li>
@@ -81,7 +84,7 @@ export default function HelpPage() {
 				{/* Features Guide */}
 				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-						<span className="text-3xl">📖</span>
+						<BookOpen className="w-8 h-8 text-blue-600" />
 						Features Guide
 					</h2>
 
@@ -115,11 +118,9 @@ export default function HelpPage() {
 				{/* Troubleshooting */}
 				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-						<span className="text-3xl">🔧</span>
+						<Settings className="w-8 h-8 text-gray-600" />
 						Troubleshooting
-					</h2>
-
-					<div className="space-y-4">
+					</h2>					<div className="space-y-4">
 						<details className="border border-gray-200 dark:border-gray-600 rounded-lg">
 							<summary className="p-4 cursor-pointer font-semibold hover:bg-gray-50 dark:hover:bg-gray-700">
 								My data disappeared or cards aren&apos;t loading
@@ -170,7 +171,7 @@ export default function HelpPage() {
 				{/* Keyboard Shortcuts */}
 				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-						<span className="text-3xl">⌨️</span>
+						<Keyboard className="w-12 h-12" />
 						Keyboard Shortcuts
 					</h2>
 
@@ -184,11 +185,15 @@ export default function HelpPage() {
 								</div>
 								<div className="flex justify-between">
 									<span>Mark as known</span>
-									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Y or →</code>
+									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded flex items-center gap-1">
+										Y or <ArrowRight className="w-3 h-3" />
+									</code>
 								</div>
 								<div className="flex justify-between">
 									<span>Mark as unknown</span>
-									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">N or ←</code>
+									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded flex items-center gap-1">
+										N or <ArrowLeft className="w-3 h-3" />
+									</code>
 								</div>
 							</div>
 						</div>

@@ -3,9 +3,11 @@
 import Link from 'next/link';
 import CardRow from './CardRow';
 import EmptyState from './EmptyState';
+import { Card as UICard, CardContent } from './ui/card';
 import { useCards } from '../../hooks';
 import { useUIStore } from '../../stores/ui';
 import type { Card } from '../../lib/types';
+import { CreditCard, Sparkles, RotateCcw, Plus } from 'lucide-react';
 
 interface CardListProps {
 	deckId: string;
@@ -25,21 +27,20 @@ export default function CardList({ deckId, className = '', showProgress = true }
 		return (
 			<div className={`space-y-4 ${className}`}>
 				{[...Array(3)].map((_, i) => (
-					<div
-						key={i}
-						className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 animate-pulse"
-					>
-						<div className="space-y-4">
-							<div>
-								<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-20 mb-2"></div>
-								<div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+					<UICard key={i} className="animate-pulse">
+						<CardContent className="p-6">
+							<div className="space-y-4">
+								<div>
+									<div className="h-4 bg-muted rounded w-20 mb-2"></div>
+									<div className="h-6 bg-muted rounded w-3/4"></div>
+								</div>
+								<div>
+									<div className="h-4 bg-muted rounded w-16 mb-2"></div>
+									<div className="h-6 bg-muted rounded w-2/3"></div>
+								</div>
 							</div>
-							<div>
-								<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-16 mb-2"></div>
-								<div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
-							</div>
-						</div>
-					</div>
+						</CardContent>
+					</UICard>
 				))}
 			</div>
 		);
@@ -49,7 +50,7 @@ export default function CardList({ deckId, className = '', showProgress = true }
 		return (
 			<div className={className}>
 				<EmptyState
-					icon="📇"
+					icon={<CreditCard className="w-20 h-20" />}
 					title="No cards yet"
 					description="Add your first card to start building your study deck"
 					actionLabel="Add Your First Card"
@@ -76,7 +77,7 @@ export default function CardList({ deckId, className = '', showProgress = true }
 					href={`/decks/${deckId}/edit-card`}
 					className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
 				>
-					<span className="text-xl">+</span>
+					<Plus className="w-5 h-5" />
 					Add Card
 				</Link>
 			</div>
@@ -123,16 +124,16 @@ function CardListStats({ cards }: CardListStatsProps) {
 	return (
 		<div className="flex items-center gap-6 text-sm">
 			<div className="flex items-center gap-2">
-				<span className="text-2xl">📇</span>
-				<span className="text-gray-600 dark:text-gray-400">
-					<strong className="text-gray-900 dark:text-gray-100">{totalCards}</strong> total cards
+				<CreditCard className="w-5 h-5" />
+				<span className="text-muted-foreground">
+					<strong className="text-foreground">{totalCards}</strong> total cards
 				</span>
 			</div>
 
 			{createdToday > 0 && (
 				<div className="flex items-center gap-2">
-					<span className="text-2xl">✨</span>
-					<span className="text-gray-600 dark:text-gray-400">
+					<Sparkles className="w-5 h-5" />
+					<span className="text-muted-foreground">
 						<strong className="text-green-600 dark:text-green-400">{createdToday}</strong> created today
 					</span>
 				</div>
@@ -140,8 +141,8 @@ function CardListStats({ cards }: CardListStatsProps) {
 
 			{recentlyUpdated > 0 && (
 				<div className="flex items-center gap-2">
-					<span className="text-2xl">🔄</span>
-					<span className="text-gray-600 dark:text-gray-400">
+					<RotateCcw className="w-5 h-5" />
+					<span className="text-muted-foreground">
 						<strong className="text-blue-600 dark:text-blue-400">{recentlyUpdated}</strong> recently updated
 					</span>
 				</div>

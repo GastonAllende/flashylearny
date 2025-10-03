@@ -2,6 +2,11 @@
 
 import { useState, useEffect } from 'react';
 import type { Card } from '../../lib/types';
+import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/badge';
+import { Card as UICard, CardContent } from '@/components/ui/card';
+import { cn } from '@/lib/utils';
+import { HelpCircle, Lightbulb, Frown, Brain, PartyPopper } from 'lucide-react';
 
 interface StudyCardProps {
 	card: Card;
@@ -70,7 +75,7 @@ export default function StudyCard({
 						<CardFace
 							content={card.question}
 							label="Question"
-							icon="❓"
+							icon={<HelpCircle className="w-6 h-6" />}
 							bgColor="bg-blue-500"
 							textColor="text-blue-50"
 							hint="Tap to reveal answer"
@@ -82,7 +87,7 @@ export default function StudyCard({
 						<CardFace
 							content={card.answer}
 							label="Answer"
-							icon="💡"
+							icon={<Lightbulb className="w-6 h-6" />}
 							bgColor="bg-green-500"
 							textColor="text-green-50"
 							hint="How well did you know this?"
@@ -91,19 +96,22 @@ export default function StudyCard({
 				</div>
 
 				{/* Flip Indicator */}
-				<div className="absolute top-4 right-4 bg-black bg-opacity-20 text-white px-3 py-1 rounded-full text-sm font-medium pointer-events-none">
+				<Badge
+					variant="secondary"
+					className="absolute top-4 right-4 bg-black/20 text-white pointer-events-none"
+				>
 					{isFlipped ? 'Answer' : 'Question'}
-				</div>
+				</Badge>
 			</div>
 
 			{/* Response Buttons - Only show when answer is revealed */}
 			{isFlipped && (
 				<div className="space-y-4">
 					<div className="text-center mb-6">
-						<h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-2">
+						<h3 className="text-lg font-semibold mb-2">
 							How well did you know this?
 						</h3>
-						<p className="text-gray-600 dark:text-gray-400 text-sm">
+						<p className="text-muted-foreground text-sm">
 							Be honest - it helps us show you the right cards at the right time
 						</p>
 					</div>
@@ -112,7 +120,7 @@ export default function StudyCard({
 						<ResponseButton
 							label="I didn't know it"
 							description="Show this more often"
-							icon="😅"
+							icon={<Frown className="w-8 h-8" />}
 							color="red"
 							onClick={() => handleResponse('didnt')}
 						/>
@@ -120,7 +128,7 @@ export default function StudyCard({
 						<ResponseButton
 							label="Almost knew it"
 							description="Show occasionally"
-							icon="🤔"
+							icon={<Brain className="w-8 h-8" />}
 							color="yellow"
 							onClick={() => handleResponse('almost')}
 						/>
@@ -128,7 +136,7 @@ export default function StudyCard({
 						<ResponseButton
 							label="I knew it!"
 							description="Show less often"
-							icon="🎉"
+							icon={<PartyPopper className="w-8 h-8" />}
 							color="green"
 							onClick={() => handleResponse('knew')}
 						/>
@@ -139,8 +147,8 @@ export default function StudyCard({
 			{/* Progress Hint */}
 			{!isFlipped && (
 				<div className="text-center">
-					<p className="text-gray-500 dark:text-gray-400 text-sm">
-						💡 Tap the card to reveal the answer
+					<p className="text-muted-foreground text-sm flex items-center justify-center gap-1">
+						<Lightbulb className="w-4 h-4" /> Tap the card to reveal the answer
 					</p>
 				</div>
 			)}
@@ -151,7 +159,7 @@ export default function StudyCard({
 interface CardFaceProps {
 	content: string;
 	label: string;
-	icon: string;
+	icon: React.ReactNode;
 	bgColor: string;
 	textColor: string;
 	hint: string;
@@ -159,67 +167,86 @@ interface CardFaceProps {
 
 function CardFace({ content, label, icon, bgColor, textColor, hint }: CardFaceProps) {
 	return (
-		<div className={`
-      w-full h-full rounded-2xl ${bgColor} shadow-2xl 
-      flex flex-col justify-center items-center p-8 relative
-      border-4 border-white dark:border-gray-200
-    `}>
+		<UICard className={cn(
+			"w-full h-full rounded-2xl shadow-2xl flex flex-col justify-center items-center p-8 relative border-4",
+			bgColor,
+			"border-white dark:border-gray-200"
+		)}>
 			{/* Header */}
 			<div className="absolute top-6 left-6 flex items-center gap-2">
 				<span className="text-2xl">{icon}</span>
-				<span className={`font-semibold ${textColor} opacity-90`}>{label}</span>
+				<Badge variant="secondary" className={cn("font-semibold", textColor, "opacity-90")}>
+					{label}
+				</Badge>
 			</div>
 
 			{/* Content */}
-			<div className="flex-1 flex items-center justify-center text-center">
-				<div className={`${textColor} text-2xl sm:text-3xl lg:text-4xl font-bold leading-relaxed max-w-lg`}>
+			<CardContent className="flex-1 flex items-center justify-center text-center p-0">
+				<div className={cn(textColor, "text-2xl sm:text-3xl lg:text-4xl font-bold leading-relaxed max-w-lg")}>
 					{content}
 				</div>
-			</div>
+			</CardContent>
 
 			{/* Hint */}
 			<div className="absolute bottom-6 left-1/2 transform -translate-x-1/2">
-				<p className={`${textColor} opacity-80 text-sm font-medium`}>
+				<p className={cn(textColor, "opacity-80 text-sm font-medium")}>
 					{hint}
 				</p>
 			</div>
-		</div>
+		</UICard>
 	);
 }
 
 interface ResponseButtonProps {
 	label: string;
 	description: string;
-	icon: string;
+	icon: React.ReactNode;
 	color: 'red' | 'yellow' | 'green';
 	onClick: () => void;
 }
 
 function ResponseButton({ label, description, icon, color, onClick }: ResponseButtonProps) {
-	const colorClasses = {
-		red: 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 hover:bg-red-100 dark:hover:bg-red-900/30 text-red-900 dark:text-red-100',
-		yellow: 'bg-amber-50 dark:bg-amber-900/20 border-amber-200 dark:border-amber-800 hover:bg-amber-100 dark:hover:bg-amber-900/30 text-amber-900 dark:text-amber-100',
-		green: 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 hover:bg-green-100 dark:hover:bg-green-900/30 text-green-900 dark:text-green-100'
+	const getButtonVariant = (color: string) => {
+		switch (color) {
+			case 'red':
+				return 'destructive';
+			case 'green':
+				return 'default';
+			case 'yellow':
+			default:
+				return 'outline';
+		}
+	};
+
+	const getColorClasses = (color: string) => {
+		switch (color) {
+			case 'red':
+				return 'border-destructive/20 hover:bg-destructive/10';
+			case 'yellow':
+				return 'border-amber-200 hover:bg-amber-50 text-amber-900 dark:border-amber-800 dark:hover:bg-amber-900/20 dark:text-amber-100';
+			case 'green':
+				return 'border-green-200 hover:bg-green-50 text-green-900 dark:border-green-800 dark:hover:bg-green-900/20 dark:text-green-100';
+			default:
+				return '';
+		}
 	};
 
 	return (
-		<button
+		<Button
 			onClick={onClick}
-			className={`
-        ${colorClasses[color]}
-        border-2 rounded-xl p-6 transition-all duration-200
-        hover:scale-105 hover:shadow-lg active:scale-95
-        focus:outline-none focus:ring-4 focus:ring-opacity-20
-        ${color === 'red' ? 'focus:ring-red-500' : ''}
-        ${color === 'yellow' ? 'focus:ring-amber-500' : ''}
-        ${color === 'green' ? 'focus:ring-green-500' : ''}
-      `}
+			variant={getButtonVariant(color)}
+			size="lg"
+			className={cn(
+				"h-auto p-6 hover:scale-105 active:scale-95 transition-all duration-200",
+				"focus:ring-4 focus:ring-opacity-20",
+				getColorClasses(color)
+			)}
 		>
 			<div className="flex flex-col items-center text-center space-y-2">
-				<span className="text-3xl">{icon}</span>
+				<div className="flex items-center justify-center">{icon}</div>
 				<div className="font-semibold text-lg">{label}</div>
 				<div className="text-sm opacity-80">{description}</div>
 			</div>
-		</button>
+		</Button>
 	);
 }

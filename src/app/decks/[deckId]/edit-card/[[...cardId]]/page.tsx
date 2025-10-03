@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useCreateCard, useUpdateCard, useCards } from '../../../../../../hooks';
 import type { Card } from '../../../../../../lib/types';
+import { Save, Plus, Lightbulb, ArrowLeft, X } from 'lucide-react';
 
 export default function EditCardPage() {
 	const params = useParams();
@@ -85,7 +86,7 @@ export default function EditCardPage() {
 	if (isEditing && !currentCard && !cardsLoading) {
 		return (
 			<div className="max-w-2xl mx-auto text-center py-16">
-				<div className="text-6xl mb-4">❌</div>
+				<X className="w-16 h-16 mb-4 text-red-400 mx-auto" />
 				<h3 className="text-xl font-semibold mb-2">Card not found</h3>
 				<p className="text-gray-600 dark:text-gray-400 mb-4">
 					The card you&apos;re trying to edit doesn&apos;t exist or has been deleted.
@@ -94,7 +95,8 @@ export default function EditCardPage() {
 					href={`/decks/${deckId}`}
 					className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
 				>
-					← Back to Deck
+					<ArrowLeft className="w-4 h-4 mr-2" />
+					Back to Deck
 				</Link>
 			</div>
 		);
@@ -109,7 +111,8 @@ export default function EditCardPage() {
 						href={`/decks/${deckId}`}
 						className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
 					>
-						← Back to Deck
+						<ArrowLeft className="w-4 h-4 mr-2" />
+						Back to Deck
 					</Link>
 				</div>
 				<h1 className="text-3xl font-bold">
@@ -201,7 +204,7 @@ export default function EditCardPage() {
 								</>
 							) : (
 								<>
-									<span>{isEditing ? '💾' : '➕'}</span>
+									{isEditing ? <Save className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
 									{isEditing ? 'Update Card' : 'Create Card'}
 								</>
 							)}
@@ -221,7 +224,10 @@ export default function EditCardPage() {
 
 			{/* Tips */}
 			<div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
-				<h3 className="font-medium text-yellow-900 dark:text-yellow-100 mb-2">💡 Tips for effective flashcards</h3>
+				<h3 className="font-medium text-yellow-900 dark:text-yellow-100 mb-2 flex items-center gap-2">
+					<Lightbulb className="w-5 h-5" />
+					Tips for effective flashcards
+				</h3>
 				<ul className="text-sm text-yellow-800 dark:text-yellow-200 space-y-1">
 					<li>• Keep questions and answers concise and clear</li>
 					<li>• Focus on one concept per card</li>

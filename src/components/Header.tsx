@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Menu, X, BookOpen, Plus, User } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import { useUIStore } from "../../stores/ui";
 
@@ -44,9 +45,9 @@ export default function Header() {
 					<ThemeToggle />
 					<Link
 						href="/profile"
-						className="bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 px-3 py-1.5 rounded text-sm font-medium transition-colors"
+						className="bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 px-3 py-1.5 rounded text-sm font-medium transition-colors flex items-center gap-2"
 					>
-						👤 Profile
+						<User className="h-4 w-4" /> Profile
 					</Link>
 				</div>
 				<Button
@@ -56,7 +57,7 @@ export default function Header() {
 					className="sm:hidden"
 					onClick={() => setOpen((v) => !v)}
 				>
-					☰ Menu
+					{open ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
 				</Button>
 			</nav>
 			{open && (
@@ -64,25 +65,25 @@ export default function Header() {
 					<div className="mx-auto max-w-6xl px-4 py-4 flex flex-col gap-4">
 						<Link
 							href="/decks"
-							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2"
+							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
 							onClick={() => setOpen(false)}
 						>
-							📚 Decks
+							<BookOpen className="h-4 w-4" /> Decks
 						</Link>
 						<button
 							onClick={handleCreateDeck}
-							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 text-left"
+							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 text-left flex items-center gap-2"
 						>
-							➕ Create Deck
+							<Plus className="h-4 w-4" /> Create Deck
 						</button>
 						<div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
 							<ThemeToggle />
 							<Link
 								href="/profile"
-								className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium"
+								className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium flex items-center gap-2"
 								onClick={() => setOpen(false)}
 							>
-								👤 Profile
+								<User className="h-4 w-4" /> Profile
 							</Link>
 						</div>
 					</div>

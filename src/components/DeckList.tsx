@@ -6,6 +6,11 @@ import EmptyState from './EmptyState';
 import { useDecks, useCreateDeck } from '../../hooks';
 import { useUIStore } from '../../stores/ui';
 import type { Deck } from '../../lib/types';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Card, CardContent } from '@/components/ui/card';
+import { BookOpen, Sparkles } from 'lucide-react';
 
 interface DeckListProps {
 	className?: string;
@@ -44,22 +49,21 @@ export default function DeckList({ className = '' }: DeckListProps) {
 		return (
 			<div className={`space-y-4 ${className}`}>
 				{[...Array(3)].map((_, i) => (
-					<div
-						key={i}
-						className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 animate-pulse"
-					>
-						<div className="flex items-center justify-between">
-							<div className="flex-1">
-								<div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-48 mb-3"></div>
-								<div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-32 mb-2"></div>
-								<div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-24"></div>
+					<Card key={i} className="animate-pulse">
+						<CardContent className="p-6">
+							<div className="flex items-center justify-between">
+								<div className="flex-1">
+									<div className="h-6 bg-muted rounded w-48 mb-3"></div>
+									<div className="h-4 bg-muted rounded w-32 mb-2"></div>
+									<div className="h-3 bg-muted rounded w-24"></div>
+								</div>
+								<div className="flex gap-2">
+									<div className="h-9 w-16 bg-muted rounded-lg"></div>
+									<div className="h-9 w-9 bg-muted rounded-lg"></div>
+								</div>
 							</div>
-							<div className="flex gap-2">
-								<div className="h-9 w-16 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
-								<div className="h-9 w-9 bg-gray-200 dark:bg-gray-700 rounded-lg"></div>
-							</div>
-						</div>
-					</div>
+						</CardContent>
+					</Card>
 				))}
 			</div>
 		);
@@ -81,7 +85,7 @@ export default function DeckList({ className = '' }: DeckListProps) {
 					/>
 				) : (
 					<EmptyState
-						icon="📚"
+						icon={<BookOpen className="w-20 h-20" />}
 						title="No decks yet"
 						description="Create your first deck to start studying with flashcards"
 						actionLabel="Create Your First Deck"
@@ -97,22 +101,23 @@ export default function DeckList({ className = '' }: DeckListProps) {
 			{/* Header with create button */}
 			<div className="flex items-center justify-between">
 				<div>
-					<h2 className="text-2xl font-bold text-gray-900 dark:text-gray-100">
+					<h2 className="text-2xl font-bold text-foreground">
 						Your Study Decks
 					</h2>
-					<p className="text-gray-600 dark:text-gray-400 mt-1">
+					<p className="text-muted-foreground mt-1">
 						{decks.length} deck{decks.length !== 1 ? 's' : ''} ready for studying
 					</p>
 				</div>
 
 				{!isCreating && (
-					<button
+					<Button
 						onClick={() => setIsCreating(true)}
-						className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 shadow-lg hover:shadow-xl"
+						size="lg"
+						className="shadow-lg hover:shadow-xl"
 					>
-						<span className="text-xl">+</span>
+						<span className="text-xl mr-2">+</span>
 						Create Deck
-					</button>
+					</Button>
 				)}
 			</div>
 
@@ -161,57 +166,59 @@ function CreateDeckForm({
 	isLoading
 }: CreateDeckFormProps) {
 	return (
-		<div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border border-blue-200 dark:border-blue-800 rounded-xl p-6">
-			<form onSubmit={onSubmit} className="space-y-4">
-				<div>
-					<label htmlFor="deckName" className="block text-sm font-medium mb-2 text-gray-900 dark:text-gray-100">
-						Deck Name
-					</label>
-					<input
-						id="deckName"
-						type="text"
-						value={newDeckName}
-						onChange={(e) => setNewDeckName(e.target.value)}
-						placeholder="e.g., Spanish Vocabulary, Biology Terms..."
-						className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white text-lg"
-						autoFocus
-						disabled={isLoading}
-						maxLength={100}
-					/>
-					<p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-						Choose a descriptive name for your study deck
-					</p>
-				</div>
+		<Card className="bg-gradient-to-r from-primary/10 to-secondary/10 border-primary/20">
+			<CardContent className="p-6">
+				<form onSubmit={onSubmit} className="space-y-4">
+					<div>
+						<Label htmlFor="deckName" className="text-foreground">
+							Deck Name
+						</Label>
+						<Input
+							id="deckName"
+							type="text"
+							value={newDeckName}
+							onChange={(e) => setNewDeckName(e.target.value)}
+							placeholder="e.g., Spanish Vocabulary, Biology Terms..."
+							className="text-lg mt-2"
+							autoFocus
+							disabled={isLoading}
+							maxLength={100}
+						/>
+						<p className="text-xs text-muted-foreground mt-1">
+							Choose a descriptive name for your study deck
+						</p>
+					</div>
 
-				<div className="flex gap-3">
-					<button
-						type="submit"
-						disabled={!newDeckName.trim() || isLoading}
-						className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2"
-					>
-						{isLoading ? (
-							<>
-								<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-								Creating...
-							</>
-						) : (
-							<>
-								<span>✨</span>
-								Create Deck
-							</>
-						)}
-					</button>
+					<div className="flex gap-3">
+						<Button
+							type="submit"
+							disabled={!newDeckName.trim() || isLoading}
+							className="flex items-center gap-2"
+						>
+							{isLoading ? (
+								<>
+									<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+									Creating...
+								</>
+							) : (
+								<>
+									<Sparkles className="w-4 h-4" />
+									Create Deck
+								</>
+							)}
+						</Button>
 
-					<button
-						type="button"
-						onClick={onCancel}
-						disabled={isLoading}
-						className="bg-gray-500 hover:bg-gray-600 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
-					>
-						Cancel
-					</button>
-				</div>
-			</form>
-		</div>
+						<Button
+							type="button"
+							variant="secondary"
+							onClick={onCancel}
+							disabled={isLoading}
+						>
+							Cancel
+						</Button>
+					</div>
+				</form>
+			</CardContent>
+		</Card>
 	);
 }

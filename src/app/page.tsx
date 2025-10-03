@@ -1,5 +1,6 @@
 import Link from "next/link";
 import InstallPrompt from "@/components/InstallPrompt";
+import { Brain, Smartphone, BarChart3 } from "lucide-react";
 
 export default function Home() {
   return (
@@ -25,21 +26,21 @@ export default function Home() {
 
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto mt-16">
         <div className="text-center p-6">
-          <div className="text-3xl mb-3">🧠</div>
+          <div className="flex justify-center mb-3"><Brain className="w-12 h-12 text-blue-600" /></div>
           <h3 className="font-semibold text-lg mb-2">Smart Learning</h3>
           <p className="text-gray-600 dark:text-gray-400">
             Adaptive spaced repetition helps you learn efficiently
           </p>
         </div>
         <div className="text-center p-6">
-          <div className="text-3xl mb-3">📱</div>
+          <div className="flex justify-center mb-3"><Smartphone className="w-12 h-12 text-green-600" /></div>
           <h3 className="font-semibold text-lg mb-2">Offline First</h3>
           <p className="text-gray-600 dark:text-gray-400">
             Study anywhere, anytime - no internet required
           </p>
         </div>
         <div className="text-center p-6">
-          <div className="text-3xl mb-3">📊</div>
+          <div className="flex justify-center mb-3"><BarChart3 className="w-12 h-12 text-purple-600" /></div>
           <h3 className="font-semibold text-lg mb-2">Track Progress</h3>
           <p className="text-gray-600 dark:text-gray-400">
             See your learning progress and mastery statistics

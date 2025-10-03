@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { Button } from './ui/button';
 
 export default function ThemeToggle({ className = '' }: { className?: string; }) {
 	const [isDark, setIsDark] = useState(false);
@@ -30,24 +31,17 @@ export default function ThemeToggle({ className = '' }: { className?: string; })
 	if (!isLoaded) {
 		return (
 			<div className={`w-12 h-12 ${className}`}>
-				<div className="w-full h-full bg-gray-200 dark:bg-gray-700 rounded-lg animate-pulse" />
+				<div className="w-full h-full bg-muted rounded-lg animate-pulse" />
 			</div>
 		);
 	}
 
 	return (
-		<button
+		<Button
+			variant="outline"
+			size="icon"
 			onClick={toggleTheme}
-			className={`
-        relative w-12 h-12 rounded-lg
-        bg-gray-100 dark:bg-gray-800 
-        hover:bg-gray-200 dark:hover:bg-gray-700
-        border border-gray-200 dark:border-gray-600
-        transition-all duration-200 ease-out
-        focus:outline-none focus:ring-4 focus:ring-blue-500/20
-        active:scale-95
-        ${className}
-      `}
+			className={`relative w-12 h-12 ${className}`}
 			aria-label={`Switch to ${isDark ? 'light' : 'dark'} mode`}
 			title={`Switch to ${isDark ? 'light' : 'dark'} mode`}
 		>
@@ -86,7 +80,7 @@ export default function ThemeToggle({ className = '' }: { className?: string; })
 					<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
 				</svg>
 			</div>
-		</button>
+		</Button>
 	);
 }
 

@@ -3,6 +3,13 @@
 import { useState, useEffect } from 'react';
 import StudyCard from './StudyCard';
 import type { Card } from '../../lib/types';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import { Label } from '@/components/ui/label';
+import { Card as UICard, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { AlertTriangle, Eye, Edit3, Save, X, Lightbulb, ArrowLeft } from 'lucide-react';
 
 interface CardEditorProps {
 	deckId: string;
@@ -23,7 +30,7 @@ export default function CardEditor({
 }: CardEditorProps) {
 	const [question, setQuestion] = useState(card?.question ?? '');
 	const [answer, setAnswer] = useState(card?.answer ?? '');
-	const [showPreview, setShowPreview] = useState(false);
+	const [activeTab, setActiveTab] = useState('edit');
 	const [errors, setErrors] = useState<{ question?: string; answer?: string; }>({});
 
 	// Reset form when card changes
@@ -66,7 +73,6 @@ export default function CardEditor({
 			});
 		} catch (error) {
 			console.error('Failed to save card:', error);
-			// Error handling could be improved with toast notifications
 		}
 	};
 
@@ -97,53 +103,40 @@ export default function CardEditor({
 		<div className={`max-w-4xl mx-auto ${className}`}>
 			{/* Header */}
 			<div className="mb-8">
-				<h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100 mb-2">
+				<h1 className="text-3xl font-bold mb-2">
 					{card ? 'Edit Card' : 'Create New Card'}
 				</h1>
-				<p className="text-gray-600 dark:text-gray-400">
+				<p className="text-muted-foreground">
 					{card ? 'Update your flashcard content below' : 'Add a new flashcard to your deck'}
 				</p>
 			</div>
 
-			{/* Toggle Buttons */}
-			<div className="flex bg-gray-100 dark:bg-gray-800 p-1 rounded-lg mb-8 max-w-md">
-				<button
-					onClick={() => setShowPreview(false)}
-					className={`
-            flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200
-            ${!showPreview
-							? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
-							: 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-						}
-          `}
-				>
-					✏️ Edit
-				</button>
-				<button
-					onClick={() => setShowPreview(true)}
-					className={`
-            flex-1 py-2 px-4 rounded-md font-medium transition-all duration-200
-            ${showPreview
-							? 'bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100 shadow-sm'
-							: 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100'
-						}
-          `}
-				>
-					👁️ Preview
-				</button>
-			</div>
+			<Tabs value={activeTab} onValueChange={setActiveTab}>
+				<TabsList className="grid w-full grid-cols-2 max-w-md">
+					<TabsTrigger value="edit" className="flex items-center gap-2">
+						<Edit3 className="h-4 w-4" />
+						Edit
+					</TabsTrigger>
+					<TabsTrigger value="preview" className="flex items-center gap-2">
+						<Eye className="h-4 w-4" />
+						Preview
+					</TabsTrigger>
+				</TabsList>
 
-			{showPreview ? (
-				/* Preview Mode */
-				<div className="space-y-6">
-					<div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-						<h3 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">
-							📖 Study Preview
-						</h3>
-						<p className="text-blue-700 dark:text-blue-300 text-sm">
-							This is how your card will look during study sessions. Click the card to flip it!
-						</p>
-					</div>
+				<TabsContent value="preview" className="space-y-6 mt-8">
+					<UICard className="border-blue-200 bg-blue-50/50">
+						<CardHeader>
+							<CardTitle className="text-blue-900 flex items-center gap-2">
+								<Eye className="h-5 w-5" />
+								Study Preview
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<p className="text-blue-700 text-sm">
+								This is how your card will look during study sessions. Click the card to flip it!
+							</p>
+						</CardContent>
+					</UICard>
 
 					<StudyCard
 						card={previewCard}
@@ -152,161 +145,129 @@ export default function CardEditor({
 					/>
 
 					<div className="text-center">
-						<button
-							onClick={() => setShowPreview(false)}
-							className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 font-medium"
-						>
-							← Back to editing
-						</button>
+						<Button variant="ghost" onClick={() => setActiveTab('edit')}>
+							<ArrowLeft className="w-4 h-4 mr-2" />
+							Back to editing
+						</Button>
 					</div>
-				</div>
-			) : (
-				/* Edit Mode */
-				<div className="space-y-8">
+				</TabsContent>
+
+				<TabsContent value="edit" className="space-y-8 mt-8">
 					{/* Question Field */}
 					<div className="space-y-3">
-						<label htmlFor="question" className="block text-lg font-semibold text-gray-900 dark:text-gray-100">
+						<Label htmlFor="question" className="text-lg font-semibold">
 							Question
-							<span className="text-red-500 ml-1">*</span>
-						</label>
-						<textarea
+							<span className="text-destructive ml-1">*</span>
+						</Label>
+						<Textarea
 							id="question"
 							value={question}
 							onChange={(e) => setQuestion(e.target.value)}
 							onKeyDown={(e) => handleKeyDown(e, 'question')}
 							placeholder="What do you want to learn? (e.g., 'What is the capital of France?')"
 							rows={4}
-							className={`
-                w-full px-4 py-3 border rounded-lg resize-none
-                text-lg leading-relaxed
-                focus:outline-none focus:ring-4 focus:ring-blue-500/20 focus:border-blue-500
-                transition-colors duration-200
-                ${errors.question
-									? 'border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20'
-									: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'
-								}
-                text-gray-900 dark:text-gray-100
-                placeholder-gray-500 dark:placeholder-gray-400
-              `}
+							className={`text-lg ${errors.question ? 'border-destructive' : ''}`}
 							maxLength={500}
 						/>
 						<div className="flex justify-between items-center">
 							{errors.question && (
-								<p className="text-red-600 dark:text-red-400 text-sm font-medium">
+								<div className="flex items-center gap-2 text-destructive text-sm">
+									<AlertTriangle className="h-4 w-4" />
 									{errors.question}
-								</p>
+								</div>
 							)}
-							<span className={`text-sm ml-auto ${question.length > 450 ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
-								}`}>
+							<Badge variant={question.length > 450 ? "destructive" : "secondary"} className="ml-auto">
 								{question.length}/500
-							</span>
+							</Badge>
 						</div>
 					</div>
 
 					{/* Answer Field */}
 					<div className="space-y-3">
-						<label htmlFor="answer" className="block text-lg font-semibold text-gray-900 dark:text-gray-100">
+						<Label htmlFor="answer" className="text-lg font-semibold">
 							Answer
-							<span className="text-red-500 ml-1">*</span>
-						</label>
-						<textarea
+							<span className="text-destructive ml-1">*</span>
+						</Label>
+						<Textarea
 							id="answer"
 							value={answer}
 							onChange={(e) => setAnswer(e.target.value)}
 							onKeyDown={(e) => handleKeyDown(e, 'answer')}
 							placeholder="The correct answer or explanation (e.g., 'Paris - it's the largest city and political capital of France')"
 							rows={6}
-							className={`
-                w-full px-4 py-3 border rounded-lg resize-none
-                text-lg leading-relaxed
-                focus:outline-none focus:ring-4 focus:ring-green-500/20 focus:border-green-500
-                transition-colors duration-200
-                ${errors.answer
-									? 'border-red-300 dark:border-red-700 bg-red-50 dark:bg-red-900/20'
-									: 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800'
-								}
-                text-gray-900 dark:text-gray-100
-                placeholder-gray-500 dark:placeholder-gray-400
-              `}
+							className={`text-lg ${errors.answer ? 'border-destructive' : ''}`}
 							maxLength={1000}
 						/>
 						<div className="flex justify-between items-center">
 							{errors.answer && (
-								<p className="text-red-600 dark:text-red-400 text-sm font-medium">
+								<div className="flex items-center gap-2 text-destructive text-sm">
+									<AlertTriangle className="h-4 w-4" />
 									{errors.answer}
-								</p>
+								</div>
 							)}
-							<span className={`text-sm ml-auto ${answer.length > 900 ? 'text-red-600 dark:text-red-400' : 'text-gray-500 dark:text-gray-400'
-								}`}>
+							<Badge variant={answer.length > 900 ? "destructive" : "secondary"} className="ml-auto">
 								{answer.length}/1000
-							</span>
+							</Badge>
 						</div>
 					</div>
 
 					{/* Tips */}
-					<div className="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-						<h4 className="font-semibold text-amber-900 dark:text-amber-100 mb-2">
-							💡 Tips for great flashcards
-						</h4>
-						<ul className="text-amber-800 dark:text-amber-200 text-sm space-y-1">
-							<li>• Keep questions specific and clear</li>
-							<li>• Make answers concise but complete</li>
-							<li>• Use your own words to aid memory</li>
-							<li>• Include context or examples when helpful</li>
-						</ul>
-					</div>
-				</div>
-			)}
+					<UICard className="border-amber-200 bg-amber-50/50">
+						<CardHeader>
+							<CardTitle className="text-amber-900 flex items-center gap-2">
+								<Lightbulb className="h-5 w-5" />
+								Tips for great flashcards
+							</CardTitle>
+						</CardHeader>
+						<CardContent>
+							<ul className="text-amber-800 text-sm space-y-1">
+								<li>• Keep questions specific and clear</li>
+								<li>• Make answers concise but complete</li>
+								<li>• Use your own words to aid memory</li>
+								<li>• Include context or examples when helpful</li>
+							</ul>
+						</CardContent>
+					</UICard>
 
-			{/* Action Buttons */}
-			{!showPreview && (
-				<div className="flex flex-col sm:flex-row gap-4 pt-8 border-t border-gray-200 dark:border-gray-700">
-					<button
-						onClick={handleSave}
-						disabled={isLoading || !question.trim() || !answer.trim()}
-						className="
-              bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 
-              text-white px-8 py-3 rounded-lg font-semibold 
-              transition-all duration-200 flex items-center justify-center gap-2
-              hover:shadow-lg disabled:cursor-not-allowed
-              focus:outline-none focus:ring-4 focus:ring-blue-500/20
-            "
-					>
-						{isLoading && (
-							<div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-						)}
-						{card ? 'Update Card' : 'Create Card'}
-						<span className="text-sm opacity-80">(⌘⏎)</span>
-					</button>
-
-					<button
-						onClick={onCancel}
-						disabled={isLoading}
-						className="
-              bg-gray-100 dark:bg-gray-800 hover:bg-gray-200 dark:hover:bg-gray-700 
-              text-gray-700 dark:text-gray-300 px-8 py-3 rounded-lg font-semibold 
-              transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed
-              focus:outline-none focus:ring-4 focus:ring-gray-500/20
-            "
-					>
-						Cancel
-					</button>
-
-					{question.trim() && answer.trim() && (
-						<button
-							onClick={() => setShowPreview(true)}
-							className="
-                bg-green-100 dark:bg-green-900/20 hover:bg-green-200 dark:hover:bg-green-900/30
-                text-green-700 dark:text-green-300 px-6 py-3 rounded-lg font-semibold 
-                transition-colors duration-200
-                focus:outline-none focus:ring-4 focus:ring-green-500/20
-              "
+					{/* Action Buttons */}
+					<div className="flex flex-col sm:flex-row gap-4 pt-8 border-t">
+						<Button
+							onClick={handleSave}
+							disabled={isLoading || !question.trim() || !answer.trim()}
+							className="flex items-center gap-2"
 						>
-							👁️ Preview Card
-						</button>
-					)}
-				</div>
-			)}
+							{isLoading ? (
+								<div className="w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></div>
+							) : (
+								<Save className="h-4 w-4" />
+							)}
+							{card ? 'Update Card' : 'Create Card'}
+							<Badge variant="outline" className="text-xs">⌘⏎</Badge>
+						</Button>
+
+						<Button
+							variant="outline"
+							onClick={onCancel}
+							disabled={isLoading}
+							className="flex items-center gap-2"
+						>
+							<X className="h-4 w-4" />
+							Cancel
+						</Button>
+
+						{question.trim() && answer.trim() && (
+							<Button
+								variant="outline"
+								onClick={() => setActiveTab('preview')}
+								className="flex items-center gap-2 border-green-200 text-green-700 hover:bg-green-50"
+							>
+								<Eye className="h-4 w-4" />
+								Preview Card
+							</Button>
+						)}
+					</div>
+				</TabsContent>
+			</Tabs>
 		</div>
 	);
 }
