@@ -77,18 +77,56 @@ export default function CardRow({
 					</div>
 
 					{/* Progress Stats */}
-					{showProgress && progress && (progress.timesSeen > 0 || progress.timesKnown > 0) && (
-						<div className="flex items-center gap-4 text-sm text-gray-500 dark:text-gray-400 pt-2 border-t border-gray-200 dark:border-gray-700">
-							<span className="flex items-center gap-1">
-								<Eye className="w-4 h-4" /> Seen {progress.timesSeen} time{progress.timesSeen !== 1 ? 's' : ''}
-							</span>
-							<span className="flex items-center gap-1">
-								<CheckCircle className="w-4 h-4" /> Known {progress.timesKnown} time{progress.timesKnown !== 1 ? 's' : ''}
-							</span>
-							{progress.lastReviewedAt && (
+					{showProgress && progress && (
+						<div className="space-y-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+							{/* Stats Row - only show if card has been studied */}
+							{(progress.timesSeen > 0 || progress.timesKnown > 0) && (
+							<div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
 								<span className="flex items-center gap-1">
-									<Clock className="w-4 h-4" /> Last reviewed {new Date(progress.lastReviewedAt).toLocaleDateString()}
+									<Eye className="w-4 h-4" />
+									<span className="font-medium text-gray-900 dark:text-gray-100">{progress.timesSeen}</span>
+									<span className="text-xs">seen</span>
 								</span>
+								<span className="flex items-center gap-1 text-green-600 dark:text-green-400">
+									<CheckCircle className="w-4 h-4" />
+									<span className="font-medium">{progress.timesKnown}</span>
+									<span className="text-xs">knew</span>
+								</span>
+								{(progress.timesAlmost ?? 0) > 0 && (
+									<span className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400">
+										<span className="w-4 h-4 flex items-center justify-center">~</span>
+										<span className="font-medium">{progress.timesAlmost}</span>
+										<span className="text-xs">almost</span>
+									</span>
+								)}
+								{progress.timesSeen > 0 && (
+									<span className="flex items-center gap-1">
+										<span className="text-xs">Accuracy:</span>
+										<span className={`font-semibold ${
+											Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 80
+												? 'text-green-600 dark:text-green-400'
+												: Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 50
+												? 'text-yellow-600 dark:text-yellow-400'
+												: 'text-red-600 dark:text-red-400'
+										}`}>
+											{Math.round((progress.timesKnown / progress.timesSeen) * 100)}%
+										</span>
+									</span>
+								)}
+							</div>
+							)}
+							{/* Last Reviewed */}
+							{progress.lastReviewedAt && (
+								<div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
+									<Clock className="w-3 h-3" />
+									Last reviewed: {new Date(progress.lastReviewedAt).toLocaleDateString('en-US', {
+										month: 'short',
+										day: 'numeric',
+										year: 'numeric',
+										hour: '2-digit',
+										minute: '2-digit'
+									})}
+								</div>
 							)}
 						</div>
 					)}

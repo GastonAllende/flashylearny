@@ -116,7 +116,7 @@ export function useInvalidateDeckProgress() {
  */
 export function useResetDeckProgress() {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: (deckId: string) => resetDeckProgress(deckId),
     onSuccess: (_data, deckId) => {
@@ -124,6 +124,8 @@ export function useResetDeckProgress() {
       queryClient.invalidateQueries({ queryKey: queryKeys.deckProgress(deckId) });
       queryClient.invalidateQueries({ queryKey: queryKeys.deckCompletion(deckId) });
       queryClient.invalidateQueries({ queryKey: queryKeys.deckAnalytics(deckId) });
+      // Invalidate ALL individual card progress queries (starts with ['progress', cardId])
+      queryClient.invalidateQueries({ queryKey: ['progress'] });
     },
   });
 }
