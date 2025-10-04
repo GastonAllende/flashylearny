@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Generate PWA Icons</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .icon-preview { margin: 20px 0; }
+        canvas { border: 1px solid #ccc; margin: 10px; }
+        button { padding: 10px 20px; margin: 5px; background: #0ea5e9; color: white; border: none; border-radius: 5px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>PWA Icon Generator for FlashyLearny</h1>
+    <p>This page helps generate the required PWA icons. Right-click on each canvas and "Save image as" to download the icons.</p>
+    
+    <div class="icon-preview">
+        <h3>192x192 Icon</h3>
+        <canvas id="icon192" width="192" height="192"></canvas>
+        <button onclick="downloadIcon('icon192', 'icon-192.png')">Download 192x192</button>
+    </div>
+    
+    <div class="icon-preview">
+        <h3>512x512 Icon</h3>
+        <canvas id="icon512" width="512" height="512"></canvas>
+        <button onclick="downloadIcon('icon512', 'icon-512.png')">Download 512x512</button>
+    </div>
+    
+    <div class="icon-preview">
+        <h3>180x180 Apple Touch Icon</h3>
+        <canvas id="appleIcon" width="180" height="180"></canvas>
+        <button onclick="downloadIcon('appleIcon', 'apple-touch-icon.png')">Download Apple Icon</button>
+    </div>
+
+    <script>
+        function drawIcon(canvas, size) {
+            const ctx = canvas.getContext('2d');
+            const scale = size / 512;
+            
+            // Clear canvas
+            ctx.clearRect(0, 0, size, size);
+            
+            // Background circle
+            ctx.fillStyle = '#0ea5e9';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 32 * scale;
+            ctx.beginPath();
+            ctx.arc(size/2, size/2, 240 * scale, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+            
+            // Flashcard rectangle
+            const cardWidth = 256 * scale;
+            const cardHeight = 192 * scale;
+            const cardX = (size - cardWidth) / 2;
+            const cardY = (size - cardHeight) / 2 - 20 * scale;
+            
+            ctx.fillStyle = '#ffffff';
+            ctx.strokeStyle = '#0ea5e9';
+            ctx.lineWidth = 4 * scale;
+            ctx.beginPath();
+            ctx.roundRect(cardX, cardY, cardWidth, cardHeight, 16 * scale);
+            ctx.fill();
+            ctx.stroke();
+            
+            // Question mark
+            ctx.fillStyle = '#0ea5e9';
+            ctx.font = `bold ${48 * scale}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('?', size/2, cardY + 60 * scale);
+            
+            // Answer lines
+            ctx.strokeStyle = '#0ea5e9';
+            ctx.lineWidth = 3 * scale;
+            ctx.lineCap = 'round';
+            
+            const lineY1 = cardY + 120 * scale;
+            const lineY2 = cardY + 140 * scale;
+            const lineY3 = cardY + 160 * scale;
+            const lineX1 = cardX + 32 * scale;
+            const lineX2 = cardX + cardWidth - 32 * scale;
+            
+            ctx.beginPath();
+            ctx.moveTo(lineX1, lineY1);
+            ctx.lineTo(lineX2, lineY1);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(lineX1, lineY2);
+            ctx.lineTo(lineX2 - 32 * scale, lineY2);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(lineX1, lineY3);
+            ctx.lineTo(lineX2 - 64 * scale, lineY3);
+            ctx.stroke();
+            
+            // Checkmark circle
+            const checkX = size/2;
+            const checkY = size/2 + 144 * scale;
+            const checkRadius = 24 * scale;
+            
+            ctx.fillStyle = '#10b981';
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 4 * scale;
+            ctx.beginPath();
+            ctx.arc(checkX, checkY, checkRadius, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.stroke();
+            
+            // Checkmark
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 4 * scale;
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+            ctx.beginPath();
+            ctx.moveTo(checkX - 16 * scale, checkY);
+            ctx.lineTo(checkX - 4 * scale, checkY + 12 * scale);
+            ctx.lineTo(checkX + 16 * scale, checkY - 12 * scale);
+            ctx.stroke();
+        }
+        
+        function downloadIcon(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL();
+            link.click();
+        }
+        
+        // Generate all icons when page loads
+        window.onload = function() {
+            drawIcon(document.getElementById('icon192'), 192);
+            drawIcon(document.getElementById('icon512'), 512);
+            drawIcon(document.getElementById('appleIcon'), 180);
+        };
+    </script>
+</body>
+</html>

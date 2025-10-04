@@ -16,6 +16,7 @@ export interface StudySession {
     totalCards: number;
     seenCards: number;
     knownCards: number;
+    almostCards: number;
     unknownCards: number;
   };
 }
@@ -46,7 +47,7 @@ export interface UIState {
   showAnswer: () => void;
   hideAnswer: () => void;
   nextCard: () => void;
-  markCard: (wasKnown: boolean) => void;
+  markCard: (response: 'knew' | 'almost' | 'didnt') => void;
   
   // Modal management
   modal: ModalState;
@@ -85,6 +86,7 @@ export const useUIStore = create<UIState>()(
               totalCards: shuffledCardIds.length,
               seenCards: 0,
               knownCards: 0,
+              almostCards: 0,
               unknownCards: 0,
             },
           },
@@ -126,16 +128,17 @@ export const useUIStore = create<UIState>()(
         }
       },
       
-      markCard: (wasKnown) => {
+      markCard: (response) => {
         const session = get().studySession;
         if (session) {
           const updatedStats = {
             ...session.sessionStats,
             seenCards: session.sessionStats.seenCards + 1,
-            knownCards: wasKnown ? session.sessionStats.knownCards + 1 : session.sessionStats.knownCards,
-            unknownCards: !wasKnown ? session.sessionStats.unknownCards + 1 : session.sessionStats.unknownCards,
+            knownCards: response === 'knew' ? session.sessionStats.knownCards + 1 : session.sessionStats.knownCards,
+            almostCards: response === 'almost' ? session.sessionStats.almostCards + 1 : session.sessionStats.almostCards,
+            unknownCards: response === 'didnt' ? session.sessionStats.unknownCards + 1 : session.sessionStats.unknownCards,
           };
-          
+
           set({
             studySession: {
               ...session,

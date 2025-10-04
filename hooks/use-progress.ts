@@ -82,14 +82,14 @@ export function useSetProgress() {
  */
 export function useStudyProgress() {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
-    mutationFn: ({ cardId, wasKnown }: { cardId: string; wasKnown: boolean }) =>
-      incrementSeenKnown(cardId, wasKnown),
+    mutationFn: ({ cardId, response }: { cardId: string; response: 'knew' | 'almost' | 'didnt' }) =>
+      incrementSeenKnown(cardId, response),
     onSuccess: (updatedProgress, { cardId }) => {
       // Update the specific card's progress in cache
       queryClient.setQueryData(queryKeys.progress(cardId), updatedProgress);
-      
+
       // Invalidate deck progress and completion queries
       queryClient.invalidateQueries({ queryKey: ['progress', 'deck'] });
       queryClient.invalidateQueries({ queryKey: ['progress', 'completion'] });

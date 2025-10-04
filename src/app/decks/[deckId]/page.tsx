@@ -385,10 +385,14 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 				</div>
 
 				{/* Session Stats - Mobile responsive */}
-				<div className="grid grid-cols-3 gap-2 text-xs sm:text-sm">
+				<div className="grid grid-cols-4 gap-2 text-xs sm:text-sm">
 					<div className="text-center">
 						<div className="text-green-600 dark:text-green-400 font-semibold">{studySession.sessionStats.knownCards}</div>
 						<div className="text-gray-600 dark:text-gray-400">Known</div>
+					</div>
+					<div className="text-center">
+						<div className="text-yellow-600 dark:text-yellow-400 font-semibold">{studySession.sessionStats.almostCards}</div>
+						<div className="text-gray-600 dark:text-gray-400">Almost</div>
 					</div>
 					<div className="text-center">
 						<div className="text-red-600 dark:text-red-400 font-semibold">{studySession.sessionStats.unknownCards}</div>
@@ -396,7 +400,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 					</div>
 					<div className="text-center">
 						<div className="text-gray-600 dark:text-gray-400 font-semibold">{studySession.sessionStats.seenCards}</div>
-						<div className="text-gray-600 dark:text-gray-400">Seen</div>
+						<div className="text-gray-600 dark:text-gray-400">Total</div>
 					</div>
 				</div>
 			</div>
@@ -603,20 +607,24 @@ function StudyCompletionView({
 			)}
 
 			{/* Session Statistics */}
-			<div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+			<div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
+				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-blue-600">{session.cardIds.length}</div>
 					<div className="text-sm text-gray-600 dark:text-gray-400">Total Cards</div>
 				</div>
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-green-600">{session.sessionStats.knownCards}</div>
 					<div className="text-sm text-gray-600 dark:text-gray-400">Known</div>
 				</div>
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
+					<div className="text-2xl font-bold text-yellow-600">{session.sessionStats.almostCards}</div>
+					<div className="text-sm text-gray-600 dark:text-gray-400">Almost</div>
+				</div>
+				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-red-600">{session.sessionStats.unknownCards}</div>
 					<div className="text-sm text-gray-600 dark:text-gray-400">Unknown</div>
 				</div>
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4">
+				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-purple-600">{accuracy}%</div>
 					<div className="text-sm text-gray-600 dark:text-gray-400">Accuracy</div>
 				</div>

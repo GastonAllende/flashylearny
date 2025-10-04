@@ -9,19 +9,19 @@ export default function Footer() {
 					<div className="flex items-center gap-6 text-sm font-medium">
 						<Link
 							href="/about"
-							className="text-muted-foreground hover:text-primary transition-colors"
+							className="flex flex-col items-center gap-1 text-muted-foreground hover:text-primary transition-colors"
 						>
 							<BookOpen className="h-4 w-4" /> About
 						</Link>
 						<Link
 							href="/help"
-							className="text-muted-foreground hover:text-primary transition-colors"
+							className="flex flex-col items-center gap-1 text-muted-foreground hover:text-primary transition-colors"
 						>
 							<HelpCircle className="h-4 w-4" /> Help
 						</Link>
 						<Link
 							href="/privacy"
-							className="text-muted-foreground hover:text-primary transition-colors"
+							className="flex flex-col items-center gap-1 text-muted-foreground hover:text-primary transition-colors"
 						>
 							<Lock className="h-4 w-4" /> Privacy
 						</Link>

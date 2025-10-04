@@ -161,7 +161,7 @@ export async function getCardsByDeck(deckId: string): Promise<Card[]> {
  */
 export async function getOrInitProgress(cardId: string): Promise<Progress> {
   let progress = await db.progress.where('cardId').equals(cardId).first();
-  
+
   if (!progress) {
     progress = {
       id: uid(),
@@ -170,10 +170,11 @@ export async function getOrInitProgress(cardId: string): Promise<Progress> {
       lastReviewedAt: null,
       timesSeen: 0,
       timesKnown: 0,
+      timesAlmost: 0,
     };
     await db.progress.add(progress);
   }
-  
+
   return progress;
 }
 
@@ -191,22 +192,27 @@ export async function setProgress(cardId: string, status: Progress['status']): P
  * - NEW → LEARNING on first interaction
  * - If Known: timesSeen++, timesKnown++, lastReviewedAt=now
  *   If timesKnown >= 3, status → MASTERED
+ * - If Almost: timesSeen++, timesAlmost++, lastReviewedAt=now, status → LEARNING
+ *   (Shows card less frequently than "didn't know" but more than "knew")
  * - If Not Known: timesSeen++, lastReviewedAt=now, status → LEARNING
  */
-export async function incrementSeenKnown(cardId: string, wasKnown: boolean): Promise<Progress> {
+export async function incrementSeenKnown(
+  cardId: string,
+  response: 'knew' | 'almost' | 'didnt'
+): Promise<Progress> {
   const progress = await getOrInitProgress(cardId);
   const now = Date.now();
-  
+
   // Always increment times seen and update last reviewed
   const updates: Partial<Progress> = {
     timesSeen: progress.timesSeen + 1,
     lastReviewedAt: now,
   };
-  
-  if (wasKnown) {
+
+  if (response === 'knew') {
     // User knew the answer
     updates.timesKnown = progress.timesKnown + 1;
-    
+
     // Promote to MASTERED if known 3+ times
     if (updates.timesKnown >= 3) {
       updates.status = 'MASTERED';
@@ -214,6 +220,18 @@ export async function incrementSeenKnown(cardId: string, wasKnown: boolean): Pro
       // First interaction: NEW → LEARNING
       updates.status = 'LEARNING';
     }
+  } else if (response === 'almost') {
+    // User almost knew it - track separately for future spaced repetition
+    updates.timesAlmost = progress.timesAlmost + 1;
+
+    if (progress.status === 'NEW') {
+      // First interaction: NEW → LEARNING
+      updates.status = 'LEARNING';
+    } else if (progress.status === 'MASTERED') {
+      // Demote from MASTERED back to LEARNING
+      updates.status = 'LEARNING';
+    }
+    // LEARNING stays LEARNING
   } else {
     // User didn't know the answer
     if (progress.status === 'NEW') {
@@ -225,74 +243,55 @@ export async function incrementSeenKnown(cardId: string, wasKnown: boolean): Pro
     }
     // LEARNING stays LEARNING
   }
-  
+
   await db.progress.update(progress.id, updates);
-  
+
   return { ...progress, ...updates };
 }
 
 /**
  * Get progress for all cards in a deck using a Dexie transaction
+ * Automatically initializes progress records for cards that don't have them
  */
 export async function getDeckProgress(deckId: string): Promise<{ card: Card; progress: Progress }[]> {
-  return await db.transaction('r', [db.cards, db.progress], async () => {
+  return await db.transaction('rw', [db.cards, db.progress], async () => {
     const cards = await db.cards.where('deckId').equals(deckId).toArray();
     const results: { card: Card; progress: Progress }[] = [];
-    
+
     for (const card of cards) {
-      // Get existing progress or create default
-      let progress = await db.progress.where('cardId').equals(card.id).first();
-      
-      if (!progress) {
-        progress = {
-          id: uid(),
-          cardId: card.id,
-          status: 'NEW',
-          lastReviewedAt: null,
-          timesSeen: 0,
-          timesKnown: 0,
-        };
-      }
-      
+      // Use getOrInitProgress to ensure progress record exists in DB
+      const progress = await getOrInitProgress(card.id);
       results.push({ card, progress });
     }
-    
+
     return results;
   });
 }
 
 /**
  * Calculate deck completion percentage (MASTERED cards / total cards) using Dexie transaction
+ * Automatically initializes progress records for cards that don't have them
  */
 export async function getDeckCompletion(deckId: string): Promise<{ completion: number; mastered: number; total: number }> {
-  return await db.transaction('r', [db.cards, db.progress], async () => {
+  return await db.transaction('rw', [db.cards, db.progress], async () => {
     // Get all cards for this deck
     const cards = await db.cards.where('deckId').equals(deckId).toArray();
     const total = cards.length;
-    
+
     if (total === 0) {
       return { completion: 0, mastered: 0, total: 0 };
     }
-    
-    // Get progress for all cards in a single query
-    const cardIds = cards.map(card => card.id);
-    const progressRecords = await db.progress.where('cardId').anyOf(cardIds).toArray();
-    
-    // Create a map for quick lookup
-    const progressMap = new Map<string, Progress>();
-    progressRecords.forEach(progress => {
-      progressMap.set(progress.cardId, progress);
-    });
-    
-    // Count mastered cards
+
+    // Count mastered cards and initialize missing progress records
     let mastered = 0;
     for (const card of cards) {
-      const progress = progressMap.get(card.id);
-      if (progress && progress.status === 'MASTERED') {
+      // Use getOrInitProgress to ensure progress record exists
+      const progress = await getOrInitProgress(card.id);
+      if (progress.status === 'MASTERED') {
         mastered++;
       }
     }
-    
+
     return {
       completion: Math.round((mastered / total) * 100),
       mastered,
@@ -303,6 +302,7 @@ export async function getDeckCompletion(deckId: string): Promise<{ completion: n
 
 /**
  * Get detailed deck analytics including average accuracy, review frequency, etc.
+ * Automatically initializes progress records for cards that don't have them
  */
 export async function getDeckAnalytics(deckId: string): Promise<{
   statusDistribution: { NEW: number; LEARNING: number; MASTERED: number };
@@ -310,9 +310,9 @@ export async function getDeckAnalytics(deckId: string): Promise<{
   totalReviews: number;
   recentActivity: { date: string; reviews: number }[];
 }> {
-  return await db.transaction('r', [db.cards, db.progress], async () => {
+  return await db.transaction('rw', [db.cards, db.progress], async () => {
     const cards = await db.cards.where('deckId').equals(deckId).toArray();
-    
+
     if (cards.length === 0) {
       return {
         statusDistribution: { NEW: 0, LEARNING: 0, MASTERED: 0 },
@@ -321,59 +321,51 @@ export async function getDeckAnalytics(deckId: string): Promise<{
         recentActivity: [],
       };
     }
-    
-    const cardIds = cards.map(card => card.id);
-    const progressRecords = await db.progress.where('cardId').anyOf(cardIds).toArray();
-    
-    // Calculate status distribution
+
+    // Calculate status distribution and stats
     const statusDistribution = { NEW: 0, LEARNING: 0, MASTERED: 0 };
     let totalSeen = 0;
     let totalKnown = 0;
-    
-    // Create progress map for quick lookup
-    const progressMap = new Map<string, Progress>();
-    progressRecords.forEach(progress => {
-      progressMap.set(progress.cardId, progress);
-    });
-    
-    // Count all cards and their status
+    const allProgress: Progress[] = [];
+
+    // Initialize missing progress records and collect all progress data
     for (const card of cards) {
-      const progress = progressMap.get(card.id);
-      if (progress) {
-        // Card has progress data
-        const status = progress.status as keyof typeof statusDistribution;
-        statusDistribution[status]++;
-        totalSeen += progress.timesSeen;
-        totalKnown += progress.timesKnown;
-      } else {
-        // Card has no progress - counts as NEW
-        statusDistribution.NEW++;
-      }
+      const progress = await getOrInitProgress(card.id);
+      const status = progress.status as keyof typeof statusDistribution;
+      statusDistribution[status]++;
+      totalSeen += progress.timesSeen;
+      totalKnown += progress.timesKnown;
+      allProgress.push(progress);
     }
-    
+
     const averageAccuracy = totalSeen > 0 ? Math.round((totalKnown / totalSeen) * 100) : 0;
-    
-    // Generate recent activity based on actual review data
-    const now = Date.now();
-    const dayMs = 24 * 60 * 60 * 1000;
+
+    // Generate recent activity based on actual review data (last 7 days including today)
     const recentActivity = [];
-    
-    for (let i = 0; i < 7; i++) {
-      const dayStart = now - (i * dayMs);
-      const dayEnd = dayStart + dayMs;
-      
-      const reviewsForDay = progressRecords.filter(progress => 
-        progress.lastReviewedAt && 
-        progress.lastReviewedAt >= dayStart && 
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Start of today
+
+    // Go back 7 days from today (including today = 7 days total)
+    for (let i = 6; i >= 0; i--) {
+      const date = new Date(today);
+      date.setDate(date.getDate() - i); // i days ago
+
+      const dayStart = date.getTime();
+      const dayEnd = dayStart + (24 * 60 * 60 * 1000); // 24 hours later
+
+      // Count number of cards that were last reviewed during this day
+      const cardsReviewedThisDay = allProgress.filter(progress =>
+        progress.lastReviewedAt &&
+        progress.lastReviewedAt >= dayStart &&
         progress.lastReviewedAt < dayEnd
-      ).reduce((sum, progress) => sum + progress.timesSeen, 0);
-      
-      recentActivity.unshift({
-        date: new Date(dayStart).toISOString().split('T')[0],
-        reviews: Math.floor(reviewsForDay / Math.max(1, i + 1)) // Distribute reviews across days
+      ).length;
+
+      recentActivity.push({
+        date: date.toISOString().split('T')[0],
+        reviews: cardsReviewedThisDay
       });
     }
-    
+
     return {
       statusDistribution,
       averageAccuracy,
@@ -474,5 +466,56 @@ export async function exportAllDecks(): Promise<Array<{ deck: Deck; cards: Card[
     }
 
     return results;
+  });
+}
+
+// ===============================
+// MIGRATIONS
+// ===============================
+
+/**
+ * Migration: Initialize progress records for all cards that don't have them
+ * This is idempotent - safe to run multiple times
+ * Returns the number of progress records created
+ */
+export async function migrateInitializeAllProgress(): Promise<{
+  cardsProcessed: number;
+  progressCreated: number;
+}> {
+  return await db.transaction('rw', db.cards, db.progress, async () => {
+    // Get all cards
+    const allCards = await db.cards.toArray();
+
+    if (allCards.length === 0) {
+      return { cardsProcessed: 0, progressCreated: 0 };
+    }
+
+    let progressCreated = 0;
+
+    // Initialize progress for each card that doesn't have it
+    for (const card of allCards) {
+      const existingProgress = await db.progress.where('cardId').equals(card.id).first();
+
+      if (!existingProgress) {
+        // Create new progress record
+        const newProgress: Progress = {
+          id: uid(),
+          cardId: card.id,
+          status: 'NEW',
+          lastReviewedAt: null,
+          timesSeen: 0,
+          timesKnown: 0,
+          timesAlmost: 0,
+        };
+
+        await db.progress.add(newProgress);
+        progressCreated++;
+      }
+    }
+
+    return {
+      cardsProcessed: allCards.length,
+      progressCreated,
+    };
   });
 }

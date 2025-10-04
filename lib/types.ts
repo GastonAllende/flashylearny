@@ -21,4 +21,5 @@ export interface Progress {
   lastReviewedAt: number | null;
   timesSeen: number;
   timesKnown: number;
+  timesAlmost: number;  // Track "almost knew it" responses separately
 }

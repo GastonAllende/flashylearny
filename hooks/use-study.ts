@@ -53,41 +53,34 @@ export function useStudySession() {
     }
 
     const currentCardId = studySession.cardIds[studySession.currentIndex];
-    
-    // Map response to boolean (for the incrementSeenKnown function)
-    const wasKnown = response === 'knew';
-    const wasAlmost = response === 'almost';
-    
-    // For "almost" - we'll treat it as partially known (counts as seen but not fully known)
+
     try {
-      if (wasAlmost) {
-        // For "almost knew it" - increment seen but not known
-        await studyProgressMutation.mutateAsync({ cardId: currentCardId, wasKnown: false });
-      } else {
-        // For "knew it" or "didn't know it"
-        await studyProgressMutation.mutateAsync({ cardId: currentCardId, wasKnown });
-      }
+      // Pass the response directly to the mutation
+      await studyProgressMutation.mutateAsync({ cardId: currentCardId, response });
 
       // Update session stats in UI store
-      markCard(wasKnown || wasAlmost);
+      // "almost" is counted separately from "knew" in the session stats
+      markCard(response);
 
       // Auto-advance to next card after a brief delay
       setTimeout(() => {
-        // Check if we have more cards to study
-        if (studySession.currentIndex < studySession.cardIds.length - 1) {
-          nextCard();
+        // Always advance to next card (or trigger session completion)
+        nextCard();
+
+        // If we haven't completed the session, hide the answer for next card
+        if (studySession.currentIndex + 1 < studySession.cardIds.length) {
           hideAnswer(); // Reset to question side for next card
         }
-        // If this was the last card, the session will be marked as completed
-        // by the isSessionCompleted function and handled by the UI
+        // If this was the last card, nextCard() will increment the index
+        // and isSessionCompleted will return true, showing completion screen
       }, 500);
 
     } catch (error) {
       console.error('Failed to update progress:', error);
       // Continue anyway - don't block user experience
-      markCard(wasKnown || wasAlmost);
-      if (studySession.currentIndex < studySession.cardIds.length - 1) {
-        nextCard();
+      markCard(response);
+      nextCard();
+      if (studySession.currentIndex + 1 < studySession.cardIds.length) {
         hideAnswer();
       }
     }
