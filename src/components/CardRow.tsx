@@ -28,7 +28,7 @@ export default function CardRow({
 				return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200';
 			case 'NEW':
 			default:
-				return 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200';
+				return 'bg-muted text-gray-800 dark:bg-gray-700 dark:text-gray-200';
 		}
 	};
 
@@ -45,13 +45,13 @@ export default function CardRow({
 	};
 
 	return (
-		<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 hover:shadow-md transition-all duration-200 group">
+		<div className="bg-card border border rounded-lg p-6 hover:shadow-md transition-all duration-200 group">
 			<div className="flex items-start justify-between gap-4">
 				<div className="flex-1 min-w-0 space-y-4">
 					{/* Question */}
 					<div>
 						<div className="flex items-center gap-2 mb-2">
-							<h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wide">
+							<h4 className="font-semibold text-foreground text-sm uppercase tracking-wide">
 								Question
 							</h4>
 							{showProgress && progress && (
@@ -68,23 +68,23 @@ export default function CardRow({
 
 					{/* Answer */}
 					<div>
-						<h4 className="font-semibold text-gray-900 dark:text-gray-100 text-sm uppercase tracking-wide mb-2">
+						<h4 className="font-semibold text-foreground text-sm uppercase tracking-wide mb-2">
 							Answer
 						</h4>
-						<p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+						<p className="text-foreground leading-relaxed">
 							{card.answer}
 						</p>
 					</div>
 
 					{/* Progress Stats */}
 					{showProgress && progress && (
-						<div className="space-y-2 pt-2 border-t border-gray-200 dark:border-gray-700">
+						<div className="space-y-2 pt-2 border-t border">
 							{/* Stats Row - only show if card has been studied */}
 							{(progress.timesSeen > 0 || progress.timesKnown > 0) && (
-							<div className="flex flex-wrap items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+							<div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
 								<span className="flex items-center gap-1">
 									<Eye className="w-4 h-4" />
-									<span className="font-medium text-gray-900 dark:text-gray-100">{progress.timesSeen}</span>
+									<span className="font-medium text-foreground">{progress.timesSeen}</span>
 									<span className="text-xs">seen</span>
 								</span>
 								<span className="flex items-center gap-1 text-green-600 dark:text-green-400">

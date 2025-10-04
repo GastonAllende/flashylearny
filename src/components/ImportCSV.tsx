@@ -77,7 +77,7 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
           border-2 border-dashed rounded-lg p-8 text-center transition-colors duration-200
           ${isDragOver
 						? 'border-blue-400 bg-blue-50 dark:bg-blue-900/20'
-						: 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'
+						: 'border hover:border-gray-400 dark:hover:border-gray-500'
 					}
           ${selectedFile ? 'bg-green-50 dark:bg-green-900/20 border-green-400' : ''}
         `}
@@ -137,7 +137,7 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 				<p className="text-sm text-blue-800 dark:text-blue-200 mb-2">
 					Your CSV file should have these columns:
 				</p>
-				<div className="bg-white dark:bg-blue-950/50 rounded border font-mono text-xs p-2 mb-2">
+				<div className="bg-white dark:bg-blue-950/20 rounded border font-mono text-xs p-2 mb-2">
 					deckName,question,answer
 				</div>
 				<ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">

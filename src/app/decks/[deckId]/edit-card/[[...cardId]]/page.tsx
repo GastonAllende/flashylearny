@@ -88,7 +88,7 @@ export default function EditCardPage() {
 			<div className="max-w-2xl mx-auto text-center py-16">
 				<X className="w-16 h-16 mb-4 text-red-400 mx-auto" />
 				<h3 className="text-xl font-semibold mb-2">Card not found</h3>
-				<p className="text-gray-600 dark:text-gray-400 mb-4">
+				<p className="text-muted-foreground mb-4">
 					The card you&apos;re trying to edit doesn&apos;t exist or has been deleted.
 				</p>
 				<Link
@@ -117,7 +117,7 @@ export default function EditCardPage() {
 				<h1 className="text-3xl font-bold">
 					{isEditing ? 'Edit Card' : 'Add New Card'}
 				</h1>
-				<p className="text-gray-600 dark:text-gray-400 mt-1">
+				<p className="text-muted-foreground mt-1">
 					{isEditing
 						? 'Update the question and answer for this flashcard'
 						: 'Create a new flashcard for your deck'
@@ -126,7 +126,7 @@ export default function EditCardPage() {
 			</div>
 
 			{/* Form */}
-			<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+			<div className="bg-card border border rounded-lg p-6">
 				<form onSubmit={handleSubmit} className="space-y-6">
 					{/* Question Field */}
 					<div>
@@ -139,7 +139,7 @@ export default function EditCardPage() {
 							onChange={(e) => setQuestion(e.target.value)}
 							placeholder="Enter the question or front side of the card..."
 							rows={4}
-							className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
+							className="w-full px-4 py-3 border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
 							disabled={isLoading}
 							required
 						/>
@@ -159,7 +159,7 @@ export default function EditCardPage() {
 							onChange={(e) => setAnswer(e.target.value)}
 							placeholder="Enter the answer or back side of the card..."
 							rows={4}
-							className="w-full px-4 py-3 border border-gray-300 dark:border-gray-600 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
+							className="w-full px-4 py-3 border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
 							disabled={isLoading}
 							required
 						/>
@@ -170,18 +170,18 @@ export default function EditCardPage() {
 
 					{/* Preview */}
 					{(question || answer) && (
-						<div className="border-t border-gray-200 dark:border-gray-700 pt-6">
+						<div className="border-t border pt-6">
 							<h3 className="font-medium mb-4">Preview</h3>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
 									<h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Front (Question)</h4>
-									<p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+									<p className="text-foreground whitespace-pre-wrap">
 										{question || 'Question will appear here...'}
 									</p>
 								</div>
 								<div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
 									<h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Back (Answer)</h4>
-									<p className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
+									<p className="text-foreground whitespace-pre-wrap">
 										{answer || 'Answer will appear here...'}
 									</p>
 								</div>
@@ -190,7 +190,7 @@ export default function EditCardPage() {
 					)}
 
 					{/* Actions */}
-					<div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border-gray-200 dark:border-gray-700">
+					<div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border">
 						<button
 							type="submit"
 							disabled={!question.trim() || !answer.trim() || isLoading}
@@ -213,7 +213,7 @@ export default function EditCardPage() {
 							type="button"
 							onClick={handleCancel}
 							disabled={isLoading}
-							className="bg-gray-500 hover:bg-gray-600 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+							className="bg-muted0 hover:bg-gray-600 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
 						>
 							Cancel
 						</button>

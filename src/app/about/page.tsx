@@ -24,7 +24,7 @@ export default function AboutPage() {
 					</CardContent>
 				</Card>
 
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6">Key Features</h2>
 					<div className="grid md:grid-cols-2 gap-6">
 						<div className="space-y-4">
@@ -32,7 +32,7 @@ export default function AboutPage() {
 								<Brain className="w-6 h-6 text-blue-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Smart Learning</h3>
-									<p className="text-gray-600 dark:text-gray-400 text-sm">
+									<p className="text-muted-foreground text-sm">
 										Adaptive spaced repetition algorithm helps you focus on cards that need the most attention
 									</p>
 								</div>
@@ -42,7 +42,7 @@ export default function AboutPage() {
 								<Smartphone className="w-6 h-6 text-green-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Offline First</h3>
-									<p className="text-gray-600 dark:text-gray-400 text-sm">
+									<p className="text-muted-foreground text-sm">
 										Study anywhere, anytime - no internet connection required
 									</p>
 								</div>
@@ -52,7 +52,7 @@ export default function AboutPage() {
 								<BarChart3 className="w-6 h-6 text-purple-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Progress Tracking</h3>
-									<p className="text-gray-600 dark:text-gray-400 text-sm">
+									<p className="text-muted-foreground text-sm">
 										Detailed statistics and progress visualization to track your learning journey
 									</p>
 								</div>
@@ -64,7 +64,7 @@ export default function AboutPage() {
 								<Moon className="w-6 h-6 text-indigo-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Dark Mode</h3>
-									<p className="text-gray-600 dark:text-gray-400 text-sm">
+									<p className="text-muted-foreground text-sm">
 										Eye-friendly dark theme for comfortable studying in any lighting
 									</p>
 								</div>
@@ -74,7 +74,7 @@ export default function AboutPage() {
 								<Save className="w-6 h-6 text-orange-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Local Storage</h3>
-									<p className="text-gray-600 dark:text-gray-400 text-sm">
+									<p className="text-muted-foreground text-sm">
 										All your data stays on your device - private and secure
 									</p>
 								</div>
@@ -84,7 +84,7 @@ export default function AboutPage() {
 								<FolderOpen className="w-6 h-6 text-teal-600 mt-1" />
 								<div>
 									<h3 className="font-semibold">Import/Export</h3>
-									<p className="text-gray-600 dark:text-gray-400 text-sm">
+									<p className="text-muted-foreground text-sm">
 										Easy backup and sharing with CSV import/export functionality
 									</p>
 								</div>
@@ -93,14 +93,14 @@ export default function AboutPage() {
 					</div>
 				</section>
 
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-4">How It Works</h2>
 					<div className="space-y-4">
 						<div className="flex items-start gap-4">
 							<div className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">1</div>
 							<div>
 								<h3 className="font-semibold">Create Decks</h3>
-								<p className="text-gray-600 dark:text-gray-400 text-sm">Organize your study material into themed decks</p>
+								<p className="text-muted-foreground text-sm">Organize your study material into themed decks</p>
 							</div>
 						</div>
 
@@ -108,7 +108,7 @@ export default function AboutPage() {
 							<div className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">2</div>
 							<div>
 								<h3 className="font-semibold">Add Cards</h3>
-								<p className="text-gray-600 dark:text-gray-400 text-sm">Create flashcards with questions and answers</p>
+								<p className="text-muted-foreground text-sm">Create flashcards with questions and answers</p>
 							</div>
 						</div>
 
@@ -116,7 +116,7 @@ export default function AboutPage() {
 							<div className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">3</div>
 							<div>
 								<h3 className="font-semibold">Study & Review</h3>
-								<p className="text-gray-600 dark:text-gray-400 text-sm">Study cards and mark whether you knew the answer</p>
+								<p className="text-muted-foreground text-sm">Study cards and mark whether you knew the answer</p>
 							</div>
 						</div>
 
@@ -124,7 +124,7 @@ export default function AboutPage() {
 							<div className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">4</div>
 							<div>
 								<h3 className="font-semibold">Track Progress</h3>
-								<p className="text-gray-600 dark:text-gray-400 text-sm">Watch your mastery improve over time</p>
+								<p className="text-muted-foreground text-sm">Watch your mastery improve over time</p>
 							</div>
 						</div>
 					</div>

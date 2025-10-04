@@ -28,7 +28,7 @@ export default function PrivacyPage() {
 				</section>
 
 				{/* Data Collection */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6">What Data We Collect</h2>
 
 					<div className="space-y-6">
@@ -37,7 +37,7 @@ export default function PrivacyPage() {
 								<CheckCircle className="w-5 h-5" />
 								Data Stored Locally
 							</h3>
-							<ul className="space-y-2 text-gray-600 dark:text-gray-400">
+							<ul className="space-y-2 text-muted-foreground">
 								<li>• Your flashcard decks and their content</li>
 								<li>• Study progress and statistics</li>
 								<li>• App preferences (theme, settings)</li>
@@ -53,7 +53,7 @@ export default function PrivacyPage() {
 								<X className="w-5 h-5" />
 								Data We DON&apos;T Collect
 							</h3>
-							<ul className="space-y-2 text-gray-600 dark:text-gray-400">
+							<ul className="space-y-2 text-muted-foreground">
 								<li>• Personal information (name, email, phone)</li>
 								<li>• Usage analytics or tracking data</li>
 								<li>• Device information or IP addresses</li>
@@ -65,25 +65,25 @@ export default function PrivacyPage() {
 				</section>
 
 				{/* Data Storage */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6">How We Store Your Data</h2>
 
 					<div className="grid md:grid-cols-2 gap-6">
 						<div className="space-y-4">
-							<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
 								<h3 className="font-semibold mb-2 flex items-center gap-2">
 									<Database className="w-5 h-5" />
 									Local Storage
 								</h3>
-								<p className="text-sm text-gray-600 dark:text-gray-400">
+								<p className="text-sm text-muted-foreground">
 									All data is stored using IndexedDB in your browser. This is a client-side database that keeps
 									your information secure and accessible offline.
 								</p>
 							</div>
 
-							<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
 								<h3 className="font-semibold mb-2">🔐 Security</h3>
-								<p className="text-sm text-gray-600 dark:text-gray-400">
+								<p className="text-sm text-muted-foreground">
 									Your data is protected by your browser&apos;s security measures and is not accessible to other websites
 									or applications.
 								</p>
@@ -91,23 +91,23 @@ export default function PrivacyPage() {
 						</div>
 
 						<div className="space-y-4">
-							<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
 								<h3 className="font-semibold mb-2 flex items-center gap-2">
 									<Smartphone className="w-5 h-5" />
 									Device Access
 								</h3>
-								<p className="text-sm text-gray-600 dark:text-gray-400">
+								<p className="text-sm text-muted-foreground">
 									Only you have access to your study data through this app on your device. No accounts or
 									sign-ups are required.
 								</p>
 							</div>
 
-							<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
 								<h3 className="font-semibold mb-2 flex items-center gap-2">
 									<Save className="w-5 h-5" />
 									Data Backup
 								</h3>
-								<p className="text-sm text-gray-600 dark:text-gray-400">
+								<p className="text-sm text-muted-foreground">
 									You can export your data as CSV files for backup purposes. These files remain under your control.
 								</p>
 							</div>
@@ -116,7 +116,7 @@ export default function PrivacyPage() {
 				</section>
 
 				{/* Third-Party Services */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6">Third-Party Services</h2>
 
 					<div className="space-y-4">
@@ -145,13 +145,13 @@ export default function PrivacyPage() {
 				</section>
 
 				{/* Your Rights */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6">Your Rights and Control</h2>
 
 					<div className="grid md:grid-cols-2 gap-6">
 						<div className="space-y-4">
 							<h3 className="font-semibold text-lg">Data Control</h3>
-							<ul className="space-y-2 text-gray-600 dark:text-gray-400">
+							<ul className="space-y-2 text-muted-foreground">
 								<li>• <strong>Access:</strong> All your data is always accessible through the app</li>
 								<li>• <strong>Export:</strong> Download your data as CSV files anytime</li>
 								<li>• <strong>Delete:</strong> Clear all data through browser settings</li>
@@ -161,7 +161,7 @@ export default function PrivacyPage() {
 
 						<div className="space-y-4">
 							<h3 className="font-semibold text-lg">Data Portability</h3>
-							<ul className="space-y-2 text-gray-600 dark:text-gray-400">
+							<ul className="space-y-2 text-muted-foreground">
 								<li>• Export decks to CSV format</li>
 								<li>• Import data from other flashcard apps</li>
 								<li>• No vendor lock-in or proprietary formats</li>
@@ -172,17 +172,17 @@ export default function PrivacyPage() {
 				</section>
 
 				{/* Data Deletion */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6">Data Deletion</h2>
 
 					<div className="space-y-4">
-						<p className="text-gray-700 dark:text-gray-300">
+						<p className="text-foreground">
 							Since all data is stored locally on your device, you have complete control over its deletion:
 						</p>
 
-						<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg">
+						<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
 							<h3 className="font-semibold mb-2">How to delete your data:</h3>
-							<ol className="list-decimal list-inside space-y-1 text-sm text-gray-600 dark:text-gray-400">
+							<ol className="list-decimal list-inside space-y-1 text-sm text-muted-foreground">
 								<li>Clear your browser&apos;s storage for this site</li>
 								<li>Use your browser&apos;s &quot;Clear browsing data&quot; feature</li>
 								<li>Uninstall the PWA from your device</li>
@@ -193,15 +193,15 @@ export default function PrivacyPage() {
 				</section>
 
 				{/* Contact */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6">Questions or Concerns?</h2>
 
-					<p className="text-gray-700 dark:text-gray-300 mb-4">
+					<p className="text-foreground mb-4">
 						If you have any questions about this privacy policy or how FlashyLearny handles your data,
 						you can reach out through:
 					</p>
 
-					<ul className="space-y-2 text-gray-600 dark:text-gray-400">
+					<ul className="space-y-2 text-muted-foreground">
 						<li>• GitHub repository issues (if open source)</li>
 						<li>• Contact form on our website</li>
 						<li>• Email support (if provided)</li>

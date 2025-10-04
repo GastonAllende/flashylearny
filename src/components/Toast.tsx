@@ -108,7 +108,7 @@ export default function Toast({
 					onClick={handleDismiss}
 					className={`
             ${styles.button} flex-shrink-0 p-1 rounded
-            hover:bg-black hover:bg-opacity-10 dark:hover:bg-white dark:hover:bg-opacity-10
+            hover:bg-foreground/10
             focus:outline-none focus:ring-2 focus:ring-current focus:ring-opacity-20
             transition-colors duration-150
           `}
@@ -122,7 +122,7 @@ export default function Toast({
 
 			{/* Progress bar for auto-dismiss */}
 			{duration > 0 && (
-				<div className="mt-3 w-full bg-black bg-opacity-10 dark:bg-white dark:bg-opacity-10 rounded-full h-1 overflow-hidden">
+				<div className="mt-3 w-full bg-foreground/10 rounded-full h-1 overflow-hidden">
 					<div
 						className="h-full bg-current opacity-50 rounded-full transition-all ease-linear"
 						style={{

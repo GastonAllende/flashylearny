@@ -13,7 +13,7 @@ export default function HelpPage() {
 
 			<div className="grid gap-8">
 				{/* Getting Started */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
 						<span className="text-3xl">🚀</span>
 						Getting Started
@@ -22,21 +22,21 @@ export default function HelpPage() {
 					<div className="space-y-4">
 						<div className="border-l-4 border-blue-500 pl-4">
 							<h3 className="font-semibold text-lg">1. Create Your First Deck</h3>
-							<p className="text-gray-600 dark:text-gray-400">
+							<p className="text-muted-foreground">
 								Start by creating a deck to organize your study material. Click the &quot;Create Deck&quot; button on the decks page and give it a descriptive name.
 							</p>
 						</div>
 
 						<div className="border-l-4 border-blue-500 pl-4">
 							<h3 className="font-semibold text-lg">2. Add Cards</h3>
-							<p className="text-gray-600 dark:text-gray-400">
+							<p className="text-muted-foreground">
 								Click &quot;Add Card&quot; to create flashcards. Write a clear question on the front and the answer on the back. Keep them concise for better memorization.
 							</p>
 						</div>
 
 						<div className="border-l-4 border-blue-500 pl-4">
 							<h3 className="font-semibold text-lg">3. Start Studying</h3>
-							<p className="text-gray-600 dark:text-gray-400">
+							<p className="text-muted-foreground">
 								Use the &quot;Start Studying&quot; button to begin a study session. Review each card and honestly mark whether you knew the answer.
 							</p>
 						</div>
@@ -44,7 +44,7 @@ export default function HelpPage() {
 				</section>
 
 				{/* Study Tips */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
 						<Lightbulb className="w-8 h-8 text-yellow-600" />
 						Learning Tips
@@ -54,7 +54,7 @@ export default function HelpPage() {
 								<h3 className="font-semibold text-green-600 mb-2 flex items-center gap-1">
 									<CheckCircle className="w-4 h-4" /> Best Practices
 								</h3>
-								<ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+								<ul className="space-y-2 text-sm text-muted-foreground">
 									<li>• Study in short, regular sessions (15-30 minutes)</li>
 									<li>• Be honest when marking cards as known/unknown</li>
 									<li>• Review difficult cards more frequently</li>
@@ -69,7 +69,7 @@ export default function HelpPage() {
 								<h3 className="font-semibold text-red-600 mb-2 flex items-center gap-1">
 									<X className="w-4 h-4" /> Things to Avoid
 								</h3>
-								<ul className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
+								<ul className="space-y-2 text-sm text-muted-foreground">
 									<li>• Making cards too long or complex</li>
 									<li>• Studying when tired or distracted</li>
 									<li>• Marking cards as known when you&apos;re not sure</li>
@@ -82,7 +82,7 @@ export default function HelpPage() {
 				</section>
 
 				{/* Features Guide */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
 						<BookOpen className="w-8 h-8 text-blue-600" />
 						Features Guide
@@ -91,7 +91,7 @@ export default function HelpPage() {
 					<div className="space-y-6">
 						<div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
 							<h3 className="font-semibold mb-2">Spaced Repetition</h3>
-							<p className="text-gray-600 dark:text-gray-400 text-sm">
+							<p className="text-muted-foreground text-sm">
 								Cards you struggle with will appear more frequently, while cards you&apos;ve mastered will appear less often.
 								This helps optimize your study time and improves long-term retention.
 							</p>
@@ -99,7 +99,7 @@ export default function HelpPage() {
 
 						<div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
 							<h3 className="font-semibold mb-2">Progress Tracking</h3>
-							<p className="text-gray-600 dark:text-gray-400 text-sm">
+							<p className="text-muted-foreground text-sm">
 								Monitor your learning progress with detailed statistics. See how many cards you&apos;ve mastered,
 								are currently learning, or haven&apos;t studied yet.
 							</p>
@@ -107,7 +107,7 @@ export default function HelpPage() {
 
 						<div className="border border-gray-200 dark:border-gray-600 rounded-lg p-4">
 							<h3 className="font-semibold mb-2">Offline Mode</h3>
-							<p className="text-gray-600 dark:text-gray-400 text-sm">
+							<p className="text-muted-foreground text-sm">
 								All your data is stored locally on your device. You can study anywhere, even without an internet connection.
 								Your progress syncs automatically when you reconnect.
 							</p>
@@ -116,16 +116,16 @@ export default function HelpPage() {
 				</section>
 
 				{/* Troubleshooting */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
 						<Settings className="w-8 h-8 text-gray-600" />
 						Troubleshooting
 					</h2>					<div className="space-y-4">
 						<details className="border border-gray-200 dark:border-gray-600 rounded-lg">
-							<summary className="p-4 cursor-pointer font-semibold hover:bg-gray-50 dark:hover:bg-gray-700">
+							<summary className="p-4 cursor-pointer font-semibold hover:bg-muted dark:hover:bg-gray-700">
 								My data disappeared or cards aren&apos;t loading
 							</summary>
-							<div className="p-4 border-t border-gray-200 dark:border-gray-600 text-sm text-gray-600 dark:text-gray-400">
+							<div className="p-4 border-t border-gray-200 dark:border-gray-600 text-sm text-muted-foreground">
 								<p>This usually happens when browser data is cleared. Try:</p>
 								<ul className="mt-2 space-y-1 ml-4">
 									<li>• Refresh the page</li>
@@ -137,10 +137,10 @@ export default function HelpPage() {
 						</details>
 
 						<details className="border border-gray-200 dark:border-gray-600 rounded-lg">
-							<summary className="p-4 cursor-pointer font-semibold hover:bg-gray-50 dark:hover:bg-gray-700">
+							<summary className="p-4 cursor-pointer font-semibold hover:bg-muted dark:hover:bg-gray-700">
 								The app won&apos;t install on my device
 							</summary>
-							<div className="p-4 border-t border-gray-200 dark:border-gray-600 text-sm text-gray-600 dark:text-gray-400">
+							<div className="p-4 border-t border-gray-200 dark:border-gray-600 text-sm text-muted-foreground">
 								<p>PWA installation requirements:</p>
 								<ul className="mt-2 space-y-1 ml-4">
 									<li>• Use a supported browser (Chrome, Firefox, Safari, Edge)</li>
@@ -152,10 +152,10 @@ export default function HelpPage() {
 						</details>
 
 						<details className="border border-gray-200 dark:border-gray-600 rounded-lg">
-							<summary className="p-4 cursor-pointer font-semibold hover:bg-gray-50 dark:hover:bg-gray-700">
+							<summary className="p-4 cursor-pointer font-semibold hover:bg-muted dark:hover:bg-gray-700">
 								Study sessions aren&apos;t working properly
 							</summary>
-							<div className="p-4 border-t border-gray-200 dark:border-gray-600 text-sm text-gray-600 dark:text-gray-400">
+							<div className="p-4 border-t border-gray-200 dark:border-gray-600 text-sm text-muted-foreground">
 								<p>Try these steps:</p>
 								<ul className="mt-2 space-y-1 ml-4">
 									<li>• Make sure your deck has cards</li>
@@ -169,7 +169,7 @@ export default function HelpPage() {
 				</section>
 
 				{/* Keyboard Shortcuts */}
-				<section className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-8">
+				<section className="bg-card border border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
 						<Keyboard className="w-12 h-12" />
 						Keyboard Shortcuts
@@ -181,17 +181,17 @@ export default function HelpPage() {
 							<div className="space-y-2 text-sm">
 								<div className="flex justify-between">
 									<span>Show answer</span>
-									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">Space</code>
+									<code className="bg-muted dark:bg-gray-700 px-2 py-1 rounded">Space</code>
 								</div>
 								<div className="flex justify-between">
 									<span>Mark as known</span>
-									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded flex items-center gap-1">
+									<code className="bg-muted dark:bg-gray-700 px-2 py-1 rounded flex items-center gap-1">
 										Y or <ArrowRight className="w-3 h-3" />
 									</code>
 								</div>
 								<div className="flex justify-between">
 									<span>Mark as unknown</span>
-									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded flex items-center gap-1">
+									<code className="bg-muted dark:bg-gray-700 px-2 py-1 rounded flex items-center gap-1">
 										N or <ArrowLeft className="w-3 h-3" />
 									</code>
 								</div>
@@ -203,15 +203,15 @@ export default function HelpPage() {
 							<div className="space-y-2 text-sm">
 								<div className="flex justify-between">
 									<span>Go to decks</span>
-									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">G D</code>
+									<code className="bg-muted dark:bg-gray-700 px-2 py-1 rounded">G D</code>
 								</div>
 								<div className="flex justify-between">
 									<span>Create new deck</span>
-									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">C</code>
+									<code className="bg-muted dark:bg-gray-700 px-2 py-1 rounded">C</code>
 								</div>
 								<div className="flex justify-between">
 									<span>Toggle theme</span>
-									<code className="bg-gray-100 dark:bg-gray-700 px-2 py-1 rounded">T</code>
+									<code className="bg-muted dark:bg-gray-700 px-2 py-1 rounded">T</code>
 								</div>
 							</div>
 						</div>

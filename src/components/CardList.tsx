@@ -65,10 +65,10 @@ export default function CardList({ deckId, className = '', showProgress = true }
 			{/* Header */}
 			<div className="flex items-center justify-between">
 				<div>
-					<h3 className="text-xl font-bold text-gray-900 dark:text-gray-100">
+					<h3 className="text-xl font-bold text-foreground">
 						Cards ({cards.length})
 					</h3>
-					<p className="text-gray-600 dark:text-gray-400 mt-1">
+					<p className="text-muted-foreground mt-1">
 						Manage your flashcards and track your progress
 					</p>
 				</div>
@@ -83,7 +83,7 @@ export default function CardList({ deckId, className = '', showProgress = true }
 			</div>
 
 			{/* Filter/Sort Options */}
-			<div className="flex items-center gap-4 pb-4 border-b border-gray-200 dark:border-gray-700">
+			<div className="flex items-center gap-4 pb-4 border-b border">
 				<CardListStats cards={cards} />
 			</div>
 

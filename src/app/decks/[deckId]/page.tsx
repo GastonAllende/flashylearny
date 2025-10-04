@@ -87,7 +87,7 @@ export default function DeckDetailPage() {
 					<h1 className="text-2xl sm:text-3xl font-bold">{currentDeckName}</h1>
 					{completion && (
 						<div className="space-y-2">
-							<div className="flex items-center justify-between text-sm text-gray-600 dark:text-gray-400">
+							<div className="flex items-center justify-between text-sm text-muted-foreground">
 								<span>{completion.completion}% complete</span>
 								<span>{completion.total} cards • {completion.mastered} mastered</span>
 							</div>
@@ -128,7 +128,7 @@ export default function DeckDetailPage() {
 						<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-2">
 							<button
 								onClick={() => openModal('renameDeck', { deckId, deckName: currentDeckName })}
-								className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-900 dark:text-gray-100 px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+								className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-foreground px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 								title="Rename this deck"
 							>
 								<CreditCard className="h-4 w-4" />
@@ -170,7 +170,7 @@ export default function DeckDetailPage() {
 			</div>
 
 			{/* Mobile-first tabs */}
-			<div className="border-b border-gray-200 dark:border-gray-700">
+			<div className="border-b border">
 				<nav className="flex">
 					{[
 						{ id: 'cards', label: 'Cards', icon: CreditCard },
@@ -226,7 +226,7 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 		const colors = {
 			MASTERED: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
 			LEARNING: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-			NEW: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+			NEW: 'bg-muted text-gray-800 dark:bg-gray-700 dark:text-gray-200'
 		};
 
 		return (
@@ -237,27 +237,27 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 	};
 
 	return (
-		<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 sm:p-6">
+		<div className="bg-card border border rounded-lg p-4 sm:p-6">
 			<div className="space-y-4">
 				<div className="space-y-3">
 					<div>
 						<div className="flex items-center gap-2 mb-1">
-							<h4 className="font-medium text-gray-900 dark:text-gray-100 text-sm">Question</h4>
+							<h4 className="font-medium text-foreground text-sm">Question</h4>
 							{getStatusBadge()}
 						</div>
-						<p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{card.question}</p>
+						<p className="text-foreground text-sm sm:text-base">{card.question}</p>
 					</div>
 					<div>
-						<h4 className="font-medium text-gray-900 dark:text-gray-100 mb-1 text-sm">Answer</h4>
-						<p className="text-gray-700 dark:text-gray-300 text-sm sm:text-base">{card.answer}</p>
+						<h4 className="font-medium text-foreground mb-1 text-sm">Answer</h4>
+						<p className="text-foreground text-sm sm:text-base">{card.answer}</p>
 					</div>
 				</div>
 
 				{/* Progress Stats */}
 				{progress && (progress.timesSeen > 0 || progress.timesKnown > 0) && (
-					<div className="border-t border-gray-200 dark:border-gray-700 pt-3 space-y-2">
+					<div className="border-t border pt-3 space-y-2">
 						<div className="flex flex-wrap items-center gap-3 text-sm">
-							<span className="flex items-center gap-1 text-gray-600 dark:text-gray-400">
+							<span className="flex items-center gap-1 text-muted-foreground">
 								<Eye className="w-4 h-4" />
 								<span className="font-medium">{progress.timesSeen}</span>
 								<span className="text-xs">seen</span>
@@ -276,7 +276,7 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 							)}
 							{progress.timesSeen > 0 && (
 								<span className="flex items-center gap-1">
-									<span className="text-xs text-gray-600 dark:text-gray-400">Accuracy:</span>
+									<span className="text-xs text-muted-foreground">Accuracy:</span>
 									<span className={`font-semibold ${
 										Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 80
 											? 'text-green-600 dark:text-green-400'
@@ -330,7 +330,7 @@ function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card
 			<div className="text-center py-16">
 				<div className="mb-4 flex justify-center"><CreditCard className="h-16 w-16" /></div>
 				<h3 className="text-xl font-semibold mb-2">No cards yet</h3>
-				<p className="text-gray-600 dark:text-gray-400 mb-6">
+				<p className="text-muted-foreground mb-6">
 					Add your first card to start building your study deck
 				</p>
 				<Link
@@ -391,7 +391,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 			<div className="text-center py-16">
 				<div className="mb-4 flex justify-center"><Brain className="h-16 w-16" /></div>
 				<h3 className="text-xl font-semibold mb-2">No cards to study</h3>
-				<p className="text-gray-600 dark:text-gray-400 mb-6">
+				<p className="text-muted-foreground mb-6">
 					Add some cards to this deck before you can start studying
 				</p>
 				<Link
@@ -415,7 +415,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 			<div className="text-center py-16">
 				<div className="mb-4 flex justify-center"><Brain className="h-16 w-16" /></div>
 				<h3 className="text-xl font-semibold mb-2">Ready to study?</h3>
-				<p className="text-gray-600 dark:text-gray-400 mb-6">
+				<p className="text-muted-foreground mb-6">
 					You have {cards.length} cards ready for studying
 				</p>
 				<div className="space-y-3 max-w-sm mx-auto">
@@ -465,19 +465,19 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 				<div className="grid grid-cols-4 gap-2 text-xs sm:text-sm">
 					<div className="text-center">
 						<div className="text-green-600 dark:text-green-400 font-semibold">{studySession.sessionStats.knownCards}</div>
-						<div className="text-gray-600 dark:text-gray-400">Known</div>
+						<div className="text-muted-foreground">Known</div>
 					</div>
 					<div className="text-center">
 						<div className="text-yellow-600 dark:text-yellow-400 font-semibold">{studySession.sessionStats.almostCards}</div>
-						<div className="text-gray-600 dark:text-gray-400">Almost</div>
+						<div className="text-muted-foreground">Almost</div>
 					</div>
 					<div className="text-center">
 						<div className="text-red-600 dark:text-red-400 font-semibold">{studySession.sessionStats.unknownCards}</div>
-						<div className="text-gray-600 dark:text-gray-400">Unknown</div>
+						<div className="text-muted-foreground">Unknown</div>
 					</div>
 					<div className="text-center">
-						<div className="text-gray-600 dark:text-gray-400 font-semibold">{studySession.sessionStats.seenCards}</div>
-						<div className="text-gray-600 dark:text-gray-400">Total</div>
+						<div className="text-muted-foreground font-semibold">{studySession.sessionStats.seenCards}</div>
+						<div className="text-muted-foreground">Total</div>
 					</div>
 				</div>
 			</div>
@@ -493,7 +493,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 			) : (
 				<div className="text-center py-16">
 					<div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
-					<p className="mt-4 text-gray-600 dark:text-gray-400">Loading card...</p>
+					<p className="mt-4 text-muted-foreground">Loading card...</p>
 				</div>
 			)}
 
@@ -512,7 +512,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 			{/* Loading Overlay */}
 			{isUpdatingProgress && (
 				<div className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50">
-					<div className="bg-white dark:bg-gray-800 rounded-lg p-6 flex items-center gap-3">
+					<div className="bg-card rounded-lg p-6 flex items-center gap-3">
 						<div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
 						<span>Updating progress...</span>
 					</div>
@@ -537,7 +537,7 @@ function StatsTab({
 			<div className="text-center py-16">
 				<div className="mb-4 flex justify-center"><BarChart3 className="h-16 w-16" /></div>
 				<h3 className="text-xl font-semibold mb-2">No statistics yet</h3>
-				<p className="text-gray-600 dark:text-gray-400">
+				<p className="text-muted-foreground">
 					Study some cards to see your progress statistics
 				</p>
 			</div>
@@ -556,39 +556,39 @@ function StatsTab({
 
 			{/* Status Distribution */}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center">
+				<div className="bg-card border border rounded-lg p-6 text-center">
 					<div className="text-3xl font-bold text-green-600">{statusCounts.MASTERED || 0}</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">Mastered</div>
+					<div className="text-sm text-muted-foreground">Mastered</div>
 				</div>
 
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center">
+				<div className="bg-card border border rounded-lg p-6 text-center">
 					<div className="text-3xl font-bold text-yellow-600">{statusCounts.LEARNING || 0}</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">Learning</div>
+					<div className="text-sm text-muted-foreground">Learning</div>
 				</div>
 
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center">
+				<div className="bg-card border border rounded-lg p-6 text-center">
 					<div className="text-3xl font-bold text-gray-600">{statusCounts.NEW || 0}</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">New</div>
+					<div className="text-sm text-muted-foreground">New</div>
 				</div>
 			</div>
 
 			{/* Enhanced Analytics */}
 			{analytics && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center">
+					<div className="bg-card border border rounded-lg p-6 text-center">
 						<div className="text-3xl font-bold text-blue-600">{analytics.averageAccuracy}%</div>
-						<div className="text-sm text-gray-600 dark:text-gray-400">Average Accuracy</div>
+						<div className="text-sm text-muted-foreground">Average Accuracy</div>
 					</div>
 
-					<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6 text-center">
+					<div className="bg-card border border rounded-lg p-6 text-center">
 						<div className="text-3xl font-bold text-purple-600">{analytics.totalReviews}</div>
-						<div className="text-sm text-gray-600 dark:text-gray-400">Total Reviews</div>
+						<div className="text-sm text-muted-foreground">Total Reviews</div>
 					</div>
 				</div>
 			)}
 
 			{completion && (
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+				<div className="bg-card border border rounded-lg p-6">
 					<h3 className="font-semibold mb-4">Progress Overview</h3>
 					<div className="space-y-3">
 						<div className="flex justify-between">
@@ -601,7 +601,7 @@ function StatsTab({
 								style={{ width: `${completion.completion}%` }}
 							/>
 						</div>
-						<div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
+						<div className="flex justify-between text-sm text-muted-foreground">
 							<span>{completion.mastered} mastered</span>
 							<span>{completion.total} total</span>
 						</div>
@@ -611,12 +611,12 @@ function StatsTab({
 
 			{/* Recent Activity Chart */}
 			{analytics && analytics.recentActivity.length > 0 && (
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-6">
+				<div className="bg-card border border rounded-lg p-6">
 					<h3 className="font-semibold mb-4">Recent Activity</h3>
 					<div className="space-y-2">
 						{analytics.recentActivity.map((activity) => (
 							<div key={activity.date} className="flex items-center justify-between">
-								<span className="text-sm text-gray-600 dark:text-gray-400">
+								<span className="text-sm text-muted-foreground">
 									{new Date(activity.date).toLocaleDateString()}
 								</span>
 								<div className="flex items-center gap-2">
@@ -668,7 +668,7 @@ function StudyCompletionView({
 				<>
 					<div className="mb-6 flex justify-center"><PartyPopper className="h-16 w-16" /></div>
 					<h2 className="text-3xl font-bold mb-4">Deck Mastered!</h2>
-					<p className="text-gray-600 dark:text-gray-400 mb-8">
+					<p className="text-muted-foreground mb-8">
 						Congratulations! You have mastered all cards in this deck.
 						<br />All cards are now marked as MASTERED status!
 					</p>
@@ -677,7 +677,7 @@ function StudyCompletionView({
 				<>
 					<div className="mb-6 flex justify-center"><PartyPopper className="h-16 w-16" /></div>
 					<h2 className="text-3xl font-bold mb-4">Session Complete!</h2>
-					<p className="text-gray-600 dark:text-gray-400 mb-8">
+					<p className="text-muted-foreground mb-8">
 						Great job studying your flashcards!
 					</p>
 				</>
@@ -685,25 +685,25 @@ function StudyCompletionView({
 
 			{/* Session Statistics */}
 			<div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
+				<div className="bg-card border border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-blue-600">{session.cardIds.length}</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">Total Cards</div>
+					<div className="text-sm text-muted-foreground">Total Cards</div>
 				</div>
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
+				<div className="bg-card border border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-green-600">{session.sessionStats.knownCards}</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">Known</div>
+					<div className="text-sm text-muted-foreground">Known</div>
 				</div>
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
+				<div className="bg-card border border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-yellow-600">{session.sessionStats.almostCards}</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">Almost</div>
+					<div className="text-sm text-muted-foreground">Almost</div>
 				</div>
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
+				<div className="bg-card border border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-red-600">{session.sessionStats.unknownCards}</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">Unknown</div>
+					<div className="text-sm text-muted-foreground">Unknown</div>
 				</div>
-				<div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 text-center">
+				<div className="bg-card border border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-purple-600">{accuracy}%</div>
-					<div className="text-sm text-gray-600 dark:text-gray-400">Accuracy</div>
+					<div className="text-sm text-muted-foreground">Accuracy</div>
 				</div>
 			</div>
 

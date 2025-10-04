@@ -29,13 +29,13 @@ export default function Header() {
 					<div className="hidden md:flex items-center gap-6 text-sm font-medium">
 						<Link
 							href="/decks"
-							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
 						>
 							Decks
 						</Link>
 						<button
 							onClick={handleCreateDeck}
-							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
 						>
 							Create Deck
 						</button>
@@ -45,7 +45,7 @@ export default function Header() {
 					<ThemeToggle />
 					<Link
 						href="/profile"
-						className="bg-gray-100 hover:bg-gray-200 dark:bg-gray-800 dark:hover:bg-gray-700 border border-gray-300 dark:border-gray-600 px-3 py-1.5 rounded text-sm font-medium transition-colors flex items-center gap-2"
+						className="bg-muted hover:bg-muted/80 border border px-3 py-1.5 rounded text-sm font-medium transition-colors flex items-center gap-2"
 					>
 						<User className="h-4 w-4" /> Profile
 					</Link>
@@ -61,26 +61,26 @@ export default function Header() {
 				</Button>
 			</nav>
 			{open && (
-				<div className="md:hidden border-t border-black/[.08] dark:border-white/[.145] bg-white dark:bg-gray-900">
+				<div className="md:hidden border-t border-black/[.08] dark:border-white/[.145] bg-card">
 					<div className="mx-auto max-w-6xl px-4 py-4 flex flex-col gap-4">
 						<Link
 							href="/decks"
-							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
+							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
 							onClick={() => setOpen(false)}
 						>
 							<BookOpen className="h-4 w-4" /> Decks
 						</Link>
 						<button
 							onClick={handleCreateDeck}
-							className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 text-left flex items-center gap-2"
+							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 text-left flex items-center gap-2"
 						>
 							<Plus className="h-4 w-4" /> Create Deck
 						</button>
-						<div className="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700">
+						<div className="flex items-center justify-between pt-2 border-t border">
 							<ThemeToggle />
 							<Link
 								href="/profile"
-								className="text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium flex items-center gap-2"
+								className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium flex items-center gap-2"
 								onClick={() => setOpen(false)}
 							>
 								<User className="h-4 w-4" /> Profile

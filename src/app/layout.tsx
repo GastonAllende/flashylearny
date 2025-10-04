@@ -4,7 +4,10 @@ import "./globals.css";
 import RegisterSW from "@/components/RegisterSW";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import { ThemeProvider } from "@/components/theme-provider";
 import Providers from "@/components/Providers";
+import GlobalModalHandler from '@/components/GlobalModalHandler';
+import { Toaster } from '@/components/ui/sonner';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -56,14 +59,23 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <Providers>
-          <RegisterSW />
-          <Header />
-          <main className="mx-auto max-w-6xl px-4 py-4 sm:py-6 lg:py-8 min-h-[calc(100dvh-7rem)]">
-            {children}
-          </main>
-          <Footer />
-        </Providers>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <Providers>
+            <RegisterSW />
+            <Header />
+            <main className="mx-auto max-w-6xl px-4 py-4 sm:py-6 lg:py-8 min-h-[calc(100dvh-7rem)]">
+              {children}
+            </main>
+            <Footer />
+            <GlobalModalHandler />
+            <Toaster />
+          </Providers>
+        </ThemeProvider>
       </body>
     </html>
   );
