@@ -11,6 +11,8 @@ import { DeleteDeckDialog } from '@/components/ConfirmDialog';
 import type { Card } from '../../../../lib/types';
 import type { StudySession } from '../../../../stores/ui';
 import { Brain, Trash2, CreditCard, BarChart3, PartyPopper, RotateCcw, CheckCircle, ArrowLeft, Shuffle, ClipboardList, Plus, Download, Eye, Clock } from 'lucide-react';
+import { StatCard } from '@/components/ui/stat-card';
+import { ProgressBar } from '@/components/ui/progress-bar';
 
 type TabType = 'cards' | 'study' | 'stats';
 
@@ -221,6 +223,7 @@ export default function DeckDetailPage() {
 // Card Item Component with Progress
 function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDelete: (cardId: string, cardQuestion: string) => void; }) {
 	const { data: progress } = useProgress(card.id);
+	const tRow = useTranslations('CardRow');
 
 	const getStatusBadge = () => {
 		if (!progress) return null;
@@ -239,18 +242,18 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 	};
 
 	return (
-		<div className="bg-card border border rounded-lg p-4 sm:p-6">
+		<div className="bg-card border rounded-lg p-4 sm:p-6">
 			<div className="space-y-4">
 				<div className="space-y-3">
 					<div>
 						<div className="flex items-center gap-2 mb-1">
-							<h4 className="font-medium text-foreground text-sm">Question</h4>
+							<h4 className="font-medium text-foreground text-sm">{tRow('question')}</h4>
 							{getStatusBadge()}
 						</div>
 						<p className="text-foreground text-sm sm:text-base">{card.question}</p>
 					</div>
 					<div>
-						<h4 className="font-medium text-foreground mb-1 text-sm">Answer</h4>
+						<h4 className="font-medium text-foreground mb-1 text-sm">{tRow('answer')}</h4>
 						<p className="text-foreground text-sm sm:text-base">{card.answer}</p>
 					</div>
 				</div>
@@ -262,23 +265,23 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 							<span className="flex items-center gap-1 text-muted-foreground">
 								<Eye className="w-4 h-4" />
 								<span className="font-medium">{progress.timesSeen}</span>
-								<span className="text-xs">seen</span>
+								<span className="text-xs">{tRow('seen')}</span>
 							</span>
 							<span className="flex items-center gap-1 text-green-600 dark:text-green-400">
 								<CheckCircle className="w-4 h-4" />
 								<span className="font-medium">{progress.timesKnown}</span>
-								<span className="text-xs">knew</span>
+								<span className="text-xs">{tRow('knew')}</span>
 							</span>
 							{(progress.timesAlmost ?? 0) > 0 && (
 								<span className="flex items-center gap-1 text-yellow-600 dark:text-yellow-400">
 									<span className="w-4 h-4 flex items-center justify-center font-bold">~</span>
 									<span className="font-medium">{progress.timesAlmost}</span>
-									<span className="text-xs">almost</span>
+									<span className="text-xs">{tRow('almost')}</span>
 								</span>
 							)}
 							{progress.timesSeen > 0 && (
 								<span className="flex items-center gap-1">
-									<span className="text-xs text-muted-foreground">Accuracy:</span>
+									<span className="text-xs text-muted-foreground">{tRow('accuracy')}</span>
 									<span className={`font-semibold ${Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 80
 										? 'text-green-600 dark:text-green-400'
 										: Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 50
@@ -293,7 +296,7 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 						{progress.lastReviewedAt && (
 							<div className="flex items-center gap-1 text-xs text-gray-500 dark:text-gray-400">
 								<Clock className="w-3 h-3" />
-								Last reviewed: {new Date(progress.lastReviewedAt).toLocaleDateString('en-US', {
+								{tRow('lastReviewed')} {new Date(progress.lastReviewedAt).toLocaleDateString('en-US', {
 									month: 'short',
 									day: 'numeric',
 									year: 'numeric',
@@ -310,13 +313,13 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 						href={`/decks/${deckId}/edit-card/${card.id}`}
 						className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-center text-sm"
 					>
-						Edit
+						{tRow('edit')}
 					</Link>
 					<button
 						onClick={() => onDelete(card.id, card.question)}
 						className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 text-white px-4 py-2 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
 					>
-						Delete
+						{tRow('delete')}
 					</button>
 				</div>
 			</div>
@@ -415,22 +418,22 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 		return (
 			<div className="text-center py-16">
 				<div className="mb-4 flex justify-center"><Brain className="h-16 w-16" /></div>
-				<h3 className="text-xl font-semibold mb-2">Ready to study?</h3>
+				<h3 className="text-xl font-semibold mb-2">{t('readyTitle')}</h3>
 				<p className="text-muted-foreground mb-6">
-					You have {cards.length} cards ready for studying
+					{t('readyDescription', { count: cards.length })}
 				</p>
 				<div className="space-y-3 max-w-sm mx-auto">
 					<button
 						onClick={() => startSession(deckId, true)}
 						className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 					>
-						<span className="inline-flex items-center justify-center gap-2"><Shuffle className="h-5 w-5" /> Shuffled Study</span>
+						<span className="inline-flex items-center justify-center gap-2"><Shuffle className="h-5 w-5" /> {t('shuffled')}</span>
 					</button>
 					<button
 						onClick={() => startSession(deckId, false)}
 						className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 					>
-						<span className="inline-flex items-center justify-center gap-2"><ClipboardList className="h-5 w-5" /> Ordered Study</span>
+						<span className="inline-flex items-center justify-center gap-2"><ClipboardList className="h-5 w-5" /> {t('ordered')}</span>
 					</button>
 				</div>
 			</div>
@@ -494,7 +497,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 			) : (
 				<div className="text-center py-16">
 					<div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
-					<p className="mt-4 text-muted-foreground">Loading card...</p>
+					<p className="mt-4 text-muted-foreground">{t('progress.loadingCard')}</p>
 				</div>
 			)}
 
@@ -556,52 +559,56 @@ function StatsTab({
 
 			{/* Status Distribution */}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-				<div className="bg-card border border rounded-lg p-6 text-center">
-					<div className="text-3xl font-bold text-green-600">{statusCounts.MASTERED || 0}</div>
-					<div className="text-sm text-muted-foreground">{t('stats.mastered')}</div>
-				</div>
-
-				<div className="bg-card border border rounded-lg p-6 text-center">
-					<div className="text-3xl font-bold text-yellow-600">{statusCounts.LEARNING || 0}</div>
-					<div className="text-sm text-muted-foreground">{t('stats.learning')}</div>
-				</div>
-
-				<div className="bg-card border border rounded-lg p-6 text-center">
-					<div className="text-3xl font-bold text-gray-600">{statusCounts.NEW || 0}</div>
-					<div className="text-sm text-muted-foreground">{t('stats.new')}</div>
-				</div>
+				<StatCard
+					value={statusCounts.MASTERED || 0}
+					label={t('stats.mastered')}
+					color="green"
+					icon={CheckCircle}
+				/>
+				<StatCard
+					value={statusCounts.LEARNING || 0}
+					label={t('stats.learning')}
+					color="yellow"
+					icon={Brain}
+				/>
+				<StatCard
+					value={statusCounts.NEW || 0}
+					label={t('stats.new')}
+					color="gray"
+					icon={CreditCard}
+				/>
 			</div>
 
 			{/* Enhanced Analytics */}
 			{analytics && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<div className="bg-card border border rounded-lg p-6 text-center">
-						<div className="text-3xl font-bold text-blue-600">{analytics.averageAccuracy}%</div>
-						<div className="text-sm text-muted-foreground">{t('stats.averageAccuracy')}</div>
-					</div>
-
-					<div className="bg-card border border rounded-lg p-6 text-center">
-						<div className="text-3xl font-bold text-purple-600">{analytics.totalReviews}</div>
-						<div className="text-sm text-muted-foreground">{t('stats.totalReviews')}</div>
-					</div>
+					<StatCard
+						value={`${analytics.averageAccuracy}%`}
+						label={t('stats.averageAccuracy')}
+						color="blue"
+						icon={BarChart3}
+					/>
+					<StatCard
+						value={analytics.totalReviews}
+						label={t('stats.totalReviews')}
+						color="purple"
+						icon={Eye}
+					/>
 				</div>
 			)}
 
 			{completion && (
-				<div className="bg-card border border rounded-lg p-6">
+				<div className="bg-card border rounded-lg p-6">
 					<h3 className="font-semibold mb-4">{t('stats.progressOverview')}</h3>
 					<div className="space-y-3">
-						<div className="flex justify-between">
-							<span>{t('stats.completionRate')}</span>
-							<span className="font-semibold">{completion.completion}%</span>
-						</div>
-						<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-4">
-							<div
-								className="bg-green-500 h-4 rounded-full transition-all duration-300"
-								style={{ width: `${completion.completion}%` }}
-							/>
-						</div>
-						<div className="flex justify-between text-sm text-muted-foreground">
+						<ProgressBar
+							value={completion.completion}
+							label={t('stats.completionRate')}
+							showBadge={true}
+							color="green"
+							size="lg"
+						/>
+						<div className="flex justify-between text-sm text-muted-foreground pt-2">
 							<span>{t('stats.masteredCount', { count: completion.mastered })}</span>
 							<span>{t('stats.totalCount', { count: completion.total })}</span>
 						</div>
@@ -611,7 +618,7 @@ function StatsTab({
 
 			{/* Recent Activity Chart */}
 			{analytics && analytics.recentActivity.length > 0 && (
-				<div className="bg-card border border rounded-lg p-6">
+				<div className="bg-card border rounded-lg p-6">
 					<h3 className="font-semibold mb-4">{t('stats.recentActivity')}</h3>
 					<div className="space-y-2">
 						{analytics.recentActivity.map((activity) => (
@@ -651,6 +658,7 @@ function StudyCompletionView({
 	onEnd: () => void;
 	checkDeckMastery: () => Promise<boolean>;
 }) {
+	const t = useTranslations('DeckDetail.completionView');
 	const [isDeckMastered, setIsDeckMastered] = useState<boolean | null>(null);
 	const accuracy = session.sessionStats.seenCards > 0
 		? Math.round((session.sessionStats.knownCards / session.sessionStats.seenCards) * 100)
@@ -667,43 +675,42 @@ function StudyCompletionView({
 			{isDeckMastered ? (
 				<>
 					<div className="mb-6 flex justify-center"><PartyPopper className="h-16 w-16" /></div>
-					<h2 className="text-3xl font-bold mb-4">Deck Mastered!</h2>
-					<p className="text-muted-foreground mb-8">
-						Congratulations! You have mastered all cards in this deck.
-						<br />All cards are now marked as MASTERED status!
+					<h2 className="text-3xl font-bold mb-4">{t('deckMasteredTitle')}</h2>
+					<p className="text-muted-foreground mb-8 whitespace-pre-line">
+						{t('deckMasteredBody')}
 					</p>
 				</>
 			) : (
 				<>
 					<div className="mb-6 flex justify-center"><PartyPopper className="h-16 w-16" /></div>
-					<h2 className="text-3xl font-bold mb-4">Session Complete!</h2>
+					<h2 className="text-3xl font-bold mb-4">{t('sessionCompleteTitle')}</h2>
 					<p className="text-muted-foreground mb-8">
-						Great job studying your flashcards!
+						{t('sessionCompleteBody')}
 					</p>
 				</>
 			)}
 
 			{/* Session Statistics */}
 			<div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
-				<div className="bg-card border border rounded-lg p-4 text-center">
+				<div className="bg-card border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-blue-600">{session.cardIds.length}</div>
-					<div className="text-sm text-muted-foreground">Total Cards</div>
+					<div className="text-sm text-muted-foreground">{t('stats.totalCards')}</div>
 				</div>
-				<div className="bg-card border border rounded-lg p-4 text-center">
+				<div className="bg-card border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-green-600">{session.sessionStats.knownCards}</div>
-					<div className="text-sm text-muted-foreground">Known</div>
+					<div className="text-sm text-muted-foreground">{t('stats.known')}</div>
 				</div>
-				<div className="bg-card border border rounded-lg p-4 text-center">
+				<div className="bg-card border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-yellow-600">{session.sessionStats.almostCards}</div>
-					<div className="text-sm text-muted-foreground">Almost</div>
+					<div className="text-sm text-muted-foreground">{t('stats.almost')}</div>
 				</div>
-				<div className="bg-card border border rounded-lg p-4 text-center">
+				<div className="bg-card border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-red-600">{session.sessionStats.unknownCards}</div>
-					<div className="text-sm text-muted-foreground">Unknown</div>
+					<div className="text-sm text-muted-foreground">{t('stats.unknown')}</div>
 				</div>
-				<div className="bg-card border border rounded-lg p-4 text-center">
+				<div className="bg-card border rounded-lg p-4 text-center">
 					<div className="text-2xl font-bold text-purple-600">{accuracy}%</div>
-					<div className="text-sm text-muted-foreground">Accuracy</div>
+					<div className="text-sm text-muted-foreground">{t('stats.accuracy')}</div>
 				</div>
 			</div>
 
@@ -715,7 +722,7 @@ function StudyCompletionView({
 							onClick={onRestart}
 							className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200"
 						>
-							<span className="inline-flex items-center gap-2"><RotateCcw className="h-5 w-5" /> Study Again</span>
+							<span className="inline-flex items-center gap-2"><RotateCcw className="h-5 w-5" /> {t('studyAgain')}</span>
 						</button>
 					)}
 					<Link
@@ -723,7 +730,7 @@ function StudyCompletionView({
 						onClick={onEnd}
 						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors duration-200 text-center"
 					>
-						<span className="inline-flex items-center gap-2"><BarChart3 className="h-5 w-5" /> View Stats</span>
+						<span className="inline-flex items-center gap-2"><BarChart3 className="h-5 w-5" /> {t('viewStats')}</span>
 					</Link>
 				</div>
 				<Link
@@ -731,7 +738,7 @@ function StudyCompletionView({
 					onClick={onEnd}
 					className="text-gray-600 hover:text-gray-800 dark:text-gray-400 dark:hover:text-gray-200 transition-colors duration-200"
 				>
-					<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> Back to All Decks</span>
+					<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> {t('backToAll')}</span>
 				</Link>
 			</div>
 		</div>

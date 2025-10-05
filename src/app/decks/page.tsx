@@ -210,6 +210,7 @@ interface DeckCardProps {
 }
 
 function DeckCard({ deck, onDelete }: DeckCardProps) {
+	const t = useTranslations('DecksPage');
 	const { data: completion } = useDeckCompletion(deck.id);
 
 	return (
@@ -229,10 +230,10 @@ function DeckCard({ deck, onDelete }: DeckCardProps) {
 						<div className="space-y-2">
 							<div className="flex items-center justify-between">
 								<span className="text-sm text-muted-foreground">
-									{completion.completion}% complete
+									{t('completionPercent', { percent: completion.completion })}
 								</span>
 								<span className="text-sm text-muted-foreground">
-									{completion.total} cards • {completion.mastered} mastered
+									{t('cardsAndMastered', { total: completion.total, mastered: completion.mastered })}
 								</span>
 							</div>
 							<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 w-full">
@@ -245,7 +246,7 @@ function DeckCard({ deck, onDelete }: DeckCardProps) {
 					)}
 
 					<div className="text-xs text-gray-500 dark:text-gray-500">
-						Updated {new Date(deck.updatedAt).toLocaleDateString()}
+						{t('updatedDate', { date: new Date(deck.updatedAt).toLocaleDateString() })}
 					</div>
 				</div>
 
@@ -255,13 +256,13 @@ function DeckCard({ deck, onDelete }: DeckCardProps) {
 						href={`/decks/${deck.id}`}
 						className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-center text-sm"
 					>
-						Open
+						{t('open')}
 					</Link>
 					<button
 						onClick={() => onDelete(deck.id, deck.name)}
 						className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
 					>
-						Delete
+						{t('delete')}
 					</button>
 				</div>
 			</div>

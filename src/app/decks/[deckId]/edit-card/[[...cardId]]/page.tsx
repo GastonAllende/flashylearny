@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useCreateCard, useUpdateCard, useCards } from '../../../../../../hooks';
@@ -8,6 +9,7 @@ import type { Card } from '../../../../../../lib/types';
 import { Save, Plus, Lightbulb, ArrowLeft, X } from 'lucide-react';
 
 export default function EditCardPage() {
+	const t = useTranslations('EditCard');
 	const params = useParams();
 	const router = useRouter();
 	const deckId = params.deckId as string;
@@ -87,16 +89,16 @@ export default function EditCardPage() {
 		return (
 			<div className="max-w-2xl mx-auto text-center py-16">
 				<X className="w-16 h-16 mb-4 text-red-400 mx-auto" />
-				<h3 className="text-xl font-semibold mb-2">Card not found</h3>
+				<h3 className="text-xl font-semibold mb-2">{t('cardNotFoundTitle')}</h3>
 				<p className="text-muted-foreground mb-4">
-					The card you&apos;re trying to edit doesn&apos;t exist or has been deleted.
+					{t('cardNotFoundDescription')}
 				</p>
 				<Link
 					href={`/decks/${deckId}`}
 					className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
 				>
 					<ArrowLeft className="w-4 h-4 mr-2" />
-					Back to Deck
+					{t('backToDeck')}
 				</Link>
 			</div>
 		);
@@ -111,78 +113,75 @@ export default function EditCardPage() {
 						href={`/decks/${deckId}`}
 						className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
 					>
-						<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> Back to Deck</span>
+						<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> {t('backToDeck')}</span>
 					</Link>
 				</div>
 				<h1 className="text-3xl font-bold">
-					{isEditing ? 'Edit Card' : 'Add New Card'}
+					{isEditing ? t('headerEdit') : t('headerAdd')}
 				</h1>
 				<p className="text-muted-foreground mt-1">
-					{isEditing
-						? 'Update the question and answer for this flashcard'
-						: 'Create a new flashcard for your deck'
-					}
+					{isEditing ? t('subEdit') : t('subAdd')}
 				</p>
 			</div>
 
 			{/* Form */}
-			<div className="bg-card border border rounded-lg p-6">
+			<div className="bg-card border rounded-lg p-6">
 				<form onSubmit={handleSubmit} className="space-y-6">
 					{/* Question Field */}
 					<div>
 						<label htmlFor="question" className="block text-sm font-medium mb-2">
-							Question <span className="text-red-500">*</span>
+							{t('questionLabel')} <span className="text-red-500">*</span>
 						</label>
 						<textarea
 							id="question"
 							value={question}
 							onChange={(e) => setQuestion(e.target.value)}
-							placeholder="Enter the question or front side of the card..."
+							placeholder={t('questionPlaceholder')}
 							rows={4}
-							className="w-full px-4 py-3 border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
+							className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
 							disabled={isLoading}
 							required
 						/>
 						<p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-							This is what you&apos;ll see first when studying
+							{t('questionHelp')}
 						</p>
 					</div>
 
 					{/* Answer Field */}
 					<div>
 						<label htmlFor="answer" className="block text-sm font-medium mb-2">
-							Answer <span className="text-red-500">*</span>
+							{t('answerLabel')} <span className="text-red-500">*</span>
 						</label>
 						<textarea
 							id="answer"
 							value={answer}
 							onChange={(e) => setAnswer(e.target.value)}
-							placeholder="Enter the answer or back side of the card..."
+							placeholder={t('answerPlaceholder')}
 							rows={4}
-							className="w-full px-4 py-3 border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
+							className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
 							disabled={isLoading}
 							required
 						/>
 						<p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-							This will be revealed after you flip the card
+							{t('answerHelp')}
 						</p>
 					</div>
 
 					{/* Preview */}
 					{(question || answer) && (
 						<div className="border-t border pt-6">
-							<h3 className="font-medium mb-4">Preview</h3>
+							<h3 className="font-medium mb-4">{t('preview')}</h3>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
 								<div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-									<h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">Front (Question)</h4>
+									<h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">{t('front')}</h4>
 									<p className="text-foreground whitespace-pre-wrap">
-										{question || 'Question will appear here...'}
+										{question || t('questionPreviewPlaceholder')}
 									</p>
 								</div>
 								<div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-									<h4 className="font-medium text-green-900 dark:text-green-100 mb-2">Back (Answer)</h4>
+									<h4 className="font-medium text-green-900 dark:text-green-100 mb-2">{t('back')}</h4>
 									<p className="text-foreground whitespace-pre-wrap">
-										{answer || 'Answer will appear here...'}
+										{answer || t('answerPreviewPlaceholder')}
 									</p>
 								</div>
 							</div>
@@ -199,12 +198,12 @@ export default function EditCardPage() {
 							{isLoading ? (
 								<>
 									<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-									{isEditing ? 'Updating...' : 'Creating...'}
+									{isEditing ? t('updating') : t('creating')}
 								</>
 							) : (
 								<>
 									{isEditing ? <Save className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-									{isEditing ? 'Update Card' : 'Create Card'}
+									{isEditing ? t('updateCard') : t('createCard')}
 								</>
 							)}
 						</button>
@@ -215,7 +214,7 @@ export default function EditCardPage() {
 							disabled={isLoading}
 							className="bg-muted0 hover:bg-gray-600 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
 						>
-							Cancel
+							{t('cancel')}
 						</button>
 					</div>
 				</form>
@@ -225,13 +224,13 @@ export default function EditCardPage() {
 			<div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
 				<h3 className="font-medium text-yellow-900 dark:text-yellow-100 mb-2 flex items-center gap-2">
 					<Lightbulb className="w-5 h-5" />
-					Tips for effective flashcards
+					{t('tipsTitle')}
 				</h3>
 				<ul className="text-sm text-yellow-800 dark:text-yellow-200 space-y-1">
-					<li>• Keep questions and answers concise and clear</li>
-					<li>• Focus on one concept per card</li>
-					<li>• Use your own words to improve retention</li>
-					<li>• Include context when necessary</li>
+					<li>• {t('tip1')}</li>
+					<li>• {t('tip2')}</li>
+					<li>• {t('tip3')}</li>
+					<li>• {t('tip4')}</li>
 				</ul>
 			</div>
 		</div>
