@@ -5,6 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, BookOpen, Plus, User } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
+import LanguageSelector from "@/components/LanguageSelector";
 import { useUIStore } from "../../stores/ui";
 
 export default function Header() {
@@ -42,6 +43,7 @@ export default function Header() {
 					</div>
 				</div>
 				<div className="hidden md:flex items-center gap-3">
+					<LanguageSelector />
 					<ThemeToggle />
 					<Link
 						href="/profile"
@@ -77,7 +79,10 @@ export default function Header() {
 							<Plus className="h-4 w-4" /> Create Deck
 						</button>
 						<div className="flex items-center justify-between pt-2 border-t border">
-							<ThemeToggle />
+							<div className="flex items-center gap-2">
+								<LanguageSelector />
+								<ThemeToggle />
+							</div>
 							<Link
 								href="/profile"
 								className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium flex items-center gap-2"

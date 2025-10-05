@@ -1,0 +1,85 @@
+{
+	"HomePage": {
+		"title": "FlashyLearny",
+		"subtitle": "Study decks and flashcards offline-first. Master any subject with spaced repetition and progress tracking.",
+		"getStarted": "Get Started",
+		"features": {
+			"smartLearning": {
+				"title": "Smart Learning",
+				"description": "Adaptive spaced repetition helps you learn efficiently"
+			},
+			"offlineFirst": {
+				"title": "Offline First",
+				"description": "Study anywhere, anytime - no internet required"
+			},
+			"trackProgress": {
+				"title": "Track Progress",
+				"description": "See your learning progress and mastery statistics"
+			}
+		}
+	},
+	"AboutPage": {
+		"title": "About FlashyLearny",
+		"subtitle": "Your offline-first study companion for mastering any subject",
+		"whatIs": {
+			"title": "What is FlashyLearny?",
+			"description": "FlashyLearny is a modern, offline-first flashcard application designed to help you learn and retain information effectively. Built with spaced repetition principles and progressive web app technology, it works seamlessly both online and offline, ensuring your study sessions are never interrupted."
+		},
+		"keyFeatures": {
+			"title": "Key Features",
+			"smartLearning": {
+				"title": "Smart Learning",
+				"description": "Adaptive spaced repetition algorithm helps you focus on cards that need the most attention"
+			},
+			"offlineFirst": {
+				"title": "Offline First",
+				"description": "Study anywhere, anytime - no internet connection required"
+			},
+			"progressTracking": {
+				"title": "Progress Tracking",
+				"description": "Detailed statistics and progress visualization to track your learning journey"
+			},
+			"darkMode": {
+				"title": "Dark Mode",
+				"description": "Eye-friendly dark theme for comfortable studying in any lighting"
+			},
+			"localStorage": {
+				"title": "Local Storage",
+				"description": "All your data stays on your device - private and secure"
+			},
+			"importExport": {
+				"title": "Import/Export",
+				"description": "Easy backup and sharing with CSV import/export functionality"
+			}
+		},
+		"howItWorks": {
+			"title": "How It Works",
+			"step1": {
+				"title": "Create Decks",
+				"description": "Organize your study material into themed decks"
+			},
+			"step2": {
+				"title": "Add Cards",
+				"description": "Create flashcards with questions and answers"
+			},
+			"step3": {
+				"title": "Study & Review",
+				"description": "Study cards and mark whether you knew the answer"
+			},
+			"step4": {
+				"title": "Track Progress",
+				"description": "Watch your mastery improve over time"
+			}
+		},
+		"technology": {
+			"title": "Technology",
+			"description": "FlashyLearny is built with modern web technologies to provide a fast, reliable, and accessible experience:",
+			"nextjs": "Next.js 15 - React framework for optimal performance",
+			"indexeddb": "IndexedDB - Client-side database for offline functionality",
+			"pwa": "Progressive Web App - Installable and works offline",
+			"tailwind": "Tailwind CSS - Modern, responsive design",
+			"typescript": "TypeScript - Type-safe development"
+		},
+		"cta": "Start Learning Today"
+	}
+}

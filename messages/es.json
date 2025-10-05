@@ -1,0 +1,85 @@
+{
+	"HomePage": {
+		"title": "FlashyLearny",
+		"subtitle": "Mazos de estudio y tarjetas didácticas sin conexión. Domina cualquier tema con repetición espaciada y seguimiento de progreso.",
+		"getStarted": "Comenzar",
+		"features": {
+			"smartLearning": {
+				"title": "Aprendizaje Inteligente",
+				"description": "La repetición espaciada adaptativa te ayuda a aprender eficientemente"
+			},
+			"offlineFirst": {
+				"title": "Sin Conexión",
+				"description": "Estudia en cualquier lugar, en cualquier momento - no se requiere internet"
+			},
+			"trackProgress": {
+				"title": "Seguimiento de Progreso",
+				"description": "Ve tu progreso de aprendizaje y estadísticas de dominio"
+			}
+		}
+	},
+	"AboutPage": {
+		"title": "Acerca de FlashyLearny",
+		"subtitle": "Tu compañero de estudio sin conexión para dominar cualquier tema",
+		"whatIs": {
+			"title": "¿Qué es FlashyLearny?",
+			"description": "FlashyLearny es una aplicación moderna de tarjetas didácticas sin conexión diseñada para ayudarte a aprender y retener información de manera efectiva. Construida con principios de repetición espaciada y tecnología de aplicación web progresiva, funciona perfectamente tanto en línea como sin conexión, asegurando que tus sesiones de estudio nunca se interrumpan."
+		},
+		"keyFeatures": {
+			"title": "Características Principales",
+			"smartLearning": {
+				"title": "Aprendizaje Inteligente",
+				"description": "El algoritmo de repetición espaciada adaptativa te ayuda a enfocarte en las tarjetas que necesitan más atención"
+			},
+			"offlineFirst": {
+				"title": "Sin Conexión Primero",
+				"description": "Estudia en cualquier lugar, en cualquier momento - no se requiere conexión a internet"
+			},
+			"progressTracking": {
+				"title": "Seguimiento de Progreso",
+				"description": "Estadísticas detalladas y visualización de progreso para seguir tu trayectoria de aprendizaje"
+			},
+			"darkMode": {
+				"title": "Modo Oscuro",
+				"description": "Tema oscuro amigable con los ojos para estudiar cómodamente en cualquier iluminación"
+			},
+			"localStorage": {
+				"title": "Almacenamiento Local",
+				"description": "Todos tus datos permanecen en tu dispositivo - privado y seguro"
+			},
+			"importExport": {
+				"title": "Importar/Exportar",
+				"description": "Fácil respaldo y compartición con funcionalidad de importación/exportación CSV"
+			}
+		},
+		"howItWorks": {
+			"title": "Cómo Funciona",
+			"step1": {
+				"title": "Crear Mazos",
+				"description": "Organiza tu material de estudio en mazos temáticos"
+			},
+			"step2": {
+				"title": "Agregar Tarjetas",
+				"description": "Crea tarjetas didácticas con preguntas y respuestas"
+			},
+			"step3": {
+				"title": "Estudiar y Revisar",
+				"description": "Estudia las tarjetas y marca si conocías la respuesta"
+			},
+			"step4": {
+				"title": "Seguir el Progreso",
+				"description": "Observa cómo mejora tu dominio con el tiempo"
+			}
+		},
+		"technology": {
+			"title": "Tecnología",
+			"description": "FlashyLearny está construido con tecnologías web modernas para proporcionar una experiencia rápida, confiable y accesible:",
+			"nextjs": "Next.js 15 - Framework de React para rendimiento óptimo",
+			"indexeddb": "IndexedDB - Base de datos del lado del cliente para funcionalidad sin conexión",
+			"pwa": "Aplicación Web Progresiva - Instalable y funciona sin conexión",
+			"tailwind": "Tailwind CSS - Diseño moderno y responsivo",
+			"typescript": "TypeScript - Desarrollo con seguridad de tipos"
+		},
+		"cta": "Comienza a Aprender Hoy"
+	}
+}
