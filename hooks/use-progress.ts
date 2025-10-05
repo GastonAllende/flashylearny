@@ -2,7 +2,6 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { queryKeys } from '../lib/react-query';
 import {
   getOrInitProgress,
-  setProgress,
   incrementSeenKnown,
   getDeckProgress,
   getDeckCompletion,
@@ -56,28 +55,6 @@ export function useDeckAnalytics(deckId: string) {
 }
 
 /**
- * Hook to set progress status for a card
- */
-export function useSetProgress() {
-  const queryClient = useQueryClient();
-  
-  return useMutation({
-    mutationFn: ({ cardId, status }: { cardId: string; status: Progress['status'] }) =>
-      setProgress(cardId, status),
-    onSuccess: (_, { cardId }) => {
-      // Invalidate progress for this specific card
-      queryClient.invalidateQueries({ queryKey: queryKeys.progress(cardId) });
-      
-      // Find which deck this card belongs to and invalidate deck progress
-      // We'll invalidate all deck progress queries (simpler approach)
-      queryClient.invalidateQueries({ queryKey: ['progress', 'deck'] });
-      queryClient.invalidateQueries({ queryKey: ['progress', 'completion'] });
-      queryClient.invalidateQueries({ queryKey: ['progress', 'analytics'] });
-    },
-  });
-}
-
-/**
  * Hook to handle study session progress updates (main study flow)
  */
 export function useStudyProgress() {
@@ -96,19 +73,6 @@ export function useStudyProgress() {
       queryClient.invalidateQueries({ queryKey: ['progress', 'analytics'] });
     },
   });
-}
-
-/**
- * Hook to invalidate all progress queries for a deck (useful after bulk operations)
- */
-export function useInvalidateDeckProgress() {
-  const queryClient = useQueryClient();
-  
-  return (deckId: string) => {
-    queryClient.invalidateQueries({ queryKey: queryKeys.deckProgress(deckId) });
-    queryClient.invalidateQueries({ queryKey: queryKeys.deckCompletion(deckId) });
-    queryClient.invalidateQueries({ queryKey: queryKeys.deckAnalytics(deckId) });
-  };
 }
 
 /**
