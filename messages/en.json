@@ -294,5 +294,157 @@
 			}
 		},
 		"cta": "Back to Studying"
+	},
+	"Header": {
+		"decks": "Decks",
+		"createDeck": "Create Deck",
+		"profile": "Profile",
+		"menu": "Menu"
+	},
+	"Footer": {
+		"about": "About",
+		"help": "Help",
+		"privacy": "Privacy",
+		"copyright": "© {year} FlashyLearny",
+		"madeWith": "Made with 💙 for learners"
+	},
+    "DeckCard": {
+        "cards": "{count} cards",
+        "mastered": "{count} mastered",
+        "learning": "{count} learning",
+        "noCardsYet": "No cards yet",
+        "updated": "Updated {date}",
+        "open": "Open",
+        "renameTitle": "Rename deck",
+        "deleteTitle": "Delete deck",
+        "startStudying": "Start Studying"
+    },
+    "CardList": {
+        "emptyTitle": "No cards yet",
+        "emptyDescription": "Add your first card to start building your study deck",
+        "emptyCta": "Add Your First Card",
+        "header": "Cards ({count})",
+        "subheader": "Manage your flashcards and track your progress",
+        "addCard": "Add Card",
+        "stats": {
+            "totalCards": "{count} total cards",
+            "createdToday": "{count} created today",
+            "recentlyUpdated": "{count} recently updated"
+        }
+    },
+    "CardRow": {
+        "question": "Question",
+        "answer": "Answer",
+        "seen": "seen",
+        "knew": "knew",
+        "almost": "almost",
+        "accuracy": "Accuracy:",
+        "lastReviewed": "Last reviewed:",
+        "edit": "Edit",
+        "delete": "Delete"
+    },
+    "ImportCSV": {
+        "fileSelected": "File Selected",
+        "chooseDifferent": "Choose different file",
+        "dropHere": "Drop CSV file here",
+        "or": "or",
+        "browseFiles": "browse files",
+        "csvFormat": "📋 CSV Format",
+        "columnsIntro": "Your CSV file should have these columns:",
+        "colDeckName": "deckName: Name of the flashcard deck",
+        "colQuestion": "question: Front side of the card",
+        "colAnswer": "answer: Back side of the card",
+        "importFailed": "Import Failed",
+        "unknownError": "Unknown error occurred",
+        "importing": "Importing...",
+        "importCsv": "Import CSV",
+        "cancel": "Cancel",
+        "downloadSample": "📎 Download sample CSV file"
+    },
+	"DecksPage": {
+		"title": "Study Decks",
+		"subtitle": "Organize your flashcards into decks and track your progress",
+		"createDeck": "Create Deck",
+		"exportAll": "Export All",
+		"export": "Export",
+		"exporting": "Exporting...",
+		"importCsv": "Import CSV",
+		"import": "Import",
+		"deckNameLabel": "Deck Name",
+		"deckNamePlaceholder": "Enter deck name...",
+		"creating": "Creating...",
+		"create": "Create",
+		"cancel": "Cancel",
+		"emptyTitle": "No decks yet",
+		"emptyDescription": "Create your first deck to start studying with flashcards",
+		"emptyCta": "Create Your First Deck",
+		"importModalTitle": "Import Decks from CSV"
+	},
+	"DeckDetail": {
+		"backToDecks": "Back to Decks",
+		"complete": "{value}% complete",
+		"cardsSummary": "{total} cards • {mastered} mastered",
+		"updated": "Updated {date}",
+		"addCard": "Add Card",
+		"startStudy": "Start Study",
+		"rename": "Rename",
+		"renameTitle": "Rename this deck",
+		"reset": "Reset",
+		"resetTitle": "Reset all learning progress for this deck",
+		"export": "Export",
+		"delete": "Delete",
+		"tabs": { "cards": "Cards", "study": "Study", "stats": "Stats" },
+		"noCardsTitle": "No cards yet",
+		"noCardsDescription": "Add your first card to start building your study deck",
+		"cardsHeader": "Cards ({count})",
+		"readyTitle": "Ready to study?",
+		"readyDescription": "You have {count} cards ready for studying",
+		"shuffled": "Shuffled Study",
+		"ordered": "Ordered Study",
+		"progress": {
+			"cardOf": "Card {current} of {total}",
+			"endSession": "End Session",
+			"known": "Known",
+			"almost": "Almost",
+			"unknown": "Unknown",
+			"total": "Total",
+			"showAnswer": "Show Answer",
+			"updating": "Updating progress...",
+			"loadingCard": "Loading card..."
+		},
+		"studyEmptyTitle": "No cards to study",
+		"studyEmptyDescription": "Add some cards to this deck before you can start studying",
+		"addCards": "Add Cards",
+		"stats": {
+			"noStatsTitle": "No statistics yet",
+			"noStatsDescription": "Study some cards to see your progress statistics",
+			"title": "Deck Statistics",
+			"mastered": "Mastered",
+			"learning": "Learning",
+			"new": "New",
+			"averageAccuracy": "Average Accuracy",
+			"totalReviews": "Total Reviews",
+			"progressOverview": "Progress Overview",
+			"completionRate": "Completion Rate",
+			"masteredCount": "{count} mastered",
+			"totalCount": "{count} total",
+			"recentActivity": "Recent Activity"
+		},
+		"completionView": {
+			"deckMasteredTitle": "Deck Mastered!",
+			"deckMasteredBody": "Congratulations! You have mastered all cards in this deck.\nAll cards are now marked as MASTERED status!",
+			"sessionCompleteTitle": "Session Complete!",
+			"sessionCompleteBody": "Great job studying your flashcards!",
+			"stats": {
+				"totalCards": "Total Cards",
+				"known": "Known",
+				"almost": "Almost",
+				"unknown": "Unknown",
+				"accuracy": "Accuracy"
+			},
+			"studyAgain": "Study Again",
+			"viewStats": "View Stats",
+			"backToAll": "Back to All Decks"
+		}
 	}
 }

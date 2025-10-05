@@ -6,6 +6,15 @@
         "shadcn@latest",
         "mcp"
       ]
+    },
+    "Context7": {
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {}
+    },
+    "Playwright": {
+      "command": "npx @playwright/mcp@latest"
     }
-  }
+  },
+  "inputs": []
 }
+

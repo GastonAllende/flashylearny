@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Menu, X, BookOpen, Plus, User } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
@@ -11,6 +12,7 @@ import { useUIStore } from "../../stores/ui";
 export default function Header() {
 	const [open, setOpen] = useState(false);
 	const { openModal } = useUIStore();
+	const t = useTranslations('Header');
 
 	const handleCreateDeck = () => {
 		openModal('createDeck');
@@ -32,14 +34,8 @@ export default function Header() {
 							href="/decks"
 							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
 						>
-							Decks
+							{t('decks')}
 						</Link>
-						<button
-							onClick={handleCreateDeck}
-							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
-						>
-							Create Deck
-						</button>
 					</div>
 				</div>
 				<div className="hidden md:flex items-center gap-3">
@@ -47,13 +43,13 @@ export default function Header() {
 					<ThemeToggle />
 					<Link
 						href="/profile"
-						className="bg-muted hover:bg-muted/80 border border px-3 py-1.5 rounded text-sm font-medium transition-colors flex items-center gap-2"
+						className="bg-muted hover:bg-muted/80 border px-3 py-1.5 rounded text-sm font-medium transition-colors flex items-center gap-2"
 					>
-						<User className="h-4 w-4" /> Profile
+						<User className="h-4 w-4" /> {t('profile')}
 					</Link>
 				</div>
 				<Button
-					aria-label="Menu"
+					aria-label={t('menu')}
 					variant="outline"
 					size="sm"
 					className="md:hidden"
@@ -70,13 +66,13 @@ export default function Header() {
 							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
 							onClick={() => setOpen(false)}
 						>
-							<BookOpen className="h-4 w-4" /> Decks
+							<BookOpen className="h-4 w-4" /> {t('decks')}
 						</Link>
 						<button
 							onClick={handleCreateDeck}
 							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 text-left flex items-center gap-2"
 						>
-							<Plus className="h-4 w-4" /> Create Deck
+							<Plus className="h-4 w-4" /> {t('createDeck')}
 						</button>
 						<div className="flex items-center justify-between pt-2 border-t border">
 							<div className="flex items-center gap-2">
@@ -88,7 +84,7 @@ export default function Header() {
 								className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium flex items-center gap-2"
 								onClick={() => setOpen(false)}
 							>
-								<User className="h-4 w-4" /> Profile
+								<User className="h-4 w-4" /> {t('profile')}
 							</Link>
 						</div>
 					</div>

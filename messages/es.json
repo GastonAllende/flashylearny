@@ -294,5 +294,157 @@
 			}
 		},
 		"cta": "Volver a Estudiar"
+	},
+	"Header": {
+		"decks": "Mazos",
+		"createDeck": "Crear Mazo",
+		"profile": "Perfil",
+		"menu": "Menú"
+	},
+	"Footer": {
+		"about": "Acerca de",
+		"help": "Ayuda",
+		"privacy": "Privacidad",
+		"copyright": "© {year} FlashyLearny",
+		"madeWith": "Hecho con 💙 para estudiantes"
+	},
+    "DeckCard": {
+        "cards": "{count} tarjetas",
+        "mastered": "{count} dominadas",
+        "learning": "{count} en aprendizaje",
+        "noCardsYet": "Aún no hay tarjetas",
+        "updated": "Actualizado {date}",
+        "open": "Abrir",
+        "renameTitle": "Renombrar mazo",
+        "deleteTitle": "Eliminar mazo",
+        "startStudying": "Comenzar a Estudiar"
+    },
+    "CardList": {
+        "emptyTitle": "Aún no hay tarjetas",
+        "emptyDescription": "Agrega tu primera tarjeta para comenzar a construir tu mazo",
+        "emptyCta": "Agregar Tu Primera Tarjeta",
+        "header": "Tarjetas ({count})",
+        "subheader": "Administra tus tarjetas y sigue tu progreso",
+        "addCard": "Agregar Tarjeta",
+        "stats": {
+            "totalCards": "{count} tarjetas en total",
+            "createdToday": "{count} creadas hoy",
+            "recentlyUpdated": "{count} actualizadas recientemente"
+        }
+    },
+    "CardRow": {
+        "question": "Pregunta",
+        "answer": "Respuesta",
+        "seen": "vistas",
+        "knew": "conocidas",
+        "almost": "casi",
+        "accuracy": "Precisión:",
+        "lastReviewed": "Última revisión:",
+        "edit": "Editar",
+        "delete": "Eliminar"
+    },
+    "ImportCSV": {
+        "fileSelected": "Archivo Seleccionado",
+        "chooseDifferent": "Elegir otro archivo",
+        "dropHere": "Suelta el archivo CSV aquí",
+        "or": "o",
+        "browseFiles": "buscar archivos",
+        "csvFormat": "📋 Formato CSV",
+        "columnsIntro": "Tu archivo CSV debe tener estas columnas:",
+        "colDeckName": "deckName: Nombre del mazo de tarjetas",
+        "colQuestion": "question: Lado frontal de la tarjeta",
+        "colAnswer": "answer: Lado posterior de la tarjeta",
+        "importFailed": "Importación Fallida",
+        "unknownError": "Ocurrió un error desconocido",
+        "importing": "Importando...",
+        "importCsv": "Importar CSV",
+        "cancel": "Cancelar",
+        "downloadSample": "📎 Descargar archivo CSV de ejemplo"
+    },
+	"DecksPage": {
+		"title": "Mazos de Estudio",
+		"subtitle": "Organiza tus tarjetas en mazos y sigue tu progreso",
+		"createDeck": "Crear Mazo",
+		"exportAll": "Exportar Todo",
+		"export": "Exportar",
+		"exporting": "Exportando...",
+		"importCsv": "Importar CSV",
+		"import": "Importar",
+		"deckNameLabel": "Nombre del Mazo",
+		"deckNamePlaceholder": "Ingresa el nombre del mazo...",
+		"creating": "Creando...",
+		"create": "Crear",
+		"cancel": "Cancelar",
+		"emptyTitle": "Aún no hay mazos",
+		"emptyDescription": "Crea tu primer mazo para comenzar a estudiar con tarjetas",
+		"emptyCta": "Crea Tu Primer Mazo",
+		"importModalTitle": "Importar Mazos desde CSV"
+	},
+	"DeckDetail": {
+		"backToDecks": "Volver a Mazos",
+		"complete": "{value}% completado",
+		"cardsSummary": "{total} tarjetas • {mastered} dominadas",
+		"updated": "Actualizado {date}",
+		"addCard": "Agregar Tarjeta",
+		"startStudy": "Comenzar Estudio",
+		"rename": "Renombrar",
+		"renameTitle": "Renombrar este mazo",
+		"reset": "Reiniciar",
+		"resetTitle": "Reiniciar todo el progreso de aprendizaje de este mazo",
+		"export": "Exportar",
+		"delete": "Eliminar",
+		"tabs": { "cards": "Tarjetas", "study": "Estudio", "stats": "Estadísticas" },
+		"noCardsTitle": "Aún no hay tarjetas",
+		"noCardsDescription": "Agrega tu primera tarjeta para comenzar a construir tu mazo",
+		"cardsHeader": "Tarjetas ({count})",
+		"readyTitle": "¿Listo para estudiar?",
+		"readyDescription": "Tienes {count} tarjetas listas para estudiar",
+		"shuffled": "Estudio Aleatorio",
+		"ordered": "Estudio Ordenado",
+		"progress": {
+			"cardOf": "Tarjeta {current} de {total}",
+			"endSession": "Terminar Sesión",
+			"known": "Conocidas",
+			"almost": "Casi",
+			"unknown": "Desconocidas",
+			"total": "Total",
+			"showAnswer": "Mostrar Respuesta",
+			"updating": "Actualizando progreso...",
+			"loadingCard": "Cargando tarjeta..."
+		},
+		"studyEmptyTitle": "No hay tarjetas para estudiar",
+		"studyEmptyDescription": "Agrega algunas tarjetas a este mazo antes de comenzar a estudiar",
+		"addCards": "Agregar Tarjetas",
+		"stats": {
+			"noStatsTitle": "Aún no hay estadísticas",
+			"noStatsDescription": "Estudia algunas tarjetas para ver tus estadísticas de progreso",
+			"title": "Estadísticas del Mazo",
+			"mastered": "Dominadas",
+			"learning": "En aprendizaje",
+			"new": "Nuevas",
+			"averageAccuracy": "Precisión Promedio",
+			"totalReviews": "Revisiones Totales",
+			"progressOverview": "Resumen del Progreso",
+			"completionRate": "Tasa de Finalización",
+			"masteredCount": "{count} dominadas",
+			"totalCount": "{count} total",
+			"recentActivity": "Actividad Reciente"
+		},
+		"completionView": {
+			"deckMasteredTitle": "¡Mazo Dominado!",
+			"deckMasteredBody": "¡Felicidades! Has dominado todas las tarjetas de este mazo.\n¡Todas las tarjetas ahora están marcadas como MASTERED!",
+			"sessionCompleteTitle": "¡Sesión Completa!",
+			"sessionCompleteBody": "¡Buen trabajo estudiando tus tarjetas!",
+			"stats": {
+				"totalCards": "Tarjetas Totales",
+				"known": "Conocidas",
+				"almost": "Casi",
+				"unknown": "Desconocidas",
+				"accuracy": "Precisión"
+			},
+			"studyAgain": "Estudiar de Nuevo",
+			"viewStats": "Ver Estadísticas",
+			"backToAll": "Volver a Todos los Mazos"
+		}
 	}
 }

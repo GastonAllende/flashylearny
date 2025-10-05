@@ -294,5 +294,157 @@
 			}
 		},
 		"cta": "Tillbaka Till Studerande"
+	},
+	"Header": {
+		"decks": "Kortlekar",
+		"createDeck": "Skapa Kortlek",
+		"profile": "Profil",
+		"menu": "Meny"
+	},
+	"Footer": {
+		"about": "Om",
+		"help": "Hjälp",
+		"privacy": "Integritet",
+		"copyright": "© {year} FlashyLearny",
+		"madeWith": "Gjord med 💙 för elever"
+	},
+    "DeckCard": {
+        "cards": "{count} kort",
+        "mastered": "{count} bemästrade",
+        "learning": "{count} lär sig",
+        "noCardsYet": "Inga kort ännu",
+        "updated": "Uppdaterad {date}",
+        "open": "Öppna",
+        "renameTitle": "Byt namn på kortlek",
+        "deleteTitle": "Radera kortlek",
+        "startStudying": "Börja Studera"
+    },
+    "CardList": {
+        "emptyTitle": "Inga kort ännu",
+        "emptyDescription": "Lägg till ditt första kort för att börja bygga din kortlek",
+        "emptyCta": "Lägg Till Ditt Första Kort",
+        "header": "Kort ({count})",
+        "subheader": "Hantera dina flashkort och följ dina framsteg",
+        "addCard": "Lägg Till Kort",
+        "stats": {
+            "totalCards": "{count} kort totalt",
+            "createdToday": "{count} skapade idag",
+            "recentlyUpdated": "{count} nyligen uppdaterade"
+        }
+    },
+    "CardRow": {
+        "question": "Fråga",
+        "answer": "Svar",
+        "seen": "visad",
+        "knew": "känd",
+        "almost": "nästan",
+        "accuracy": "Träffsäkerhet:",
+        "lastReviewed": "Senast granskad:",
+        "edit": "Redigera",
+        "delete": "Radera"
+    },
+    "ImportCSV": {
+        "fileSelected": "Fil Vald",
+        "chooseDifferent": "Välj annan fil",
+        "dropHere": "Släpp CSV-fil här",
+        "or": "eller",
+        "browseFiles": "bläddra filer",
+        "csvFormat": "📋 CSV-format",
+        "columnsIntro": "Din CSV-fil ska ha dessa kolumner:",
+        "colDeckName": "deckName: Namn på kortleken",
+        "colQuestion": "question: Framsidan av kortet",
+        "colAnswer": "answer: Baksidan av kortet",
+        "importFailed": "Import misslyckades",
+        "unknownError": "Okänt fel inträffade",
+        "importing": "Importerar...",
+        "importCsv": "Importera CSV",
+        "cancel": "Avbryt",
+        "downloadSample": "📎 Ladda ner exempel-CSV"
+    },
+	"DecksPage": {
+		"title": "Studiekortlekar",
+		"subtitle": "Organisera dina flashkort i kortlekar och följ dina framsteg",
+		"createDeck": "Skapa Kortlek",
+		"exportAll": "Exportera Alla",
+		"export": "Exportera",
+		"exporting": "Exporterar...",
+		"importCsv": "Importera CSV",
+		"import": "Importera",
+		"deckNameLabel": "Kortleksnamn",
+		"deckNamePlaceholder": "Ange kortleksnamn...",
+		"creating": "Skapar...",
+		"create": "Skapa",
+		"cancel": "Avbryt",
+		"emptyTitle": "Inga kortlekar ännu",
+		"emptyDescription": "Skapa din första kortlek för att börja studera med flashkort",
+		"emptyCta": "Skapa Din Första Kortlek",
+		"importModalTitle": "Importera Kortlekar från CSV"
+	},
+	"DeckDetail": {
+		"backToDecks": "Tillbaka till Kortlekar",
+		"complete": "{value}% klart",
+		"cardsSummary": "{total} kort • {mastered} bemästrade",
+		"updated": "Uppdaterad {date}",
+		"addCard": "Lägg Till Kort",
+		"startStudy": "Börja Studera",
+		"rename": "Byt namn",
+		"renameTitle": "Byt namn på denna kortlek",
+		"reset": "Återställ",
+		"resetTitle": "Återställ allt inlärningsframsteg för denna kortlek",
+		"export": "Exportera",
+		"delete": "Radera",
+		"tabs": { "cards": "Kort", "study": "Studera", "stats": "Statistik" },
+		"noCardsTitle": "Inga kort ännu",
+		"noCardsDescription": "Lägg till ditt första kort för att börja bygga din kortlek",
+		"cardsHeader": "Kort ({count})",
+		"readyTitle": "Redo att studera?",
+		"readyDescription": "Du har {count} kort redo att studera",
+		"shuffled": "Blandad Studering",
+		"ordered": "Ordnad Studering",
+		"progress": {
+			"cardOf": "Kort {current} av {total}",
+			"endSession": "Avsluta Session",
+			"known": "Kända",
+			"almost": "Nästan",
+			"unknown": "Okända",
+			"total": "Totalt",
+			"showAnswer": "Visa Svar",
+			"updating": "Uppdaterar framsteg...",
+			"loadingCard": "Laddar kort..."
+		},
+		"studyEmptyTitle": "Inga kort att studera",
+		"studyEmptyDescription": "Lägg till några kort i denna kortlek innan du börjar studera",
+		"addCards": "Lägg Till Kort",
+		"stats": {
+			"noStatsTitle": "Inga statistik ännu",
+			"noStatsDescription": "Studera några kort för att se dina framsteg",
+			"title": "Kortleksstatistik",
+			"mastered": "Bemästrade",
+			"learning": "Lär sig",
+			"new": "Nya",
+			"averageAccuracy": "Genomsnittlig träffsäkerhet",
+			"totalReviews": "Totalt antal granskningar",
+			"progressOverview": "Översikt av framsteg",
+			"completionRate": "Slutförandegrad",
+			"masteredCount": "{count} bemästrade",
+			"totalCount": "{count} totalt",
+			"recentActivity": "Senaste Aktivitet"
+		},
+		"completionView": {
+			"deckMasteredTitle": "Kortlek Bemästrad!",
+			"deckMasteredBody": "Grattis! Du har bemästrat alla kort i denna kortlek.\nAlla kort är nu markerade som MASTERED!",
+			"sessionCompleteTitle": "Session Klar!",
+			"sessionCompleteBody": "Bra jobbat med dina flashkort!",
+			"stats": {
+				"totalCards": "Totalt Antal Kort",
+				"known": "Kända",
+				"almost": "Nästan",
+				"unknown": "Okända",
+				"accuracy": "Träffsäkerhet"
+			},
+			"studyAgain": "Studera Igen",
+			"viewStats": "Visa Statistik",
+			"backToAll": "Tillbaka till Alla Kortlekar"
+		}
 	}
 }

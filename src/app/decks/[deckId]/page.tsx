@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useCards, useDeckCompletion, useDeckProgress, useDeckAnalytics, useStudySession, useDeleteDeck, useExportDeck, useDecks, useProgress } from '../../../../hooks';
@@ -14,6 +15,7 @@ import { Brain, Trash2, CreditCard, BarChart3, PartyPopper, RotateCcw, CheckCirc
 type TabType = 'cards' | 'study' | 'stats';
 
 export default function DeckDetailPage() {
+	const t = useTranslations('DeckDetail');
 	const params = useParams();
 	const router = useRouter();
 	const deckId = params.deckId as string;
@@ -79,7 +81,7 @@ export default function DeckDetailPage() {
 					href="/decks"
 					className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-200 text-sm"
 				>
-					<ArrowLeft className="h-4 w-4" /> Back to Decks
+					<ArrowLeft className="h-4 w-4" /> {t('backToDecks')}
 				</Link>
 
 				{/* Deck title and progress */}
@@ -88,8 +90,8 @@ export default function DeckDetailPage() {
 					{completion && (
 						<div className="space-y-2">
 							<div className="flex items-center justify-between text-sm text-muted-foreground">
-								<span>{completion.completion}% complete</span>
-								<span>{completion.total} cards • {completion.mastered} mastered</span>
+								<span>{t('complete', { value: completion.completion })}</span>
+								<span>{t('cardsSummary', { total: completion.total, mastered: completion.mastered })}</span>
 							</div>
 							<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 w-full">
 								<div
@@ -110,7 +112,7 @@ export default function DeckDetailPage() {
 							className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 						>
 							<Plus className="h-4 w-4" />
-							Add Card
+							{t('addCard')}
 						</Link>
 						{cards && cards.length > 0 && (
 							<button
@@ -118,7 +120,7 @@ export default function DeckDetailPage() {
 								className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 							>
 								<Brain className="h-4 w-4" />
-								Start Study
+								{t('startStudy')}
 							</button>
 						)}
 					</div>
@@ -129,18 +131,18 @@ export default function DeckDetailPage() {
 							<button
 								onClick={() => openModal('renameDeck', { deckId, deckName: currentDeckName })}
 								className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-foreground px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
-								title="Rename this deck"
+								title={t('renameTitle')}
 							>
 								<CreditCard className="h-4 w-4" />
-								Rename
+								{t('rename')}
 							</button>
 							<button
 								onClick={() => openModal('resetProgress', { deckId })}
 								className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
-								title="Reset all learning progress for this deck"
+								title={t('resetTitle')}
 							>
 								<RotateCcw className="h-4 w-4" />
-								Reset
+								{t('reset')}
 							</button>
 						</div>
 					)}
@@ -154,7 +156,7 @@ export default function DeckDetailPage() {
 								className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 							>
 								<Download className="h-4 w-4" />
-								Export
+								{t('export')}
 							</button>
 						)}
 						<button
@@ -163,7 +165,7 @@ export default function DeckDetailPage() {
 							disabled={deleteDeckMutation.isPending}
 						>
 							<Trash2 className="h-4 w-4" />
-							Delete
+							{t('delete')}
 						</button>
 					</div>
 				</div>
@@ -173,9 +175,9 @@ export default function DeckDetailPage() {
 			<div className="border-b border">
 				<nav className="flex">
 					{[
-						{ id: 'cards', label: 'Cards', icon: CreditCard },
-						{ id: 'study', label: 'Study', icon: Brain },
-						{ id: 'stats', label: 'Stats', icon: BarChart3 },
+						{ id: 'cards', label: t('tabs.cards'), icon: CreditCard },
+						{ id: 'study', label: t('tabs.study'), icon: Brain },
+						{ id: 'stats', label: t('tabs.stats'), icon: BarChart3 },
 					].map((tab) => (
 						<button
 							key={tab.id}
@@ -208,7 +210,7 @@ export default function DeckDetailPage() {
 			{/* Delete Confirmation Dialog */}
 			<DeleteDeckDialog
 				isOpen={showDeleteDialog}
-				deckName="this deck"
+				deckName={currentDeckName}
 				onConfirm={handleDeleteDeck}
 				onCancel={() => setShowDeleteDialog(false)}
 			/>
@@ -278,10 +280,10 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 								<span className="flex items-center gap-1">
 									<span className="text-xs text-muted-foreground">Accuracy:</span>
 									<span className={`font-semibold ${Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 80
-											? 'text-green-600 dark:text-green-400'
-											: Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 50
-												? 'text-yellow-600 dark:text-yellow-400'
-												: 'text-red-600 dark:text-red-400'
+										? 'text-green-600 dark:text-green-400'
+										: Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 50
+											? 'text-yellow-600 dark:text-yellow-400'
+											: 'text-red-600 dark:text-red-400'
 										}`}>
 										{Math.round((progress.timesKnown / progress.timesSeen) * 100)}%
 									</span>
@@ -324,20 +326,21 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 
 // Cards Tab Component
 function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card[] | undefined; onDeleteCard: (cardId: string, cardQuestion: string) => void; }) {
+	const t = useTranslations('DeckDetail');
 	if (!cards || cards.length === 0) {
 		return (
 			<div className="text-center py-16">
 				<div className="mb-4 flex justify-center"><CreditCard className="h-16 w-16" /></div>
-				<h3 className="text-xl font-semibold mb-2">No cards yet</h3>
+				<h3 className="text-xl font-semibold mb-2">{t('noCardsTitle')}</h3>
 				<p className="text-muted-foreground mb-6">
-					Add your first card to start building your study deck
+					{t('noCardsDescription')}
 				</p>
 				<Link
 					href={`/decks/${deckId}/edit-card`}
 					className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 text-base sm:text-sm"
 				>
 					<Plus className="h-5 w-5" />
-					Add Your First Card
+					{t('addCard')}
 				</Link>
 			</div>
 		);
@@ -346,13 +349,13 @@ function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card
 	return (
 		<div className="space-y-4">
 			<div className="flex items-center justify-between">
-				<h2 className="text-lg sm:text-xl font-semibold">Cards ({cards.length})</h2>
+				<h2 className="text-lg sm:text-xl font-semibold">{t('cardsHeader', { count: cards.length })}</h2>
 				<Link
 					href={`/decks/${deckId}/edit-card`}
 					className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 text-sm"
 				>
 					<Plus className="h-4 w-4" />
-					Add Card
+					{t('addCard')}
 				</Link>
 			</div>
 
@@ -367,6 +370,7 @@ function CardsTab({ deckId, cards, onDeleteCard }: { deckId: string; cards: Card
 
 // Study Tab Component  
 function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined; }) {
+	const t = useTranslations('DeckDetail');
 	const {
 		studySession,
 		endStudySession,
@@ -389,15 +393,13 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 		return (
 			<div className="text-center py-16">
 				<div className="mb-4 flex justify-center"><Brain className="h-16 w-16" /></div>
-				<h3 className="text-xl font-semibold mb-2">No cards to study</h3>
-				<p className="text-muted-foreground mb-6">
-					Add some cards to this deck before you can start studying
-				</p>
+				<h3 className="text-xl font-semibold mb-2">{t('studyEmptyTitle')}</h3>
+				<p className="text-muted-foreground mb-6">{t('studyEmptyDescription')}</p>
 				<Link
 					href={`/decks/${deckId}/edit-card`}
 					className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 				>
-					Add Cards
+					{t('addCards')}
 				</Link>
 			</div>
 		);
@@ -442,13 +444,13 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 			<div className="space-y-4">
 				<div className="flex items-center justify-between">
 					<h3 className="text-lg font-semibold">
-						Card {studySession.currentIndex + 1} of {studySession.cardIds.length}
+						{t('progress.cardOf', { current: studySession.currentIndex + 1, total: studySession.cardIds.length })}
 					</h3>
 					<button
 						onClick={endStudySession}
 						className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-3 py-2 rounded transition-colors text-sm"
 					>
-						End Session
+						{t('progress.endSession')}
 					</button>
 				</div>
 
@@ -464,19 +466,19 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 				<div className="grid grid-cols-4 gap-2 text-xs sm:text-sm">
 					<div className="text-center">
 						<div className="text-green-600 dark:text-green-400 font-semibold">{studySession.sessionStats.knownCards}</div>
-						<div className="text-muted-foreground">Known</div>
+						<div className="text-muted-foreground">{t('progress.known')}</div>
 					</div>
 					<div className="text-center">
 						<div className="text-yellow-600 dark:text-yellow-400 font-semibold">{studySession.sessionStats.almostCards}</div>
-						<div className="text-muted-foreground">Almost</div>
+						<div className="text-muted-foreground">{t('progress.almost')}</div>
 					</div>
 					<div className="text-center">
 						<div className="text-red-600 dark:text-red-400 font-semibold">{studySession.sessionStats.unknownCards}</div>
-						<div className="text-muted-foreground">Unknown</div>
+						<div className="text-muted-foreground">{t('progress.unknown')}</div>
 					</div>
 					<div className="text-center">
 						<div className="text-muted-foreground font-semibold">{studySession.sessionStats.seenCards}</div>
-						<div className="text-muted-foreground">Total</div>
+						<div className="text-muted-foreground">{t('progress.total')}</div>
 					</div>
 				</div>
 			</div>
@@ -503,7 +505,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 						onClick={showAnswer}
 						className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:px-6 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 					>
-						Show Answer
+						{t('progress.showAnswer')}
 					</button>
 				</div>
 			)}
@@ -513,7 +515,7 @@ function StudyTab({ deckId, cards }: { deckId: string; cards: Card[] | undefined
 				<div className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50">
 					<div className="bg-card rounded-lg p-6 flex items-center gap-3">
 						<div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
-						<span>Updating progress...</span>
+						<span>{t('progress.updating')}</span>
 					</div>
 				</div>
 			)}
@@ -531,14 +533,13 @@ function StatsTab({
 	completion: { completion: number; mastered: number; total: number; } | undefined;
 	analytics: { statusDistribution: { NEW: number; LEARNING: number; MASTERED: number; }; averageAccuracy: number; totalReviews: number; recentActivity: { date: string; reviews: number; }[]; } | undefined;
 }) {
+	const t = useTranslations('DeckDetail');
 	if (!deckProgress || deckProgress.length === 0) {
 		return (
 			<div className="text-center py-16">
 				<div className="mb-4 flex justify-center"><BarChart3 className="h-16 w-16" /></div>
-				<h3 className="text-xl font-semibold mb-2">No statistics yet</h3>
-				<p className="text-muted-foreground">
-					Study some cards to see your progress statistics
-				</p>
+				<h3 className="text-xl font-semibold mb-2">{t('stats.noStatsTitle')}</h3>
+				<p className="text-muted-foreground">{t('stats.noStatsDescription')}</p>
 			</div>
 		);
 	}
@@ -551,23 +552,23 @@ function StatsTab({
 
 	return (
 		<div className="space-y-6">
-			<h2 className="text-xl font-semibold">Deck Statistics</h2>
+			<h2 className="text-xl font-semibold">{t('stats.title')}</h2>
 
 			{/* Status Distribution */}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
 				<div className="bg-card border border rounded-lg p-6 text-center">
 					<div className="text-3xl font-bold text-green-600">{statusCounts.MASTERED || 0}</div>
-					<div className="text-sm text-muted-foreground">Mastered</div>
+					<div className="text-sm text-muted-foreground">{t('stats.mastered')}</div>
 				</div>
 
 				<div className="bg-card border border rounded-lg p-6 text-center">
 					<div className="text-3xl font-bold text-yellow-600">{statusCounts.LEARNING || 0}</div>
-					<div className="text-sm text-muted-foreground">Learning</div>
+					<div className="text-sm text-muted-foreground">{t('stats.learning')}</div>
 				</div>
 
 				<div className="bg-card border border rounded-lg p-6 text-center">
 					<div className="text-3xl font-bold text-gray-600">{statusCounts.NEW || 0}</div>
-					<div className="text-sm text-muted-foreground">New</div>
+					<div className="text-sm text-muted-foreground">{t('stats.new')}</div>
 				</div>
 			</div>
 
@@ -576,22 +577,22 @@ function StatsTab({
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 					<div className="bg-card border border rounded-lg p-6 text-center">
 						<div className="text-3xl font-bold text-blue-600">{analytics.averageAccuracy}%</div>
-						<div className="text-sm text-muted-foreground">Average Accuracy</div>
+						<div className="text-sm text-muted-foreground">{t('stats.averageAccuracy')}</div>
 					</div>
 
 					<div className="bg-card border border rounded-lg p-6 text-center">
 						<div className="text-3xl font-bold text-purple-600">{analytics.totalReviews}</div>
-						<div className="text-sm text-muted-foreground">Total Reviews</div>
+						<div className="text-sm text-muted-foreground">{t('stats.totalReviews')}</div>
 					</div>
 				</div>
 			)}
 
 			{completion && (
 				<div className="bg-card border border rounded-lg p-6">
-					<h3 className="font-semibold mb-4">Progress Overview</h3>
+					<h3 className="font-semibold mb-4">{t('stats.progressOverview')}</h3>
 					<div className="space-y-3">
 						<div className="flex justify-between">
-							<span>Completion Rate</span>
+							<span>{t('stats.completionRate')}</span>
 							<span className="font-semibold">{completion.completion}%</span>
 						</div>
 						<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-4">
@@ -601,8 +602,8 @@ function StatsTab({
 							/>
 						</div>
 						<div className="flex justify-between text-sm text-muted-foreground">
-							<span>{completion.mastered} mastered</span>
-							<span>{completion.total} total</span>
+							<span>{t('stats.masteredCount', { count: completion.mastered })}</span>
+							<span>{t('stats.totalCount', { count: completion.total })}</span>
 						</div>
 					</div>
 				</div>
@@ -611,7 +612,7 @@ function StatsTab({
 			{/* Recent Activity Chart */}
 			{analytics && analytics.recentActivity.length > 0 && (
 				<div className="bg-card border border rounded-lg p-6">
-					<h3 className="font-semibold mb-4">Recent Activity</h3>
+					<h3 className="font-semibold mb-4">{t('stats.recentActivity')}</h3>
 					<div className="space-y-2">
 						{analytics.recentActivity.map((activity) => (
 							<div key={activity.date} className="flex items-center justify-between">

@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { useTranslations } from 'next-intl';
 import { useDecks, useCreateDeck, useExportAllDecks } from '../../../hooks';
 import { useDeckCompletion } from '../../../hooks';
 import { useUIStore } from '../../../stores/ui';
@@ -9,6 +10,7 @@ import { ImportCSV } from '../../components/ImportCSV';
 import { Download, BookOpen, X } from 'lucide-react';
 
 export default function DecksPage() {
+	const t = useTranslations('DecksPage');
 	const [isCreating, setIsCreating] = useState(false);
 	const [newDeckName, setNewDeckName] = useState('');
 	const [showImportModal, setShowImportModal] = useState(false);
@@ -62,9 +64,9 @@ export default function DecksPage() {
 			{/* Mobile-first header */}
 			<div className="space-y-4">
 				<div>
-					<h1 className="text-2xl sm:text-3xl font-bold">Study Decks</h1>
+					<h1 className="text-2xl sm:text-3xl font-bold">{t('title')}</h1>
 					<p className="text-muted-foreground mt-1 text-sm sm:text-base">
-						Organize your flashcards into decks and track your progress
+						{t('subtitle')}
 					</p>
 				</div>
 
@@ -77,7 +79,7 @@ export default function DecksPage() {
 							className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 						>
 							<span className="text-base sm:text-sm">+</span>
-							Create Deck
+							{t('createDeck')}
 						</button>
 					)}
 
@@ -90,8 +92,8 @@ export default function DecksPage() {
 								className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-3 py-3 sm:px-3 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 							>
 								<span>📤</span>
-								<span className="hidden sm:inline">{exportAllDecksMutation.isPending ? 'Exporting...' : 'Export All'}</span>
-								<span className="sm:hidden">Export</span>
+								<span className="hidden sm:inline">{exportAllDecksMutation.isPending ? t('exporting') : t('exportAll')}</span>
+								<span className="sm:hidden">{t('export')}</span>
 							</button>
 
 							<button
@@ -99,8 +101,8 @@ export default function DecksPage() {
 								className="bg-green-600 hover:bg-green-700 text-white px-3 py-3 sm:px-3 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 							>
 								<Download className="w-4 h-4" />
-								<span className="hidden sm:inline">Import CSV</span>
-								<span className="sm:hidden">Import</span>
+								<span className="hidden sm:inline">{t('importCsv')}</span>
+								<span className="sm:hidden">{t('import')}</span>
 							</button>
 						</div>
 					)}
@@ -108,19 +110,19 @@ export default function DecksPage() {
 			</div>
 
 			{isCreating && (
-				<div className="bg-card border border rounded-lg p-6">
+				<div className="bg-card border rounded-lg p-6">
 					<form onSubmit={handleCreateDeck} className="space-y-4">
 						<div>
 							<label htmlFor="deckName" className="block text-sm font-medium mb-2">
-								Deck Name
+								{t('deckNameLabel')}
 							</label>
 							<input
 								id="deckName"
 								type="text"
 								value={newDeckName}
 								onChange={(e) => setNewDeckName(e.target.value)}
-								placeholder="Enter deck name..."
-								className="w-full px-4 py-2 border border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+								placeholder={t('deckNamePlaceholder')}
+								className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
 								autoFocus
 								disabled={createDeckMutation.isPending}
 							/>
@@ -131,7 +133,7 @@ export default function DecksPage() {
 								disabled={!newDeckName.trim() || createDeckMutation.isPending}
 								className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
 							>
-								{createDeckMutation.isPending ? 'Creating...' : 'Create'}
+								{createDeckMutation.isPending ? t('creating') : t('create')}
 							</button>
 							<button
 								type="button"
@@ -141,7 +143,7 @@ export default function DecksPage() {
 								}}
 								className="bg-muted0 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
 							>
-								Cancel
+								{t('cancel')}
 							</button>
 						</div>
 					</form>
@@ -151,16 +153,16 @@ export default function DecksPage() {
 			{!decks || decks.length === 0 ? (
 				<div className="text-center py-16">
 					<BookOpen className="w-16 h-16 mb-4 text-gray-400" />
-					<h3 className="text-xl font-semibold mb-2">No decks yet</h3>
+					<h3 className="text-xl font-semibold mb-2">{t('emptyTitle')}</h3>
 					<p className="text-muted-foreground mb-6">
-						Create your first deck to start studying with flashcards
+						{t('emptyDescription')}
 					</p>
 					{!isCreating && (
 						<button
 							onClick={() => setIsCreating(true)}
 							className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
 						>
-							Create Your First Deck
+							{t('emptyCta')}
 						</button>
 					)}
 				</div>
@@ -182,7 +184,7 @@ export default function DecksPage() {
 					<div className="bg-card rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
 						<div className="p-6">
 							<div className="flex items-center justify-between mb-6">
-								<h2 className="text-2xl font-bold">Import Decks from CSV</h2>
+								<h2 className="text-2xl font-bold">{t('importModalTitle')}</h2>
 								<button
 									onClick={() => setShowImportModal(false)}
 									className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl"
@@ -211,7 +213,7 @@ function DeckCard({ deck, onDelete }: DeckCardProps) {
 	const { data: completion } = useDeckCompletion(deck.id);
 
 	return (
-		<div className="bg-card border border rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow duration-200">
+		<div className="bg-card border rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow duration-200">
 			{/* Mobile-first layout */}
 			<div className="space-y-4">
 				{/* Deck name and progress */}

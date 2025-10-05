@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import { Button } from './ui/button';
 import { useImportCSV } from '../../hooks';
 import { CheckCircle, Folder, X, Download } from 'lucide-react';
@@ -11,6 +12,7 @@ interface ImportCSVProps {
 }
 
 export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
+	const t = useTranslations('ImportCSV');
 	const [isDragOver, setIsDragOver] = useState(false);
 	const [selectedFile, setSelectedFile] = useState<File | null>(null);
 	const fileInputRef = useRef<HTMLInputElement>(null);
@@ -97,7 +99,7 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 					<div className="space-y-3">
 						<CheckCircle className="w-10 h-10 text-green-600" />
 						<div>
-							<h3 className="font-medium text-green-800 dark:text-green-200">File Selected</h3>
+							<h3 className="font-medium text-green-800 dark:text-green-200">{t('fileSelected')}</h3>
 							<p className="text-sm text-green-600 dark:text-green-300 mt-1">
 								{selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
 							</p>
@@ -108,22 +110,22 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 							className="text-sm text-muted-foreground hover:text-foreground underline"
 							onClick={handleReset}
 						>
-							Choose different file
+							{t('chooseDifferent')}
 						</Button>
 					</div>
 				) : (
 					<div className="space-y-3">
 						<Folder className="w-10 h-10 text-gray-600" />
 						<div>
-							<h3 className="font-medium">Drop CSV file here</h3>
+							<h3 className="font-medium">{t('dropHere')}</h3>
 							<p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
-								or{' '}
+								{t('or')}{' '}
 								<button
 									type="button"
 									onClick={() => fileInputRef.current?.click()}
 									className="text-blue-600 hover:text-blue-700 underline"
 								>
-									browse files
+									{t('browseFiles')}
 								</button>
 							</p>
 						</div>
@@ -133,17 +135,17 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 
 			{/* File Format Info */}
 			<div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-				<h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">📋 CSV Format</h4>
+				<h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">{t('csvFormat')}</h4>
 				<p className="text-sm text-blue-800 dark:text-blue-200 mb-2">
-					Your CSV file should have these columns:
+					{t('columnsIntro')}
 				</p>
 				<div className="bg-white dark:bg-blue-950/20 rounded border font-mono text-xs p-2 mb-2">
 					deckName,question,answer
 				</div>
 				<ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-					<li>• <strong>deckName:</strong> Name of the flashcard deck</li>
-					<li>• <strong>question:</strong> Front side of the card</li>
-					<li>• <strong>answer:</strong> Back side of the card</li>
+					<li>• <strong>deckName:</strong> {t('colDeckName')}</li>
+					<li>• <strong>question:</strong> {t('colQuestion')}</li>
+					<li>• <strong>answer:</strong> {t('colAnswer')}</li>
 				</ul>
 			</div>
 
@@ -151,10 +153,10 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 			{importMutation.error && (
 				<div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
 					<h4 className="font-medium text-red-900 dark:text-red-100 mb-1 flex items-center gap-2">
-						<X className="w-4 h-4" /> Import Failed
+						<X className="w-4 h-4" /> {t('importFailed')}
 					</h4>
 					<p className="text-sm text-red-800 dark:text-red-200">
-						{importMutation.error instanceof Error ? importMutation.error.message : 'Unknown error occurred'}
+						{importMutation.error instanceof Error ? importMutation.error.message : t('unknownError')}
 					</p>
 				</div>
 			)}
@@ -169,12 +171,12 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 					{importMutation.isPending ? (
 						<>
 							<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
-							Importing...
+							{t('importing')}
 						</>
 					) : (
 						<>
 							<Download className="w-4 h-4" />
-							Import CSV
+							{t('importCsv')}
 						</>
 					)}
 				</Button>
@@ -185,7 +187,7 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 						onClick={onCancel}
 						disabled={importMutation.isPending}
 					>
-						Cancel
+						{t('cancel')}
 					</Button>
 				)}
 			</div>
@@ -210,7 +212,7 @@ Math Facts,What is the square root of 64?,8`;
 					}}
 					className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 underline"
 				>
-					📎 Download sample CSV file
+					{t('downloadSample')}
 				</button>
 			</div>
 		</div>
