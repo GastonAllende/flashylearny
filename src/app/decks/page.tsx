@@ -1,12 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useDecks, useCreateDeck, useExportAllDecks } from '../../../hooks';
-import { useDeckCompletion } from '../../../hooks';
 import { useUIStore } from '../../../stores/ui';
 import { ImportCSV } from '../../components/ImportCSV';
+import DeckCard from '../../components/DeckCard';
 import { Download, BookOpen, X } from 'lucide-react';
 
 export default function DecksPage() {
@@ -172,6 +171,7 @@ export default function DecksPage() {
 						<DeckCard
 							key={deck.id}
 							deck={deck}
+							onEdit={(d) => openModal('renameDeck', { deckId: d.id, currentName: d.name })}
 							onDelete={handleDeleteDeck}
 						/>
 					))}
@@ -204,68 +204,3 @@ export default function DecksPage() {
 	);
 }
 
-interface DeckCardProps {
-	deck: { id: string; name: string; createdAt: number; updatedAt: number; };
-	onDelete: (deckId: string, deckName: string) => void;
-}
-
-function DeckCard({ deck, onDelete }: DeckCardProps) {
-	const t = useTranslations('DecksPage');
-	const { data: completion } = useDeckCompletion(deck.id);
-
-	return (
-		<div className="bg-card border rounded-lg p-4 sm:p-6 hover:shadow-lg transition-shadow duration-200">
-			{/* Mobile-first layout */}
-			<div className="space-y-4">
-				{/* Deck name and progress */}
-				<div className="space-y-3">
-					<Link
-						href={`/decks/${deck.id}`}
-						className="text-lg sm:text-xl font-semibold text-blue-600 hover:text-blue-700 transition-colors duration-200 block"
-					>
-						{deck.name}
-					</Link>
-
-					{completion && (
-						<div className="space-y-2">
-							<div className="flex items-center justify-between">
-								<span className="text-sm text-muted-foreground">
-									{t('completionPercent', { percent: completion.completion })}
-								</span>
-								<span className="text-sm text-muted-foreground">
-									{t('cardsAndMastered', { total: completion.total, mastered: completion.mastered })}
-								</span>
-							</div>
-							<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 w-full">
-								<div
-									className="bg-green-500 h-3 rounded-full transition-all duration-300"
-									style={{ width: `${completion.completion}%` }}
-								/>
-							</div>
-						</div>
-					)}
-
-					<div className="text-xs text-gray-500 dark:text-gray-500">
-						{t('updatedDate', { date: new Date(deck.updatedAt).toLocaleDateString() })}
-					</div>
-				</div>
-
-				{/* Action buttons - responsive */}
-				<div className="flex gap-3 sm:gap-2">
-					<Link
-						href={`/decks/${deck.id}`}
-						className="flex-1 sm:flex-none bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-center text-sm"
-					>
-						{t('open')}
-					</Link>
-					<button
-						onClick={() => onDelete(deck.id, deck.name)}
-						className="flex-1 sm:flex-none bg-red-600 hover:bg-red-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 text-sm"
-					>
-						{t('delete')}
-					</button>
-				</div>
-			</div>
-		</div>
-	);
-}

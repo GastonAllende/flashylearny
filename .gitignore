@@ -41,4 +41,6 @@ yarn-error.log*
 next-env.d.ts
 
 # project doc files
-doc/*
+docs/*
+
+.playwright-mcp/*
