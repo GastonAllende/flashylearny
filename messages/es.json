@@ -81,5 +81,218 @@
 			"typescript": "TypeScript - Desarrollo con seguridad de tipos"
 		},
 		"cta": "Comienza a Aprender Hoy"
+	},
+	"PrivacyPage": {
+		"title": "Política de Privacidad",
+		"subtitle": "Tu privacidad es importante para nosotros",
+		"lastUpdated": "Última actualización: 2 de octubre de 2025",
+		"overview": {
+			"title": "Resumen de Privacidad",
+			"description": "FlashyLearny está diseñado con la privacidad en su núcleo. Todos tus datos de estudio permanecen en tu dispositivo. No recopilamos, almacenamos ni transmitimos ninguna de tu información personal o contenido de estudio a servidores externos."
+		},
+		"dataCollection": {
+			"title": "Qué Datos Recopilamos",
+			"storedLocally": {
+				"title": "Datos Almacenados Localmente",
+				"items": [
+					"Tus mazos de tarjetas didácticas y su contenido",
+					"Progreso de estudio y estadísticas",
+					"Preferencias de la aplicación (tema, configuraciones)",
+					"Datos de sesión para seguimiento de estudio"
+				],
+				"note": "Importante: Estos datos nunca salen de tu dispositivo y se almacenan en la base de datos local de tu navegador."
+			},
+			"notCollected": {
+				"title": "Datos que NO Recopilamos",
+				"items": [
+					"Información personal (nombre, email, teléfono)",
+					"Analíticas de uso o datos de seguimiento",
+					"Información del dispositivo o direcciones IP",
+					"Contenido de estudio o datos de progreso",
+					"Cookies para propósitos de seguimiento"
+				]
+			}
+		},
+		"dataStorage": {
+			"title": "Cómo Almacenamos Tus Datos",
+			"localStorage": {
+				"title": "Almacenamiento Local",
+				"description": "Todos los datos se almacenan usando IndexedDB en tu navegador. Esta es una base de datos del lado del cliente que mantiene tu información segura y accesible sin conexión."
+			},
+			"security": {
+				"title": "🔐 Seguridad",
+				"description": "Tus datos están protegidos por las medidas de seguridad de tu navegador y no son accesibles para otros sitios web o aplicaciones."
+			},
+			"deviceAccess": {
+				"title": "Acceso al Dispositivo",
+				"description": "Solo tú tienes acceso a tus datos de estudio a través de esta aplicación en tu dispositivo. No se requieren cuentas o registros."
+			},
+			"dataBackup": {
+				"title": "Respaldo de Datos",
+				"description": "Puedes exportar tus datos como archivos CSV para propósitos de respaldo. Estos archivos permanecen bajo tu control."
+			}
+		},
+		"thirdPartyServices": {
+			"title": "Servicios de Terceros",
+			"hosting": {
+				"title": "Alojamiento",
+				"description": "Esta aplicación está alojada en Vercel. Aunque Vercel puede recopilar registros estándar del servidor web (direcciones IP, tiempos de solicitud), no tienen acceso a tus datos de estudio ya que se almacenan localmente."
+			},
+			"noAnalytics": {
+				"title": "Sin Analíticas",
+				"description": "No utilizamos Google Analytics, Facebook Pixel, ni ningún otro servicio de seguimiento. Tus patrones de uso y hábitos de estudio permanecen privados."
+			}
+		},
+		"yourRights": {
+			"title": "Tus Derechos y Control",
+			"dataControl": {
+				"title": "Control de Datos",
+				"items": [
+					"Acceso: Todos tus datos siempre son accesibles a través de la aplicación",
+					"Exportar: Descarga tus datos como archivos CSV en cualquier momento",
+					"Eliminar: Borra todos los datos a través de la configuración del navegador",
+					"Modificar: Edita o elimina tarjetas y mazos individuales"
+				]
+			},
+			"dataPortability": {
+				"title": "Portabilidad de Datos",
+				"items": [
+					"Exportar mazos a formato CSV",
+					"Importar datos de otras aplicaciones de tarjetas didácticas",
+					"Sin dependencia de proveedor o formatos propietarios",
+					"Formatos de archivo estándar y legibles"
+				]
+			}
+		},
+		"dataDeletion": {
+			"title": "Eliminación de Datos",
+			"description": "Dado que todos los datos se almacenan localmente en tu dispositivo, tienes control completo sobre su eliminación:",
+			"howToDelete": {
+				"title": "Cómo eliminar tus datos:",
+				"steps": [
+					"Borra el almacenamiento de tu navegador para este sitio",
+					"Usa la función \"Borrar datos de navegación\" de tu navegador",
+					"Desinstala la PWA de tu dispositivo",
+					"Elimina mazos y tarjetas individuales dentro de la aplicación"
+				]
+			}
+		},
+		"contact": {
+			"title": "¿Preguntas o Inquietudes?",
+			"description": "Si tienes alguna pregunta sobre esta política de privacidad o cómo FlashyLearny maneja tus datos, puedes contactarnos a través de:",
+			"methods": [
+				"Problemas del repositorio de GitHub (si es de código abierto)",
+				"Formulario de contacto en nuestro sitio web",
+				"Soporte por email (si se proporciona)"
+			],
+			"updateNote": "Esta política de privacidad puede actualizarse de vez en cuando. Cualquier cambio se publicará en esta página."
+		},
+		"cta": "Comienza a Estudiar de Forma Privada"
+	},
+	"HelpPage": {
+		"title": "Ayuda y Soporte",
+		"subtitle": "Aprovecha al máximo FlashyLearny con estas guías útiles",
+		"gettingStarted": {
+			"title": "Comenzando",
+			"step1": {
+				"title": "1. Crea Tu Primer Mazo",
+				"description": "Comienza creando un mazo para organizar tu material de estudio. Haz clic en el botón \"Crear Mazo\" en la página de mazos y dale un nombre descriptivo."
+			},
+			"step2": {
+				"title": "2. Agregar Tarjetas",
+				"description": "Haz clic en \"Agregar Tarjeta\" para crear tarjetas didácticas. Escribe una pregunta clara en el frente y la respuesta en el reverso. Manténlas concisas para mejor memorización."
+			},
+			"step3": {
+				"title": "3. Comenzar a Estudiar",
+				"description": "Usa el botón \"Comenzar a Estudiar\" para iniciar una sesión de estudio. Revisa cada tarjeta y marca honestamente si conocías la respuesta."
+			}
+		},
+		"learningTips": {
+			"title": "Consejos de Aprendizaje",
+			"bestPractices": {
+				"title": "Mejores Prácticas",
+				"items": [
+					"Estudia en sesiones cortas y regulares (15-30 minutos)",
+					"Sé honesto al marcar las tarjetas como conocidas/desconocidas",
+					"Revisa las tarjetas difíciles con más frecuencia",
+					"Crea tarjetas con tus propias palabras",
+					"Enfócate en la comprensión, no solo en la memorización"
+				]
+			},
+			"thingsToAvoid": {
+				"title": "Cosas que Evitar",
+				"items": [
+					"Hacer tarjetas demasiado largas o complejas",
+					"Estudiar cuando estés cansado o distraído",
+					"Marcar tarjetas como conocidas cuando no estés seguro",
+					"Saltarse las sesiones de revisión",
+					"Crear demasiadas tarjetas nuevas a la vez"
+				]
+			}
+		},
+		"featuresGuide": {
+			"title": "Guía de Características",
+			"spacedRepetition": {
+				"title": "Repetición Espaciada",
+				"description": "Las tarjetas con las que tienes dificultades aparecerán con más frecuencia, mientras que las tarjetas que has dominado aparecerán con menos frecuencia. Esto ayuda a optimizar tu tiempo de estudio y mejora la retención a largo plazo."
+			},
+			"progressTracking": {
+				"title": "Seguimiento de Progreso",
+				"description": "Monitorea tu progreso de aprendizaje con estadísticas detalladas. Ve cuántas tarjetas has dominado, estás aprendiendo actualmente, o no has estudiado aún."
+			},
+			"offlineMode": {
+				"title": "Modo Sin Conexión",
+				"description": "Todos tus datos se almacenan localmente en tu dispositivo. Puedes estudiar en cualquier lugar, incluso sin conexión a internet. Tu progreso se sincroniza automáticamente cuando te reconectas."
+			}
+		},
+		"troubleshooting": {
+			"title": "Solución de Problemas",
+			"dataDisappeared": {
+				"title": "Mis datos desaparecieron o las tarjetas no se cargan",
+				"description": "Esto usualmente sucede cuando se borran los datos del navegador. Intenta:",
+				"steps": [
+					"Actualizar la página",
+					"Verificar si estás usando un navegador diferente o modo incógnito",
+					"Asegurarte de que tu navegador soporte IndexedDB",
+					"Importar tus datos desde una copia de seguridad CSV si está disponible"
+				]
+			},
+			"appWontInstall": {
+				"title": "La aplicación no se instala en mi dispositivo",
+				"description": "Requisitos de instalación PWA:",
+				"steps": [
+					"Usar un navegador compatible (Chrome, Firefox, Safari, Edge)",
+					"Visitar el sitio a través de HTTPS",
+					"Buscar el botón de instalación en la barra de direcciones de tu navegador",
+					"En móvil, usar \"Agregar a Pantalla de Inicio\" desde el menú del navegador"
+				]
+			},
+			"studySessionsNotWorking": {
+				"title": "Las sesiones de estudio no funcionan correctamente",
+				"description": "Intenta estos pasos:",
+				"steps": [
+					"Asegúrate de que tu mazo tenga tarjetas",
+					"Actualiza la página e inténtalo de nuevo",
+					"Borra la caché del navegador y recarga",
+					"Revisa la consola para mensajes de error"
+				]
+			}
+		},
+		"keyboardShortcuts": {
+			"title": "Atajos de Teclado",
+			"studySession": {
+				"title": "Sesión de Estudio",
+				"showAnswer": "Mostrar respuesta",
+				"markAsKnown": "Marcar como conocido",
+				"markAsUnknown": "Marcar como desconocido"
+			},
+			"navigation": {
+				"title": "Navegación",
+				"goToDecks": "Ir a mazos",
+				"createNewDeck": "Crear nuevo mazo",
+				"toggleTheme": "Cambiar tema"
+			}
+		},
+		"cta": "Volver a Estudiar"
 	}
 }

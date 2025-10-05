@@ -34,12 +34,12 @@ function DropdownMenuTrigger({
   const { open, setOpen } = context;
 
   if (asChild && React.isValidElement(children)) {
-    return React.cloneElement(children as React.ReactElement<any>, {
+    return React.cloneElement(children as React.ReactElement<{ onClick?: (e: React.MouseEvent) => void; }>, {
       onClick: (e: React.MouseEvent) => {
         e.stopPropagation();
         setOpen(!open);
-        if ((children as any).props?.onClick) {
-          (children as any).props.onClick(e);
+        if ((children as React.ReactElement<{ onClick?: (e: React.MouseEvent) => void; }>).props?.onClick) {
+          (children as React.ReactElement<{ onClick?: (e: React.MouseEvent) => void; }>).props.onClick?.(e);
         }
       }
     });

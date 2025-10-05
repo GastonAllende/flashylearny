@@ -81,5 +81,218 @@
 			"typescript": "TypeScript - Type-safe development"
 		},
 		"cta": "Start Learning Today"
+	},
+	"PrivacyPage": {
+		"title": "Privacy Policy",
+		"subtitle": "Your privacy is important to us",
+		"lastUpdated": "Last updated: October 2, 2025",
+		"overview": {
+			"title": "Privacy Overview",
+			"description": "FlashyLearny is designed with privacy at its core. All your study data stays on your device. We don't collect, store, or transmit any of your personal information or study content to external servers."
+		},
+		"dataCollection": {
+			"title": "What Data We Collect",
+			"storedLocally": {
+				"title": "Data Stored Locally",
+				"items": [
+					"Your flashcard decks and their content",
+					"Study progress and statistics",
+					"App preferences (theme, settings)",
+					"Session data for study tracking"
+				],
+				"note": "Important: This data never leaves your device and is stored in your browser's local database."
+			},
+			"notCollected": {
+				"title": "Data We DON'T Collect",
+				"items": [
+					"Personal information (name, email, phone)",
+					"Usage analytics or tracking data",
+					"Device information or IP addresses",
+					"Study content or progress data",
+					"Cookies for tracking purposes"
+				]
+			}
+		},
+		"dataStorage": {
+			"title": "How We Store Your Data",
+			"localStorage": {
+				"title": "Local Storage",
+				"description": "All data is stored using IndexedDB in your browser. This is a client-side database that keeps your information secure and accessible offline."
+			},
+			"security": {
+				"title": "🔐 Security",
+				"description": "Your data is protected by your browser's security measures and is not accessible to other websites or applications."
+			},
+			"deviceAccess": {
+				"title": "Device Access",
+				"description": "Only you have access to your study data through this app on your device. No accounts or sign-ups are required."
+			},
+			"dataBackup": {
+				"title": "Data Backup",
+				"description": "You can export your data as CSV files for backup purposes. These files remain under your control."
+			}
+		},
+		"thirdPartyServices": {
+			"title": "Third-Party Services",
+			"hosting": {
+				"title": "Hosting",
+				"description": "This application is hosted on Vercel. While Vercel may collect standard web server logs (IP addresses, request times), they do not have access to your study data since it's stored locally."
+			},
+			"noAnalytics": {
+				"title": "No Analytics",
+				"description": "We do not use Google Analytics, Facebook Pixel, or any other tracking services. Your usage patterns and study habits remain private."
+			}
+		},
+		"yourRights": {
+			"title": "Your Rights and Control",
+			"dataControl": {
+				"title": "Data Control",
+				"items": [
+					"Access: All your data is always accessible through the app",
+					"Export: Download your data as CSV files anytime",
+					"Delete: Clear all data through browser settings",
+					"Modify: Edit or delete individual cards and decks"
+				]
+			},
+			"dataPortability": {
+				"title": "Data Portability",
+				"items": [
+					"Export decks to CSV format",
+					"Import data from other flashcard apps",
+					"No vendor lock-in or proprietary formats",
+					"Standard, readable file formats"
+				]
+			}
+		},
+		"dataDeletion": {
+			"title": "Data Deletion",
+			"description": "Since all data is stored locally on your device, you have complete control over its deletion:",
+			"howToDelete": {
+				"title": "How to delete your data:",
+				"steps": [
+					"Clear your browser's storage for this site",
+					"Use your browser's \"Clear browsing data\" feature",
+					"Uninstall the PWA from your device",
+					"Delete individual decks and cards within the app"
+				]
+			}
+		},
+		"contact": {
+			"title": "Questions or Concerns?",
+			"description": "If you have any questions about this privacy policy or how FlashyLearny handles your data, you can reach out through:",
+			"methods": [
+				"GitHub repository issues (if open source)",
+				"Contact form on our website",
+				"Email support (if provided)"
+			],
+			"updateNote": "This privacy policy may be updated from time to time. Any changes will be posted on this page."
+		},
+		"cta": "Start Studying Privately"
+	},
+	"HelpPage": {
+		"title": "Help & Support",
+		"subtitle": "Get the most out of FlashyLearny with these helpful guides",
+		"gettingStarted": {
+			"title": "Getting Started",
+			"step1": {
+				"title": "1. Create Your First Deck",
+				"description": "Start by creating a deck to organize your study material. Click the \"Create Deck\" button on the decks page and give it a descriptive name."
+			},
+			"step2": {
+				"title": "2. Add Cards",
+				"description": "Click \"Add Card\" to create flashcards. Write a clear question on the front and the answer on the back. Keep them concise for better memorization."
+			},
+			"step3": {
+				"title": "3. Start Studying",
+				"description": "Use the \"Start Studying\" button to begin a study session. Review each card and honestly mark whether you knew the answer."
+			}
+		},
+		"learningTips": {
+			"title": "Learning Tips",
+			"bestPractices": {
+				"title": "Best Practices",
+				"items": [
+					"Study in short, regular sessions (15-30 minutes)",
+					"Be honest when marking cards as known/unknown",
+					"Review difficult cards more frequently",
+					"Create cards in your own words",
+					"Focus on understanding, not just memorization"
+				]
+			},
+			"thingsToAvoid": {
+				"title": "Things to Avoid",
+				"items": [
+					"Making cards too long or complex",
+					"Studying when tired or distracted",
+					"Marking cards as known when you're not sure",
+					"Skipping review sessions",
+					"Creating too many new cards at once"
+				]
+			}
+		},
+		"featuresGuide": {
+			"title": "Features Guide",
+			"spacedRepetition": {
+				"title": "Spaced Repetition",
+				"description": "Cards you struggle with will appear more frequently, while cards you've mastered will appear less often. This helps optimize your study time and improves long-term retention."
+			},
+			"progressTracking": {
+				"title": "Progress Tracking",
+				"description": "Monitor your learning progress with detailed statistics. See how many cards you've mastered, are currently learning, or haven't studied yet."
+			},
+			"offlineMode": {
+				"title": "Offline Mode",
+				"description": "All your data is stored locally on your device. You can study anywhere, even without an internet connection. Your progress syncs automatically when you reconnect."
+			}
+		},
+		"troubleshooting": {
+			"title": "Troubleshooting",
+			"dataDisappeared": {
+				"title": "My data disappeared or cards aren't loading",
+				"description": "This usually happens when browser data is cleared. Try:",
+				"steps": [
+					"Refresh the page",
+					"Check if you're using a different browser or incognito mode",
+					"Ensure your browser supports IndexedDB",
+					"Import your data from a CSV backup if available"
+				]
+			},
+			"appWontInstall": {
+				"title": "The app won't install on my device",
+				"description": "PWA installation requirements:",
+				"steps": [
+					"Use a supported browser (Chrome, Firefox, Safari, Edge)",
+					"Visit the site over HTTPS",
+					"Look for the install button in your browser's address bar",
+					"On mobile, use \"Add to Home Screen\" from the browser menu"
+				]
+			},
+			"studySessionsNotWorking": {
+				"title": "Study sessions aren't working properly",
+				"description": "Try these steps:",
+				"steps": [
+					"Make sure your deck has cards",
+					"Refresh the page and try again",
+					"Clear browser cache and reload",
+					"Check console for any error messages"
+				]
+			}
+		},
+		"keyboardShortcuts": {
+			"title": "Keyboard Shortcuts",
+			"studySession": {
+				"title": "Study Session",
+				"showAnswer": "Show answer",
+				"markAsKnown": "Mark as known",
+				"markAsUnknown": "Mark as unknown"
+			},
+			"navigation": {
+				"title": "Navigation",
+				"goToDecks": "Go to decks",
+				"createNewDeck": "Create new deck",
+				"toggleTheme": "Toggle theme"
+			}
+		},
+		"cta": "Back to Studying"
 	}
 }

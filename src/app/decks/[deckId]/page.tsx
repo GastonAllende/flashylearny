@@ -26,7 +26,7 @@ export default function DeckDetailPage() {
 	const { data: completion } = useDeckCompletion(deckId);
 	const { data: deckProgress } = useDeckProgress(deckId);
 	const { data: analytics } = useDeckAnalytics(deckId);
-	const { startStudySession, openModal } = useUIStore();
+	const { openModal } = useUIStore();
 	const deleteDeckMutation = useDeleteDeck();
 	const exportDeckMutation = useExportDeck();
 
@@ -217,7 +217,7 @@ export default function DeckDetailPage() {
 }
 
 // Card Item Component with Progress
-function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDelete: (cardId: string, cardQuestion: string) => void }) {
+function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDelete: (cardId: string, cardQuestion: string) => void; }) {
 	const { data: progress } = useProgress(card.id);
 
 	const getStatusBadge = () => {
@@ -277,13 +277,12 @@ function CardItem({ card, deckId, onDelete }: { card: Card; deckId: string; onDe
 							{progress.timesSeen > 0 && (
 								<span className="flex items-center gap-1">
 									<span className="text-xs text-muted-foreground">Accuracy:</span>
-									<span className={`font-semibold ${
-										Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 80
+									<span className={`font-semibold ${Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 80
 											? 'text-green-600 dark:text-green-400'
 											: Math.round((progress.timesKnown / progress.timesSeen) * 100) >= 50
-											? 'text-yellow-600 dark:text-yellow-400'
-											: 'text-red-600 dark:text-red-400'
-									}`}>
+												? 'text-yellow-600 dark:text-yellow-400'
+												: 'text-red-600 dark:text-red-400'
+										}`}>
 										{Math.round((progress.timesKnown / progress.timesSeen) * 100)}%
 									</span>
 								</span>
