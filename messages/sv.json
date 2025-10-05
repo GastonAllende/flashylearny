@@ -1,0 +1,298 @@
+{
+	"HomePage": {
+		"title": "FlashyLearny",
+		"subtitle": "Studiekort och flashkort offline-först. Bemästra vilket ämne som helst med upprepning och framstegsuppföljning.",
+		"getStarted": "Kom igång",
+		"features": {
+			"smartLearning": {
+				"title": "Smart Inlärning",
+				"description": "Adaptiv upprepning hjälper dig att lära dig effektivt"
+			},
+			"offlineFirst": {
+				"title": "Offline Först",
+				"description": "Studera var som helst, när som helst - ingen internet krävs"
+			},
+			"trackProgress": {
+				"title": "Följ Framsteg",
+				"description": "Se din inlärningsframsteg och behärskningsstatistik"
+			}
+		}
+	},
+	"AboutPage": {
+		"title": "Om FlashyLearny",
+		"subtitle": "Din offline-först studiekompis för att bemästra vilket ämne som helst",
+		"whatIs": {
+			"title": "Vad är FlashyLearny?",
+			"description": "FlashyLearny är en modern, offline-först flashkortsapplikation utformad för att hjälpa dig lära och behålla information effektivt. Byggd med principer för upprepning och progressiv webbappteknik, fungerar den sömlöst både online och offline, vilket säkerställer att dina studiesessioner aldrig avbryts."
+		},
+		"keyFeatures": {
+			"title": "Nyckelfunktioner",
+			"smartLearning": {
+				"title": "Smart Inlärning",
+				"description": "Adaptiv upprepningsalgoritm hjälper dig fokusera på kort som behöver mest uppmärksamhet"
+			},
+			"offlineFirst": {
+				"title": "Offline Först",
+				"description": "Studera var som helst, när som helst - ingen internetanslutning krävs"
+			},
+			"progressTracking": {
+				"title": "Framstegsuppföljning",
+				"description": "Detaljerad statistik och framstegsvisualisering för att följa din inlärningsresa"
+			},
+			"darkMode": {
+				"title": "Mörkt Läge",
+				"description": "Ögonvänligt mörkt tema för bekvämt studerande i alla ljusförhållanden"
+			},
+			"localStorage": {
+				"title": "Lokal Lagring",
+				"description": "All din data stannar på din enhet - privat och säker"
+			},
+			"importExport": {
+				"title": "Importera/Exportera",
+				"description": "Enkel säkerhetskopiering och delning med CSV import/export-funktionalitet"
+			}
+		},
+		"howItWorks": {
+			"title": "Hur Det Fungerar",
+			"step1": {
+				"title": "Skapa Kortlekar",
+				"description": "Organisera ditt studiematerial i tematiska kortlekar"
+			},
+			"step2": {
+				"title": "Lägg Till Kort",
+				"description": "Skapa flashkort med frågor och svar"
+			},
+			"step3": {
+				"title": "Studera & Granska",
+				"description": "Studera kort och markera om du visste svaret"
+			},
+			"step4": {
+				"title": "Följ Framsteg",
+				"description": "Se hur din behärskning förbättras över tid"
+			}
+		},
+		"technology": {
+			"title": "Teknologi",
+			"description": "FlashyLearny är byggd med moderna webbteknologier för att ge en snabb, pålitlig och tillgänglig upplevelse:",
+			"nextjs": "Next.js 15 - React-ramverk för optimal prestanda",
+			"indexeddb": "IndexedDB - Klientsidans databas för offline-funktionalitet",
+			"pwa": "Progressiv Webbapp - Installerbar och fungerar offline",
+			"tailwind": "Tailwind CSS - Modern, responsiv design",
+			"typescript": "TypeScript - Typsäker utveckling"
+		},
+		"cta": "Börja Lära Dig Idag"
+	},
+	"PrivacyPage": {
+		"title": "Integritetspolicy",
+		"subtitle": "Din integritet är viktig för oss",
+		"lastUpdated": "Senast uppdaterad: 2 oktober 2025",
+		"overview": {
+			"title": "Integritetsöversikt",
+			"description": "FlashyLearny är designad med integritet i kärnan. All din studiedata stannar på din enhet. Vi samlar inte in, lagrar eller överför någon av din personliga information eller studieinnehåll till externa servrar."
+		},
+		"dataCollection": {
+			"title": "Vilken Data Vi Samlar In",
+			"storedLocally": {
+				"title": "Data Lagrad Lokalt",
+				"items": [
+					"Dina flashkortlekar och deras innehåll",
+					"Studieframsteg och statistik",
+					"Appinställningar (tema, inställningar)",
+					"Sessionsdata för studieuppföljning"
+				],
+				"note": "Viktigt: Denna data lämnar aldrig din enhet och lagras i din webbläsares lokala databas."
+			},
+			"notCollected": {
+				"title": "Data Vi INTE Samlar In",
+				"items": [
+					"Personlig information (namn, e-post, telefon)",
+					"Användningsanalys eller spårningsdata",
+					"Enhetsinformation eller IP-adresser",
+					"Studieinnehåll eller framstegsdata",
+					"Cookies för spårningsändamål"
+				]
+			}
+		},
+		"dataStorage": {
+			"title": "Hur Vi Lagrar Din Data",
+			"localStorage": {
+				"title": "Lokal Lagring",
+				"description": "All data lagras med IndexedDB i din webbläsare. Detta är en klientsidans databas som håller din information säker och tillgänglig offline."
+			},
+			"security": {
+				"title": "🔐 Säkerhet",
+				"description": "Din data skyddas av din webbläsares säkerhetsåtgärder och är inte tillgänglig för andra webbplatser eller applikationer."
+			},
+			"deviceAccess": {
+				"title": "Enhetsåtkomst",
+				"description": "Endast du har tillgång till din studiedata genom denna app på din enhet. Inga konton eller registreringar krävs."
+			},
+			"dataBackup": {
+				"title": "Datasäkerhetskopiering",
+				"description": "Du kan exportera din data som CSV-filer för säkerhetskopieringsändamål. Dessa filer förblir under din kontroll."
+			}
+		},
+		"thirdPartyServices": {
+			"title": "Tredjepartstjänster",
+			"hosting": {
+				"title": "Hosting",
+				"description": "Denna applikation är hostad på Vercel. Medan Vercel kan samla in standardwebbserverloggar (IP-adresser, begärantider), har de inte tillgång till din studiedata eftersom den lagras lokalt."
+			},
+			"noAnalytics": {
+				"title": "Ingen Analys",
+				"description": "Vi använder inte Google Analytics, Facebook Pixel eller andra spårningstjänster. Dina användningsmönster och studievanor förblir privata."
+			}
+		},
+		"yourRights": {
+			"title": "Dina Rättigheter och Kontroll",
+			"dataControl": {
+				"title": "Datakontroll",
+				"items": [
+					"Åtkomst: All din data är alltid tillgänglig genom appen",
+					"Exportera: Ladda ner din data som CSV-filer när som helst",
+					"Radera: Rensa all data genom webbläsarinställningar",
+					"Ändra: Redigera eller radera individuella kort och kortlekar"
+				]
+			},
+			"dataPortability": {
+				"title": "Dataportabilitet",
+				"items": [
+					"Exportera kortlekar till CSV-format",
+					"Importera data från andra flashkortsappar",
+					"Ingen leverantörslåsning eller proprietära format",
+					"Standard, läsbara filformat"
+				]
+			}
+		},
+		"dataDeletion": {
+			"title": "Dataradering",
+			"description": "Eftersom all data lagras lokalt på din enhet har du full kontroll över dess radering:",
+			"howToDelete": {
+				"title": "Hur du raderar din data:",
+				"steps": [
+					"Rensa din webbläsares lagring för denna webbplats",
+					"Använd din webbläsares \"Rensa webbläsardata\"-funktion",
+					"Avinstallera PWA från din enhet",
+					"Radera individuella kortlekar och kort inom appen"
+				]
+			}
+		},
+		"contact": {
+			"title": "Frågor eller Funderingar?",
+			"description": "Om du har några frågor om denna integritetspolicy eller hur FlashyLearny hanterar din data kan du kontakta oss genom:",
+			"methods": [
+				"GitHub-förvarproblem (om öppen källkod)",
+				"Kontaktformulär på vår webbplats",
+				"E-postsupport (om tillhandahållen)"
+			],
+			"updateNote": "Denna integritetspolicy kan uppdateras från tid till annan. Eventuella ändringar kommer att publiceras på denna sida."
+		},
+		"cta": "Börja Studera Privat"
+	},
+	"HelpPage": {
+		"title": "Hjälp & Support",
+		"subtitle": "Få ut det mesta av FlashyLearny med dessa hjälpsamma guider",
+		"gettingStarted": {
+			"title": "Komma Igång",
+			"step1": {
+				"title": "1. Skapa Din Första Kortlek",
+				"description": "Börja med att skapa en kortlek för att organisera ditt studiematerial. Klicka på \"Skapa Kortlek\"-knappen på kortleksidan och ge den ett beskrivande namn."
+			},
+			"step2": {
+				"title": "2. Lägg Till Kort",
+				"description": "Klicka på \"Lägg Till Kort\" för att skapa flashkort. Skriv en tydlig fråga på framsidan och svaret på baksidan. Håll dem koncisa för bättre memorering."
+			},
+			"step3": {
+				"title": "3. Börja Studera",
+				"description": "Använd \"Börja Studera\"-knappen för att påbörja en studiesession. Granska varje kort och markera ärligt om du visste svaret."
+			}
+		},
+		"learningTips": {
+			"title": "Inlärningstips",
+			"bestPractices": {
+				"title": "Bästa Praxis",
+				"items": [
+					"Studera i korta, regelbundna sessioner (15-30 minuter)",
+					"Var ärlig när du markerar kort som kända/okända",
+					"Granska svåra kort oftare",
+					"Skapa kort med dina egna ord",
+					"Fokusera på förståelse, inte bara memorering"
+				]
+			},
+			"thingsToAvoid": {
+				"title": "Saker Att Undvika",
+				"items": [
+					"Göra kort för långa eller komplexa",
+					"Studera när du är trött eller distraherad",
+					"Markera kort som kända när du inte är säker",
+					"Hoppa över granskningssessioner",
+					"Skapa för många nya kort på en gång"
+				]
+			}
+		},
+		"featuresGuide": {
+			"title": "Funktionsguide",
+			"spacedRepetition": {
+				"title": "Upprepning",
+				"description": "Kort du har svårt med kommer att visas oftare, medan kort du har bemästrat kommer att visas mer sällan. Detta hjälper till att optimera din studietid och förbättra långsiktigt minne."
+			},
+			"progressTracking": {
+				"title": "Framstegsuppföljning",
+				"description": "Övervaka din inlärningsframsteg med detaljerad statistik. Se hur många kort du har bemästrat, för närvarande lär dig eller inte studerat ännu."
+			},
+			"offlineMode": {
+				"title": "Offline-läge",
+				"description": "All din data lagras lokalt på din enhet. Du kan studera var som helst, även utan internetanslutning. Din framsteg synkroniseras automatiskt när du återansluter."
+			}
+		},
+		"troubleshooting": {
+			"title": "Felsökning",
+			"dataDisappeared": {
+				"title": "Min data försvann eller kort laddas inte",
+				"description": "Detta händer vanligtvis när webbläsardata rensas. Försök:",
+				"steps": [
+					"Uppdatera sidan",
+					"Kontrollera om du använder en annan webbläsare eller inkognitoläge",
+					"Se till att din webbläsare stöder IndexedDB",
+					"Importera din data från en CSV-säkerhetskopia om tillgänglig"
+				]
+			},
+			"appWontInstall": {
+				"title": "Appen installeras inte på min enhet",
+				"description": "PWA-installationskrav:",
+				"steps": [
+					"Använd en webbläsare som stöds (Chrome, Firefox, Safari, Edge)",
+					"Besök webbplatsen via HTTPS",
+					"Sök efter installationsknappen i din webbläsares adressfält",
+					"På mobil, använd \"Lägg till på hemskärmen\" från webbläsarmenyn"
+				]
+			},
+			"studySessionsNotWorking": {
+				"title": "Studiesessioner fungerar inte korrekt",
+				"description": "Prova dessa steg:",
+				"steps": [
+					"Se till att din kortlek har kort",
+					"Uppdatera sidan och försök igen",
+					"Rensa webbläsarcachen och ladda om",
+					"Kontrollera konsolen för felmeddelanden"
+				]
+			}
+		},
+		"keyboardShortcuts": {
+			"title": "Tangentbordsgenvägar",
+			"studySession": {
+				"title": "Studiesession",
+				"showAnswer": "Visa svar",
+				"markAsKnown": "Markera som känd",
+				"markAsUnknown": "Markera som okänd"
+			},
+			"navigation": {
+				"title": "Navigering",
+				"goToDecks": "Gå till kortlekar",
+				"createNewDeck": "Skapa ny kortlek",
+				"toggleTheme": "Växla tema"
+			}
+		},
+		"cta": "Tillbaka Till Studerande"
+	}
+}
