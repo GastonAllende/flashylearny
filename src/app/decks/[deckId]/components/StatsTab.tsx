@@ -1,8 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { StatCard } from '@/components/ui/stat-card';
-import { ProgressBar } from '@/components/ui/progress-bar';
+import { Card as UICard, CardContent } from '@/components/ui/card';
+import { Progress } from '@/components/ui/progress';
 import type { Card } from '../../../../../lib/types';
 import { BarChart3, CheckCircle, Brain, CreditCard, Eye } from 'lucide-react';
 
@@ -37,41 +37,46 @@ export function StatsTab({ deckProgress, completion, analytics }: StatsTabProps)
 
 			{/* Status Distribution */}
 			<div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-				<StatCard
-					value={statusCounts.MASTERED || 0}
-					label={t('stats.mastered')}
-					color="green"
-					icon={CheckCircle}
-				/>
-				<StatCard
-					value={statusCounts.LEARNING || 0}
-					label={t('stats.learning')}
-					color="yellow"
-					icon={Brain}
-				/>
-				<StatCard
-					value={statusCounts.NEW || 0}
-					label={t('stats.new')}
-					color="gray"
-					icon={CreditCard}
-				/>
+				<UICard className="text-center">
+					<CardContent className="pt-6">
+						<CheckCircle className="h-8 w-8 mx-auto mb-2 text-green-600 dark:text-green-500" />
+						<div className="text-3xl font-bold text-green-600 dark:text-green-500">{statusCounts.MASTERED || 0}</div>
+						<div className="text-sm text-muted-foreground mt-1">{t('stats.mastered')}</div>
+					</CardContent>
+				</UICard>
+				<UICard className="text-center">
+					<CardContent className="pt-6">
+						<Brain className="h-8 w-8 mx-auto mb-2 text-yellow-600 dark:text-yellow-500" />
+						<div className="text-3xl font-bold text-yellow-600 dark:text-yellow-500">{statusCounts.LEARNING || 0}</div>
+						<div className="text-sm text-muted-foreground mt-1">{t('stats.learning')}</div>
+					</CardContent>
+				</UICard>
+				<UICard className="text-center">
+					<CardContent className="pt-6">
+						<CreditCard className="h-8 w-8 mx-auto mb-2 text-gray-600 dark:text-gray-500" />
+						<div className="text-3xl font-bold text-gray-600 dark:text-gray-500">{statusCounts.NEW || 0}</div>
+						<div className="text-sm text-muted-foreground mt-1">{t('stats.new')}</div>
+					</CardContent>
+				</UICard>
 			</div>
 
 			{/* Enhanced Analytics */}
 			{analytics && (
 				<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-					<StatCard
-						value={`${analytics.averageAccuracy}%`}
-						label={t('stats.averageAccuracy')}
-						color="blue"
-						icon={BarChart3}
-					/>
-					<StatCard
-						value={analytics.totalReviews}
-						label={t('stats.totalReviews')}
-						color="purple"
-						icon={Eye}
-					/>
+					<UICard className="text-center">
+						<CardContent className="pt-6">
+							<BarChart3 className="h-8 w-8 mx-auto mb-2 text-blue-600 dark:text-blue-500" />
+							<div className="text-3xl font-bold text-blue-600 dark:text-blue-500">{`${analytics.averageAccuracy}%`}</div>
+							<div className="text-sm text-muted-foreground mt-1">{t('stats.averageAccuracy')}</div>
+						</CardContent>
+					</UICard>
+					<UICard className="text-center">
+						<CardContent className="pt-6">
+							<Eye className="h-8 w-8 mx-auto mb-2 text-purple-600 dark:text-purple-500" />
+							<div className="text-3xl font-bold text-purple-600 dark:text-purple-500">{analytics.totalReviews}</div>
+							<div className="text-sm text-muted-foreground mt-1">{t('stats.totalReviews')}</div>
+						</CardContent>
+					</UICard>
 				</div>
 			)}
 
@@ -79,13 +84,13 @@ export function StatsTab({ deckProgress, completion, analytics }: StatsTabProps)
 				<div className="bg-card border rounded-lg p-6">
 					<h3 className="font-semibold mb-4">{t('stats.progressOverview')}</h3>
 					<div className="space-y-3">
-						<ProgressBar
-							value={completion.completion}
-							label={t('stats.completionRate')}
-							showBadge={true}
-							color="green"
-							size="lg"
-						/>
+						<div>
+							<div className="flex justify-between items-center mb-2">
+								<span className="text-sm text-muted-foreground">{t('stats.completionRate')}</span>
+								<span className="text-sm font-semibold">{completion.completion}%</span>
+							</div>
+							<Progress value={completion.completion} className="h-4" />
+						</div>
 						<div className="flex justify-between text-sm text-muted-foreground pt-2">
 							<span>{t('stats.masteredCount', { count: completion.mastered })}</span>
 							<span>{t('stats.totalCount', { count: completion.total })}</span>
@@ -99,22 +104,21 @@ export function StatsTab({ deckProgress, completion, analytics }: StatsTabProps)
 				<div className="bg-card border rounded-lg p-6">
 					<h3 className="font-semibold mb-4">{t('stats.recentActivity')}</h3>
 					<div className="space-y-2">
-						{analytics.recentActivity.map((activity) => (
-							<div key={activity.date} className="flex items-center justify-between">
-								<span className="text-sm text-muted-foreground">
-									{new Date(activity.date).toLocaleDateString()}
-								</span>
-								<div className="flex items-center gap-2">
-									<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-2 w-16">
-										<div
-											className="bg-blue-500 h-2 rounded-full transition-all duration-300"
-											style={{ width: `${Math.min(100, (activity.reviews / Math.max(...analytics.recentActivity.map(a => a.reviews))) * 100)}%` }}
-										/>
+						{analytics.recentActivity.map((activity) => {
+							const maxReviews = Math.max(...analytics.recentActivity.map(a => a.reviews));
+							const percentage = Math.min(100, (activity.reviews / maxReviews) * 100);
+							return (
+								<div key={activity.date} className="flex items-center justify-between gap-4">
+									<span className="text-sm text-muted-foreground min-w-24">
+										{new Date(activity.date).toLocaleDateString()}
+									</span>
+									<div className="flex-1">
+										<Progress value={percentage} className="h-2" />
 									</div>
 									<span className="text-sm font-medium w-8 text-right">{activity.reviews}</span>
 								</div>
-							</div>
-						))}
+							);
+						})}
 					</div>
 				</div>
 			)}

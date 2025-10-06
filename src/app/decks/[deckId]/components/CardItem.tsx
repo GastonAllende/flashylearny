@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useProgress } from '../../../../../hooks';
+import { Badge } from '@/components/ui/badge';
 import type { Card } from '../../../../../lib/types';
 import { Eye, CheckCircle, Clock } from 'lucide-react';
 
@@ -19,16 +20,18 @@ export function CardItem({ card, deckId, onDelete }: CardItemProps) {
 	const getStatusBadge = () => {
 		if (!progress) return null;
 
-		const colors = {
-			MASTERED: 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200',
-			LEARNING: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900 dark:text-yellow-200',
-			NEW: 'bg-muted text-gray-800 dark:bg-gray-700 dark:text-gray-200'
+		const statusConfig = {
+			MASTERED: { variant: 'default' as const, className: 'bg-green-500 hover:bg-green-600 text-white' },
+			LEARNING: { variant: 'default' as const, className: 'bg-yellow-500 hover:bg-yellow-600 text-white' },
+			NEW: { variant: 'outline' as const, className: '' }
 		};
 
+		const config = statusConfig[progress.status as keyof typeof statusConfig] || statusConfig.NEW;
+
 		return (
-			<span className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${colors[progress.status as keyof typeof colors] || colors.NEW}`}>
+			<Badge variant={config.variant} className={config.className}>
 				{progress.status}
-			</span>
+			</Badge>
 		);
 	};
 
