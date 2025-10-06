@@ -2,10 +2,10 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useDecks, useCreateDeck, useExportAllDecks } from '../../../hooks';
-import { useUIStore } from '../../../stores/ui';
-import { ImportCSV } from '../../components/ImportCSV';
-import DeckCard from '../../components/DeckCard';
+import { useDecks, useCreateDeck, useExportAllDecks } from '@/hooks';
+import { useUIStore } from '@/stores/ui';
+import { ImportCSV } from '@/features/decks/components/ImportCSV';
+import DeckCard from '@/features/decks/components/DeckCard';
 import { Download, BookOpen, X } from 'lucide-react';
 
 export default function DecksPage() {

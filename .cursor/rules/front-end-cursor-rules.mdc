@@ -67,3 +67,38 @@ Follow these rules when you write code:
 - Use descriptive variable and function/const names. Also, event functions should be named with a “handle” prefix, like “handleClick” for onClick and “handleKeyDown” for onKeyDown.
 - Implement accessibility features on elements. For example, a tag should have a tabindex=“0”, aria-label, on:click, and on:keydown, and similar attributes.
 - Use consts instead of functions, for example, “const toggle = () =>”. Also, define a type if possible.
+
+## Security Considerations
+
+- No authentication (local-only app)
+- No backend API
+- Data stored in browser (user's device only)
+- CSV import: Sanitize user input to prevent XSS
+- Service worker: Ensure cache poisoning protections
+- Content Security Policy headers in next.config.ts
+
+## Accessibility
+
+- Semantic HTML structure
+- ARIA labels on interactive elements
+- Keyboard navigation support
+- Focus management in modals
+- Color contrast compliance (WCAG AA)
+- Screen reader tested (VoiceOver, NVDA)
+
+## Browser Support
+
+- Chrome/Edge 90+ (full support)
+- Firefox 88+ (full support)
+- Safari 14+ (iOS/macOS)
+- Samsung Internet 15+
+- PWA install: Chrome, Edge, Safari on iOS 11.3+
+
+## Resources
+
+- [Next.js 15 Docs](https://nextjs.org/docs)
+- [Dexie.js Docs](https://dexie.org)
+- [TanStack Query Docs](https://tanstack.com/query)
+- [Zustand Docs](https://zustand.docs.pmnd.rs/)
+- [shadcn/ui Components](https://ui.shadcn.com/)
+- [PWA Guide](https://web.dev/progressive-web-apps/)

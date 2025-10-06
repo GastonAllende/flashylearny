@@ -4,12 +4,12 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
-import { useCards, useDeckCompletion, useDeckProgress, useDeckAnalytics, useDeleteDeck, useExportDeck, useDecks } from '../../../../hooks';
-import { useUIStore } from '../../../../stores/ui';
+import { useCards, useDeckCompletion, useDeckProgress, useDeckAnalytics, useDeleteDeck, useExportDeck, useDecks } from '@/hooks';
+import { useUIStore } from '@/stores/ui';
 import { DeleteDeckDialog } from '@/components/ConfirmDialog';
-import { CardsTab } from './components/CardsTab';
-import { StudyTab } from './components/StudyTab';
-import { StatsTab } from './components/StatsTab';
+import { CardsTab } from '@/features/cards/components/CardsTab';
+import { StudyTab } from '@/features/study/components/StudyTab';
+import { StatsTab } from '@/features/stats/components/StatsTab';
 import { Brain, Trash2, CreditCard, BarChart3, RotateCcw, ArrowLeft, Plus, Download } from 'lucide-react';
 
 type TabType = 'cards' | 'study' | 'stats';

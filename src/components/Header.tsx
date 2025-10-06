@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Menu, X, BookOpen, Plus, User } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSelector from "@/components/LanguageSelector";
-import { useUIStore } from "../../stores/ui";
+import { useUIStore } from "@/stores/ui";
 
 export default function Header() {
 	const [open, setOpen] = useState(false);

@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
@@ -24,7 +24,6 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FlashyLearny - Study Decks & Flashcards",
   description: "Study decks and flashcards offline-first. Create, manage, and study your flashcard collections with spaced repetition.",
-  themeColor: "#0ea5e9",
   manifest: "/manifest.json",
   icons: {
     icon: [
@@ -42,13 +41,15 @@ export const metadata: Metadata = {
   },
   formatDetection: {
     telephone: false
-  },
-  viewport: {
-    width: "device-width",
-    initialScale: 1,
-    maximumScale: 1,
-    userScalable: false
   }
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  themeColor: "#0ea5e9"
 };
 
 export default async function RootLayout({

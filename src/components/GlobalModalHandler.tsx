@@ -2,10 +2,9 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useUIStore } from '../../stores/ui';
-import { useDeleteDeck, useDeleteCard, useRenameDeck } from '../../hooks';
+import { useUIStore } from '@/stores/ui';
+import { useDeleteDeck, useDeleteCard, useRenameDeck, useResetDeckProgress } from '@/hooks';
 import { DeleteDeckDialog, DeleteCardDialog, ResetProgressDialog } from './ConfirmDialog';
-import { useResetDeckProgress } from '../../hooks/use-progress';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './ui/dialog';
 import { Input } from './ui/input';
 import { Button } from './ui/button';

@@ -4,8 +4,8 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { useCreateCard, useUpdateCard, useCards } from '../../../../../../hooks';
-import type { Card } from '../../../../../../lib/types';
+import { useCreateCard, useUpdateCard, useCards } from '@/hooks';
+import type { Card } from '@/lib/types';
 import { Save, Plus, Lightbulb, ArrowLeft, X } from 'lucide-react';
 
 export default function EditCardPage() {
