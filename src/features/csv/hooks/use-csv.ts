@@ -12,34 +12,83 @@ import {
   importDecksWithCards,
   exportDeck,
   exportAllDecks,
+  getDecks,
+  getCardsByDeck,
 } from '@/lib/db';
+import { useAuth } from '@/contexts/AuthContext';
+import { SUBSCRIPTION_LIMITS } from '@/lib/subscription';
 
 /**
  * Hook to import CSV data and create decks/cards
  */
 export function useImportCSV() {
   const queryClient = useQueryClient();
-  
+  const { profile } = useAuth();
+
   return useMutation({
     mutationFn: async (file: File) => {
+      const tier = profile?.tier || 'free';
+      const limits = SUBSCRIPTION_LIMITS[tier];
+
       // Validate file
       validateCSVFile(file);
-      
+
       // Read file content
       const csvContent = await readFileAsText(file);
-      
+
       // Parse CSV
       const parsedData: ParsedCSVData = parseCSV(csvContent);
-      
+
+      // Check subscription limits before importing
+      const currentDecks = await getDecks();
+      const currentDeckCount = currentDecks.length;
+
+      // Count new decks (decks that don't exist yet)
+      const existingDeckNames = new Set(currentDecks.map(d => d.name.toLowerCase()));
+      const newDeckNames = Object.keys(parsedData).filter(
+        name => !existingDeckNames.has(name.toLowerCase())
+      );
+      const newDeckCount = newDeckNames.length;
+      const totalDecksAfterImport = currentDeckCount + newDeckCount;
+
+      // Check deck limit
+      if (totalDecksAfterImport > limits.maxDecks) {
+        const remaining = Math.max(0, limits.maxDecks - currentDeckCount);
+        throw new Error(
+          `Import would exceed deck limit. You have ${currentDeckCount}/${limits.maxDecks} decks. ` +
+          `This import has ${newDeckCount} new deck(s), but you only have ${remaining} slot(s) remaining. ` +
+          `${tier === 'free' ? 'Upgrade to Pro for unlimited decks.' : ''}`
+        );
+      }
+
+      // Check card limits for each deck
+      for (const [deckName, cards] of Object.entries(parsedData)) {
+        const existingDeck = currentDecks.find(d => d.name.toLowerCase() === deckName.toLowerCase());
+        const currentCardCount = existingDeck
+          ? (await getCardsByDeck(existingDeck.id)).length
+          : 0;
+        const totalCardsAfterImport = currentCardCount + cards.length;
+
+        if (totalCardsAfterImport > limits.maxCardsPerDeck) {
+          const remaining = Math.max(0, limits.maxCardsPerDeck - currentCardCount);
+          throw new Error(
+            `Import would exceed card limit for deck "${deckName}". ` +
+            `Current: ${currentCardCount}/${limits.maxCardsPerDeck} cards. ` +
+            `Import has ${cards.length} card(s), but only ${remaining} slot(s) remaining. ` +
+            `${tier === 'free' ? 'Upgrade to Pro for unlimited cards.' : ''}`
+          );
+        }
+      }
+
       // Convert to format expected by importDecksWithCards
       const decksData = Object.entries(parsedData).map(([deckName, cards]) => ({
         deckName,
         cards,
       }));
-      
+
       // Import to database
       const result = await importDecksWithCards(decksData);
-      
+
       return {
         ...result,
         decksData: Object.keys(parsedData),

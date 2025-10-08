@@ -3,12 +3,16 @@
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
 import { useDecks, useCreateDeck, useExportAllDecks, useCategories } from '@/hooks';
+import { useSubscription } from '@/hooks/use-subscription';
 import { useUIStore } from '@/stores/ui';
 import { ImportCSV } from '@/features/decks/components/ImportCSV';
 import DeckCard from '@/features/decks/components/DeckCard';
-import { Download, BookOpen, X, Filter, Tag } from 'lucide-react';
+import { Download, BookOpen, X, Filter, Tag, Crown, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { toast } from 'sonner';
 
 export default function DecksPage() {
 	const t = useTranslations('DecksPage');
@@ -23,6 +27,12 @@ export default function DecksPage() {
 	const createDeckMutation = useCreateDeck();
 	const exportAllDecksMutation = useExportAllDecks();
 	const { openModal } = useUIStore();
+	const subscription = useSubscription();
+
+	const currentDeckCount = decks?.length || 0;
+	const canCreate = subscription.canCreateDeck(currentDeckCount);
+	const remaining = subscription.getRemainingDecks(currentDeckCount);
+	const usagePercentage = subscription.getDeckUsagePercentage(currentDeckCount);
 
 	// Filter decks by selected category
 	const filteredDecks = decks?.filter((deck) => {
@@ -30,9 +40,24 @@ export default function DecksPage() {
 		return deck.category === selectedFilter;
 	}) || [];
 
+	const handleCreateClick = () => {
+		if (!canCreate) {
+			openModal('paywall', { context: 'deck_limit' });
+			return;
+		}
+		setIsCreating(true);
+	};
+
 	const handleCreateDeck = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!newDeckName.trim()) return;
+
+		// Double check limit before mutation
+		if (!canCreate) {
+			toast.error(`You've reached the maximum of ${subscription.limits.maxDecks} decks on the free plan`);
+			openModal('paywall', { context: 'deck_limit' });
+			return;
+		}
 
 		try {
 			await createDeckMutation.mutateAsync({
@@ -42,8 +67,10 @@ export default function DecksPage() {
 			setNewDeckName('');
 			setCategory('');
 			setIsCreating(false);
+			toast.success('Deck created successfully!');
 		} catch (error) {
 			console.error('Failed to create deck:', error);
+			toast.error('Failed to create deck. Please try again.');
 		}
 	};
 
@@ -79,9 +106,16 @@ export default function DecksPage() {
 			<div className="space-y-4">
 				<div>
 					<h1 className="text-2xl sm:text-3xl font-bold">{t('title')}</h1>
-					<p className="text-muted-foreground mt-1 text-sm sm:text-base">
-						{t('subtitle')}
-					</p>
+					<div className="flex items-center gap-3 mt-1">
+						<p className="text-muted-foreground text-sm sm:text-base">
+							{t('subtitle')}
+						</p>
+						{subscription.isFree && decks && decks.length > 0 && (
+							<Badge variant="secondary" className="text-xs">
+								{currentDeckCount}/{subscription.limits.maxDecks} decks used
+							</Badge>
+						)}
+					</div>
 				</div>
 
 				{/* Responsive action buttons */}
@@ -89,9 +123,11 @@ export default function DecksPage() {
 					{/* Create Deck Button - Primary action */}
 					{!isCreating && (
 						<button
-							onClick={() => setIsCreating(true)}
-							className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+							onClick={handleCreateClick}
+							disabled={!canCreate}
+							className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 						>
+							{!canCreate && <Crown className="w-4 h-4" />}
 							<span className="text-base sm:text-sm">+</span>
 							{t('createDeck')}
 						</button>
@@ -122,6 +158,41 @@ export default function DecksPage() {
 					)}
 				</div>
 			</div>
+
+			{/* Free tier limit warning */}
+			{subscription.isFree && usagePercentage >= 80 && canCreate && (
+				<Alert>
+					<AlertCircle className="h-4 w-4" />
+					<AlertDescription>
+						You&apos;re using {currentDeckCount} of {subscription.limits.maxDecks} decks on the free plan.
+						{remaining === 1 ? ' 1 deck remaining.' : ` ${remaining} decks remaining.`}
+						{' '}
+						<button
+							onClick={() => openModal('paywall', { context: 'deck_limit_warning' })}
+							className="font-medium text-primary hover:underline"
+						>
+							Upgrade to Pro for unlimited decks
+						</button>
+					</AlertDescription>
+				</Alert>
+			)}
+
+			{/* Limit reached warning */}
+			{!canCreate && (
+				<Alert variant="destructive">
+					<Crown className="h-4 w-4" />
+					<AlertDescription>
+						You&apos;rereached the maximum of {subscription.limits.maxDecks} decks on the free plan.
+						{' '}
+						<button
+							onClick={() => openModal('paywall', { context: 'deck_limit' })}
+							className="font-medium underline"
+						>
+							Upgrade to Pro for unlimited decks
+						</button>
+					</AlertDescription>
+				</Alert>
+			)}
 
 			{isCreating && (
 				<div className="bg-card border rounded-lg p-6">
@@ -223,9 +294,11 @@ export default function DecksPage() {
 					</p>
 					{!isCreating && (
 						<button
-							onClick={() => setIsCreating(true)}
-							className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
+							onClick={handleCreateClick}
+							disabled={!canCreate}
+							className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm inline-flex items-center gap-2"
 						>
+							{!canCreate && <Crown className="w-4 h-4" />}
 							{t('emptyCta')}
 						</button>
 					)}
@@ -258,27 +331,17 @@ export default function DecksPage() {
 			)}
 
 			{/* Import CSV Modal */}
-			{showImportModal && (
-				<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-					<div className="bg-card rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-						<div className="p-6">
-							<div className="flex items-center justify-between mb-6">
-								<h2 className="text-2xl font-bold">{t('importModalTitle')}</h2>
-								<button
-									onClick={() => setShowImportModal(false)}
-									className="text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 text-2xl"
-								>
-									<X className="w-4 h-4" />
-								</button>
-							</div>
-							<ImportCSV
-								onSuccess={handleImportSuccess}
-								onCancel={() => setShowImportModal(false)}
-							/>
-						</div>
-					</div>
-				</div>
-			)}
+			<Dialog open={showImportModal} onOpenChange={setShowImportModal}>
+				<DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+					<DialogHeader>
+						<DialogTitle className="text-2xl font-bold">{t('importModalTitle')}</DialogTitle>
+					</DialogHeader>
+					<ImportCSV
+						onSuccess={handleImportSuccess}
+						onCancel={() => setShowImportModal(false)}
+					/>
+				</DialogContent>
+			</Dialog>
 		</div>
 	);
 }

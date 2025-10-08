@@ -103,8 +103,9 @@ function DropdownMenuItem({
   className,
   children,
   onClick,
+  asChild,
   ...props
-}: React.HTMLAttributes<HTMLDivElement>) {
+}: React.HTMLAttributes<HTMLDivElement> & { asChild?: boolean }) {
   const context = React.useContext(DropdownMenuContext);
   if (!context) throw new Error("DropdownMenuItem must be used within DropdownMenu");
 
@@ -114,6 +115,12 @@ function DropdownMenuItem({
     onClick?.(e);
     setOpen(false);
   };
+
+  if (asChild && React.isValidElement(children)) {
+    return React.cloneElement(children as React.ReactElement<any>, {
+      onClick: handleClick,
+    });
+  }
 
   return (
     <div
@@ -129,9 +136,41 @@ function DropdownMenuItem({
   );
 }
 
+function DropdownMenuLabel({
+  className,
+  children,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn(
+        "px-2 py-1.5 text-sm font-semibold",
+        className
+      )}
+      {...props}
+    >
+      {children}
+    </div>
+  );
+}
+
+function DropdownMenuSeparator({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
+  return (
+    <div
+      className={cn("-mx-1 my-1 h-px bg-muted", className)}
+      {...props}
+    />
+  );
+}
+
 export {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 };

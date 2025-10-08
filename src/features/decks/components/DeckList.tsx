@@ -5,12 +5,15 @@ import DeckCard from './DeckCard';
 import EmptyState from '@/components/EmptyState';
 import { CreateDeckForm } from './CreateDeckForm';
 import { useDecks, useCreateDeck, useCategories } from '@/hooks';
+import { useSubscription } from '@/hooks/use-subscription';
 import { useUIStore } from '@/stores/ui';
 import type { Deck } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { BookOpen, Filter, X } from 'lucide-react';
+import { Alert, AlertDescription } from '@/components/ui/alert';
+import { BookOpen, Filter, X, Crown, AlertCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 interface DeckListProps {
 	className?: string;
@@ -26,6 +29,12 @@ export default function DeckList({ className = '' }: DeckListProps) {
 	const { data: categories } = useCategories();
 	const createDeckMutation = useCreateDeck();
 	const { openModal } = useUIStore();
+	const subscription = useSubscription();
+
+	const currentDeckCount = decks?.length || 0;
+	const canCreate = subscription.canCreateDeck(currentDeckCount);
+	const remaining = subscription.getRemainingDecks(currentDeckCount);
+	const usagePercentage = subscription.getDeckUsagePercentage(currentDeckCount);
 
 	// Filter decks by selected category
 	const filteredDecks = decks?.filter((deck) => {
@@ -33,9 +42,24 @@ export default function DeckList({ className = '' }: DeckListProps) {
 		return deck.category === selectedFilter;
 	}) || [];
 
+	const handleCreateClick = () => {
+		if (!canCreate) {
+			openModal('paywall', { context: 'deck_limit' });
+			return;
+		}
+		setIsCreating(true);
+	};
+
 	const handleCreateDeck = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!newDeckName.trim()) return;
+
+		// Double check limit before mutation
+		if (!canCreate) {
+			toast.error(`You've reached the maximum of ${subscription.limits.maxDecks} decks on the free plan`);
+			openModal('paywall', { context: 'deck_limit' });
+			return;
+		}
 
 		try {
 			await createDeckMutation.mutateAsync({
@@ -45,8 +69,10 @@ export default function DeckList({ className = '' }: DeckListProps) {
 			setNewDeckName('');
 			setCategory('');
 			setIsCreating(false);
+			toast.success('Deck created successfully!');
 		} catch (error) {
 			console.error('Failed to create deck:', error);
+			toast.error('Failed to create deck. Please try again.');
 		}
 	};
 
@@ -105,7 +131,7 @@ export default function DeckList({ className = '' }: DeckListProps) {
 						title="No decks yet"
 						description="Create your first deck to start studying with flashcards"
 						actionLabel="Create Your First Deck"
-						onAction={() => setIsCreating(true)}
+						onAction={handleCreateClick}
 					/>
 				)}
 			</div>
@@ -120,22 +146,64 @@ export default function DeckList({ className = '' }: DeckListProps) {
 					<h2 className="text-2xl font-bold text-foreground">
 						Your Study Decks
 					</h2>
-					<p className="text-muted-foreground mt-1">
-						{filteredDecks.length} {selectedFilter ? 'filtered ' : ''}deck{filteredDecks.length !== 1 ? 's' : ''} {selectedFilter ? `in "${selectedFilter}"` : 'ready for studying'}
-					</p>
+					<div className="flex items-center gap-3 mt-1">
+						<p className="text-muted-foreground">
+							{filteredDecks.length} {selectedFilter ? 'filtered ' : ''}deck{filteredDecks.length !== 1 ? 's' : ''} {selectedFilter ? `in "${selectedFilter}"` : 'ready for studying'}
+						</p>
+						<Badge variant="secondary" className="text-xs">
+							Tier: {subscription.tier} | {currentDeckCount}/{subscription.limits.maxDecks} decks
+						</Badge>
+					</div>
 				</div>
 
 				{!isCreating && (
 					<Button
-						onClick={() => setIsCreating(true)}
+						onClick={handleCreateClick}
 						size="lg"
 						className="shadow-lg hover:shadow-xl"
+						disabled={!canCreate}
 					>
+						{!canCreate && <Crown className="mr-2 h-4 w-4" />}
 						<span className="text-xl mr-2">+</span>
 						Create Deck
 					</Button>
 				)}
 			</div>
+
+			{/* Free tier limit warning */}
+			{subscription.isFree && usagePercentage >= 80 && canCreate && (
+				<Alert>
+					<AlertCircle className="h-4 w-4" />
+					<AlertDescription>
+						You're using {currentDeckCount} of {subscription.limits.maxDecks} decks on the free plan.
+						{remaining === 1 ? ' 1 deck remaining.' : ` ${remaining} decks remaining.`}
+						{' '}
+						<button
+							onClick={() => openModal('paywall', { context: 'deck_limit_warning' })}
+							className="font-medium text-primary hover:underline"
+						>
+							Upgrade to Pro for unlimited decks
+						</button>
+					</AlertDescription>
+				</Alert>
+			)}
+
+			{/* Limit reached warning */}
+			{!canCreate && (
+				<Alert variant="destructive">
+					<Crown className="h-4 w-4" />
+					<AlertDescription>
+						You've reached the maximum of {subscription.limits.maxDecks} decks on the free plan.
+						{' '}
+						<button
+							onClick={() => openModal('paywall', { context: 'deck_limit' })}
+							className="font-medium underline"
+						>
+							Upgrade to Pro for unlimited decks
+						</button>
+					</AlertDescription>
+				</Alert>
+			)}
 
 			{/* Category filter */}
 			{categories && categories.length > 0 && (

@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { useUIStore } from '@/stores/ui';
 import { useDeleteDeck, useDeleteCard, useRenameDeck, useResetDeckProgress, useUpdateDeck } from '@/hooks';
 import { DeleteDeckDialog, DeleteCardDialog, ResetProgressDialog } from './ConfirmDialog';
+import { PaywallModal } from './PaywallModal';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './ui/dialog';
 import { Input } from './ui/input';
 import { Label } from './ui/label';
@@ -158,6 +159,14 @@ export default function GlobalModalHandler() {
 						</DialogFooter>
 					</DialogContent>
 				</Dialog>
+			);
+
+		case 'paywall':
+			return (
+				<PaywallModal
+					isOpen={modal.isOpen}
+					context={modal.data?.context as 'deck_limit' | 'card_limit' | 'deck_limit_warning' | 'card_limit_warning'}
+				/>
 			);
 
 		default:

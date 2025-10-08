@@ -5,8 +5,11 @@ import { useTranslations } from 'next-intl';
 import { useState, useEffect } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import { useCreateCard, useUpdateCard, useCards } from '@/hooks';
+import { useSubscription } from '@/hooks/use-subscription';
+import { useUIStore } from '@/stores/ui';
 import type { Card } from '@/lib/types';
 import { Save, Plus, Lightbulb, ArrowLeft, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function EditCardPage() {
 	const t = useTranslations('EditCard');
@@ -24,9 +27,14 @@ export default function EditCardPage() {
 	const { data: cards, isLoading: cardsLoading } = useCards(deckId);
 	const createCardMutation = useCreateCard();
 	const updateCardMutation = useUpdateCard();
+	const subscription = useSubscription();
+	const { openModal } = useUIStore();
 
 	const isEditing = !!cardId;
 	const currentCard = cards?.find((card: Card) => card.id === cardId);
+
+	const currentCardCount = cards?.length || 0;
+	const canCreate = subscription.canCreateCard(currentCardCount);
 
 	// Load existing card data if editing
 	useEffect(() => {
@@ -40,6 +48,13 @@ export default function EditCardPage() {
 		e.preventDefault();
 
 		if (!question.trim() || !answer.trim()) {
+			return;
+		}
+
+		// Check limit before creating new card (not when editing)
+		if (!isEditing && !canCreate) {
+			toast.error(`You've reached the maximum of ${subscription.limits.maxCardsPerDeck} cards per deck on the free plan`);
+			openModal('paywall', { context: 'card_limit' });
 			return;
 		}
 
