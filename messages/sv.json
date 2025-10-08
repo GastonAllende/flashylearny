@@ -120,7 +120,7 @@
 				"description": "All data lagras med IndexedDB i din webbläsare. Detta är en klientsidans databas som håller din information säker och tillgänglig offline."
 			},
 			"security": {
-				"title": "🔐 Säkerhet",
+				"title": "Säkerhet",
 				"description": "Din data skyddas av din webbläsares säkerhetsåtgärder och är inte tillgänglig för andra webbplatser eller applikationer."
 			},
 			"deviceAccess": {
@@ -308,6 +308,30 @@
 		"copyright": "© {year} FlashyLearny",
 		"madeWith": "Gjord med 💙 för elever"
 	},
+    "StudyCard": {
+        "question": "Fråga",
+        "answer": "Svar",
+        "tapToReveal": "Tryck för att visa svaret",
+        "howWell": "Hur väl visste du detta?",
+        "beHonest": "Var ärlig – det hjälper oss visa rätt kort vid rätt tid",
+        "indicatorAnswer": "Svar",
+        "indicatorQuestion": "Fråga",
+        "tapToRevealShort": "Tryck på kortet för att visa svaret",
+        "responses": {
+            "didnt": {
+                "label": "Jag visste inte",
+                "description": "Visa detta oftare"
+            },
+            "almost": {
+                "label": "Nästan visste",
+                "description": "Visa ibland"
+            },
+            "knew": {
+                "label": "Jag visste det!",
+                "description": "Visa mer sällan"
+            }
+        }
+    },
     "DeckCard": {
         "cards": "{count} kort",
         "mastered": "{count} bemästrade",

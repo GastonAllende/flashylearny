@@ -120,7 +120,7 @@
 				"description": "All data is stored using IndexedDB in your browser. This is a client-side database that keeps your information secure and accessible offline."
 			},
 			"security": {
-				"title": "🔐 Security",
+				"title": "Security",
 				"description": "Your data is protected by your browser's security measures and is not accessible to other websites or applications."
 			},
 			"deviceAccess": {
@@ -308,6 +308,30 @@
 		"copyright": "© {year} FlashyLearny",
 		"madeWith": "Made with 💙 for learners"
 	},
+    "StudyCard": {
+        "question": "Question",
+        "answer": "Answer",
+        "tapToReveal": "Tap to reveal answer",
+        "howWell": "How well did you know this?",
+        "beHonest": "Be honest - it helps us show you the right cards at the right time",
+        "indicatorAnswer": "Answer",
+        "indicatorQuestion": "Question",
+        "tapToRevealShort": "Tap the card to reveal the answer",
+        "responses": {
+            "didnt": {
+                "label": "I didn't know it",
+                "description": "Show this more often"
+            },
+            "almost": {
+                "label": "Almost knew it",
+                "description": "Show occasionally"
+            },
+            "knew": {
+                "label": "I knew it!",
+                "description": "Show less often"
+            }
+        }
+    },
     "DeckCard": {
         "cards": "{count} cards",
         "mastered": "{count} mastered",

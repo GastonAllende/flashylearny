@@ -29,6 +29,20 @@ export class FlashLearnyDB extends Dexie {
         }
       });
     });
+
+    // Version 3: Add category field to decks for organizing by subject/topic
+    this.version(3).stores({
+      decks: 'id, name, category, updatedAt',
+      cards: 'id, deckId, updatedAt',
+      progress: 'id, cardId, status'
+    }).upgrade(tx => {
+      // Add category field to existing decks (set to null by default)
+      return tx.table('decks').toCollection().modify(deck => {
+        if (deck.category === undefined) {
+          deck.category = null;
+        }
+      });
+    });
   }
 }
 

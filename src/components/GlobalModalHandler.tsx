@@ -3,10 +3,11 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUIStore } from '@/stores/ui';
-import { useDeleteDeck, useDeleteCard, useRenameDeck, useResetDeckProgress } from '@/hooks';
+import { useDeleteDeck, useDeleteCard, useRenameDeck, useResetDeckProgress, useUpdateDeck } from '@/hooks';
 import { DeleteDeckDialog, DeleteCardDialog, ResetProgressDialog } from './ConfirmDialog';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './ui/dialog';
 import { Input } from './ui/input';
+import { Label } from './ui/label';
 import { Button } from './ui/button';
 
 /**
@@ -19,12 +20,15 @@ export default function GlobalModalHandler() {
 	const deleteDeckMutation = useDeleteDeck();
 	const deleteCardMutation = useDeleteCard();
 	const renameDeckMutation = useRenameDeck();
+	const updateDeckMutation = useUpdateDeck();
 	const resetDeckProgressMutation = useResetDeckProgress();
 	const [newDeckName, setNewDeckName] = useState('');
+	const [newCategory, setNewCategory] = useState('');
 
 	useEffect(() => {
 		if (modal.type === 'renameDeck' && modal.isOpen) {
 			setNewDeckName((modal.data?.deckName as string) || '');
+			setNewCategory((modal.data?.category as string) || '');
 		}
 	}, [modal.type, modal.isOpen, modal.data]);
 
@@ -69,10 +73,16 @@ export default function GlobalModalHandler() {
 	const handleRenameDeck = async () => {
 		if (!modal.data?.deckId || !newDeckName.trim()) return;
 		try {
-			await renameDeckMutation.mutateAsync({ deckId: modal.data.deckId as string, newName: newDeckName.trim() });
+			await updateDeckMutation.mutateAsync({
+				deckId: modal.data.deckId as string,
+				updates: {
+					name: newDeckName.trim(),
+					category: newCategory.trim() || null,
+				}
+			});
 			closeModal();
 		} catch (error) {
-			console.error('Failed to rename deck:', error);
+			console.error('Failed to update deck:', error);
 		}
 	};
 
@@ -113,20 +123,37 @@ export default function GlobalModalHandler() {
 				<Dialog open={modal.isOpen} onOpenChange={(open) => !open && closeModal()}>
 					<DialogContent>
 						<DialogHeader>
-							<DialogTitle>Rename Deck</DialogTitle>
-							<DialogDescription>Enter a new name for this deck.</DialogDescription>
+							<DialogTitle>Edit Deck</DialogTitle>
+							<DialogDescription>Update the name and category for this deck.</DialogDescription>
 						</DialogHeader>
-						<div className="py-2">
-							<Input
-								value={newDeckName}
-								onChange={(e) => setNewDeckName(e.target.value)}
-								placeholder="New deck name"
-							/>
+						<div className="py-2 space-y-4">
+							<div className="space-y-2">
+								<Label htmlFor="deck-name">Deck Name</Label>
+								<Input
+									id="deck-name"
+									value={newDeckName}
+									onChange={(e) => setNewDeckName(e.target.value)}
+									placeholder="Deck name"
+								/>
+							</div>
+							<div className="space-y-2">
+								<Label htmlFor="deck-category">Category (Optional)</Label>
+								<Input
+									id="deck-category"
+									value={newCategory}
+									onChange={(e) => setNewCategory(e.target.value)}
+									placeholder="e.g., Languages, Science, History..."
+									maxLength={50}
+								/>
+								<p className="text-xs text-muted-foreground">
+									Organize your decks by category
+								</p>
+							</div>
 						</div>
 						<DialogFooter className="gap-2">
 							<Button variant="outline" onClick={closeModal}>Cancel</Button>
-							<Button onClick={handleRenameDeck} disabled={renameDeckMutation.isPending || !newDeckName.trim()}>
-								{renameDeckMutation.isPending ? 'Renaming...' : 'Rename'}
+							<Button onClick={handleRenameDeck} disabled={updateDeckMutation.isPending || !newDeckName.trim()}>
+								{updateDeckMutation.isPending ? 'Saving...' : 'Save Changes'}
 							</Button>
 						</DialogFooter>
 					</DialogContent>

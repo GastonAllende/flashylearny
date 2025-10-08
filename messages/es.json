@@ -120,7 +120,7 @@
 				"description": "Todos los datos se almacenan usando IndexedDB en tu navegador. Esta es una base de datos del lado del cliente que mantiene tu información segura y accesible sin conexión."
 			},
 			"security": {
-				"title": "🔐 Seguridad",
+				"title": "Seguridad",
 				"description": "Tus datos están protegidos por las medidas de seguridad de tu navegador y no son accesibles para otros sitios web o aplicaciones."
 			},
 			"deviceAccess": {
@@ -308,6 +308,30 @@
 		"copyright": "© {year} FlashyLearny",
 		"madeWith": "Hecho con 💙 para estudiantes"
 	},
+    "StudyCard": {
+        "question": "Pregunta",
+        "answer": "Respuesta",
+        "tapToReveal": "Toca para revelar la respuesta",
+        "howWell": "¿Qué tan bien sabías esto?",
+        "beHonest": "Sé honesto: nos ayuda a mostrarte las tarjetas correctas en el momento adecuado",
+        "indicatorAnswer": "Respuesta",
+        "indicatorQuestion": "Pregunta",
+        "tapToRevealShort": "Toca la tarjeta para revelar la respuesta",
+        "responses": {
+            "didnt": {
+                "label": "No lo sabía",
+                "description": "Mostrar esto más a menudo"
+            },
+            "almost": {
+                "label": "Casi lo sabía",
+                "description": "Mostrar ocasionalmente"
+            },
+            "knew": {
+                "label": "¡Lo sabía!",
+                "description": "Mostrar con menos frecuencia"
+            }
+        }
+    },
     "DeckCard": {
         "cards": "{count} tarjetas",
         "mastered": "{count} dominadas",

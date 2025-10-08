@@ -31,7 +31,9 @@ export default function DeckDetailPage() {
 	}, [searchParams]);
 	const [showDeleteDialog, setShowDeleteDialog] = useState(false);
 	const { data: decks } = useDecks();
-	const currentDeckName = decks?.find(d => d.id === deckId)?.name || 'Deck';
+	const currentDeck = decks?.find(d => d.id === deckId);
+	const currentDeckName = currentDeck?.name || 'Deck';
+	const currentDeckCategory = currentDeck?.category || null;
 
 	const { data: cards, isLoading: cardsLoading } = useCards(deckId);
 	const { data: completion } = useDeckCompletion(deckId);
@@ -138,7 +140,7 @@ export default function DeckDetailPage() {
 					{cards && cards.length > 0 && (
 						<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-2">
 							<button
-								onClick={() => openModal('renameDeck', { deckId, deckName: currentDeckName })}
+								onClick={() => openModal('renameDeck', { deckId, deckName: currentDeckName, category: currentDeckCategory })}
 								className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-foreground px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
 								title={t('renameTitle')}
 							>

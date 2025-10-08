@@ -4,12 +4,13 @@ import { useState } from 'react';
 import DeckCard from './DeckCard';
 import EmptyState from '@/components/EmptyState';
 import { CreateDeckForm } from './CreateDeckForm';
-import { useDecks, useCreateDeck } from '@/hooks';
+import { useDecks, useCreateDeck, useCategories } from '@/hooks';
 import { useUIStore } from '@/stores/ui';
 import type { Deck } from '@/lib/types';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { BookOpen } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { BookOpen, Filter, X } from 'lucide-react';
 
 interface DeckListProps {
 	className?: string;
@@ -18,18 +19,31 @@ interface DeckListProps {
 export default function DeckList({ className = '' }: DeckListProps) {
 	const [isCreating, setIsCreating] = useState(false);
 	const [newDeckName, setNewDeckName] = useState('');
+	const [category, setCategory] = useState('');
+	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 
 	const { data: decks, isLoading } = useDecks();
+	const { data: categories } = useCategories();
 	const createDeckMutation = useCreateDeck();
 	const { openModal } = useUIStore();
+
+	// Filter decks by selected category
+	const filteredDecks = decks?.filter((deck) => {
+		if (!selectedFilter) return true;
+		return deck.category === selectedFilter;
+	}) || [];
 
 	const handleCreateDeck = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!newDeckName.trim()) return;
 
 		try {
-			await createDeckMutation.mutateAsync(newDeckName.trim());
+			await createDeckMutation.mutateAsync({
+				name: newDeckName.trim(),
+				category: category.trim() || null,
+			});
 			setNewDeckName('');
+			setCategory('');
 			setIsCreating(false);
 		} catch (error) {
 			console.error('Failed to create deck:', error);
@@ -37,7 +51,7 @@ export default function DeckList({ className = '' }: DeckListProps) {
 	};
 
 	const handleEditDeck = (deck: Deck) => {
-		openModal('renameDeck', { deckId: deck.id, currentName: deck.name });
+		openModal('renameDeck', { deckId: deck.id, deckName: deck.name, category: deck.category });
 	};
 
 	const handleDeleteDeck = (deckId: string, deckName: string) => {
@@ -75,10 +89,13 @@ export default function DeckList({ className = '' }: DeckListProps) {
 					<CreateDeckForm
 						newDeckName={newDeckName}
 						setNewDeckName={setNewDeckName}
+						category={category}
+						setCategory={setCategory}
 						onSubmit={handleCreateDeck}
 						onCancel={() => {
 							setIsCreating(false);
 							setNewDeckName('');
+							setCategory('');
 						}}
 						isLoading={createDeckMutation.isPending}
 					/>
@@ -104,7 +121,7 @@ export default function DeckList({ className = '' }: DeckListProps) {
 						Your Study Decks
 					</h2>
 					<p className="text-muted-foreground mt-1">
-						{decks.length} deck{decks.length !== 1 ? 's' : ''} ready for studying
+						{filteredDecks.length} {selectedFilter ? 'filtered ' : ''}deck{filteredDecks.length !== 1 ? 's' : ''} {selectedFilter ? `in "${selectedFilter}"` : 'ready for studying'}
 					</p>
 				</div>
 
@@ -120,31 +137,74 @@ export default function DeckList({ className = '' }: DeckListProps) {
 				)}
 			</div>
 
+			{/* Category filter */}
+			{categories && categories.length > 0 && (
+				<div className="flex flex-wrap items-center gap-2">
+					<Filter className="w-4 h-4 text-muted-foreground" />
+					<Badge
+						variant={!selectedFilter ? "default" : "outline"}
+						className="cursor-pointer hover:bg-primary/10"
+						onClick={() => setSelectedFilter(null)}
+					>
+						All ({decks?.length || 0})
+					</Badge>
+					{categories.map((cat) => (
+						<Badge
+							key={cat}
+							variant={selectedFilter === cat ? "default" : "outline"}
+							className="cursor-pointer hover:bg-primary/10"
+							onClick={() => setSelectedFilter(cat)}
+						>
+							{cat} ({decks?.filter(d => d.category === cat).length || 0})
+							{selectedFilter === cat && (
+								<X className="w-3 h-3 ml-1" onClick={(e) => {
+									e.stopPropagation();
+									setSelectedFilter(null);
+								}} />
+							)}
+						</Badge>
+					))}
+				</div>
+			)}
+
 			{/* Create deck form */}
 			{isCreating && (
 				<CreateDeckForm
 					newDeckName={newDeckName}
 					setNewDeckName={setNewDeckName}
+					category={category}
+					setCategory={setCategory}
 					onSubmit={handleCreateDeck}
 					onCancel={() => {
 						setIsCreating(false);
 						setNewDeckName('');
+						setCategory('');
 					}}
 					isLoading={createDeckMutation.isPending}
 				/>
 			)}
 
 			{/* Deck grid */}
-			<div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
-				{decks.map((deck) => (
-					<DeckCard
-						key={deck.id}
-						deck={deck}
-						onEdit={handleEditDeck}
-						onDelete={handleDeleteDeck}
-					/>
-				))}
-			</div>
+			{filteredDecks.length > 0 ? (
+				<div className="grid gap-6 sm:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3">
+					{filteredDecks.map((deck) => (
+						<DeckCard
+							key={deck.id}
+							deck={deck}
+							onEdit={handleEditDeck}
+							onDelete={handleDeleteDeck}
+						/>
+					))}
+				</div>
+			) : (
+				<EmptyState
+					icon={<Filter className="w-20 h-20" />}
+					title="No decks in this category"
+					description={`No decks found in "${selectedFilter}". Try selecting a different category or create a new deck.`}
+					actionLabel="Clear Filter"
+					onAction={() => setSelectedFilter(null)}
+				/>
+			)}
 		</div>
 	);
 }

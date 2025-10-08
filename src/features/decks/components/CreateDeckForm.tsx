@@ -9,6 +9,8 @@ import { Sparkles } from 'lucide-react';
 interface CreateDeckFormProps {
 	newDeckName: string;
 	setNewDeckName: (name: string) => void;
+	category: string;
+	setCategory: (category: string) => void;
 	onSubmit: (e: React.FormEvent) => Promise<void>;
 	onCancel: () => void;
 	isLoading: boolean;
@@ -17,6 +19,8 @@ interface CreateDeckFormProps {
 export function CreateDeckForm({
 	newDeckName,
 	setNewDeckName,
+	category,
+	setCategory,
 	onSubmit,
 	onCancel,
 	isLoading
@@ -42,6 +46,25 @@ export function CreateDeckForm({
 						/>
 						<p className="text-xs text-muted-foreground mt-1">
 							Choose a descriptive name for your study deck
+						</p>
+					</div>
+
+					<div>
+						<Label htmlFor="category" className="text-foreground">
+							Category (Optional)
+						</Label>
+						<Input
+							id="category"
+							type="text"
+							value={category}
+							onChange={(e) => setCategory(e.target.value)}
+							placeholder="e.g., Languages, Science, History..."
+							className="mt-2"
+							disabled={isLoading}
+							maxLength={50}
+						/>
+						<p className="text-xs text-muted-foreground mt-1">
+							Organize your decks by category
 						</p>
 					</div>
 

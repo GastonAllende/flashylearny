@@ -49,7 +49,7 @@ export default function LanguageSelector() {
 					<span className="sm:hidden">{currentLanguage.flag}</span>
 				</Button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent align="end">
+			<DropdownMenuContent>
 				{languages.map((language) => (
 					<DropdownMenuItem
 						key={language.code}

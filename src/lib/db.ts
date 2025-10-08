@@ -9,15 +9,16 @@ import type { Deck, Card, Progress } from './types';
 /**
  * Create a new deck with generated ID and timestamps
  */
-export async function createDeck(name: string): Promise<Deck> {
+export async function createDeck(name: string, category?: string | null): Promise<Deck> {
   const now = Date.now();
   const deck: Deck = {
     id: uid(),
     name,
+    category: category || null,
     createdAt: now,
     updatedAt: now,
   };
-  
+
   await db.decks.add(deck);
   return deck;
 }
@@ -28,6 +29,19 @@ export async function createDeck(name: string): Promise<Deck> {
 export async function renameDeck(deckId: string, newName: string): Promise<void> {
   await db.decks.update(deckId, {
     name: newName,
+    updatedAt: Date.now(),
+  });
+}
+
+/**
+ * Update deck details (name and/or category)
+ */
+export async function updateDeck(
+  deckId: string,
+  updates: { name?: string; category?: string | null }
+): Promise<void> {
+  await db.decks.update(deckId, {
+    ...updates,
     updatedAt: Date.now(),
   });
 }
@@ -77,6 +91,43 @@ export async function resetDeckProgress(deckId: string): Promise<void> {
  */
 export async function getDecks(): Promise<Deck[]> {
   return await db.decks.orderBy('updatedAt').reverse().toArray();
+}
+
+/**
+ * Get decks filtered by category, ordered by most recently updated
+ */
+export async function getDecksByCategory(category: string | null): Promise<Deck[]> {
+  if (category === null) {
+    // Return decks with no category
+    return await db.decks.filter(deck => deck.category === null).toArray();
+  }
+  return await db.decks.where('category').equals(category).reverse().sortBy('updatedAt');
+}
+
+/**
+ * Get all unique categories from existing decks
+ */
+export async function getAllCategories(): Promise<string[]> {
+  const decks = await db.decks.toArray();
+  const categories = new Set<string>();
+
+  decks.forEach(deck => {
+    if (deck.category) {
+      categories.add(deck.category);
+    }
+  });
+
+  return Array.from(categories).sort();
+}
+
+/**
+ * Update a deck's category
+ */
+export async function updateDeckCategory(deckId: string, category: string | null): Promise<void> {
+  await db.decks.update(deckId, {
+    category,
+    updatedAt: Date.now(),
+  });
 }
 
 // ===============================
@@ -402,6 +453,7 @@ export async function importDecksWithCards(
         deck = {
           id: uid(),
           name: deckData.deckName,
+          category: null,
           createdAt: now,
           updatedAt: now,
         };

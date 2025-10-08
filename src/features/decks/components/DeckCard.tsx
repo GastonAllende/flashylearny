@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
-import { Edit, Trash2, BookOpen, Brain, ArrowRight, CreditCard, CheckCircle } from 'lucide-react';
+import { Edit, Trash2, BookOpen, Brain, ArrowRight, CreditCard, CheckCircle, Tag } from 'lucide-react';
 
 interface DeckCardProps {
 	deck: Deck;
@@ -27,15 +27,23 @@ export default function DeckCard({ deck, onEdit, onDelete }: DeckCardProps) {
 				<div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
 					<div className="flex-1 min-w-0">
 						<div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3 mb-3">
-							<Link
-								href={`/decks/${deck.id}`}
-								className="text-xl font-semibold text-foreground hover:text-primary transition-colors truncate"
-							>
-								{deck.name}
-							</Link>
+							<div className="flex items-center gap-2 flex-wrap">
+								<Link
+									href={`/decks/${deck.id}`}
+									className="text-xl font-semibold text-foreground hover:text-primary transition-colors truncate"
+								>
+									{deck.name}
+								</Link>
+								{deck.category && (
+									<Badge variant="outline" className="gap-1 text-xs">
+										<Tag className="w-3 h-3" />
+										{deck.category}
+									</Badge>
+								)}
+							</div>
 							{completion && completion.total > 0 && (
 								<div className="flex items-center gap-2 shrink-0">
-									<Progress value={completion.completion} className="w-20 h-2" />
+									<Progress value={completion.completion} color="green" className="w-20 h-2" />
 									<Badge variant="secondary" className="text-xs">
 										{completion.completion}%
 									</Badge>

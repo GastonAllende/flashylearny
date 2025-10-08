@@ -2,30 +2,45 @@
 
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { useDecks, useCreateDeck, useExportAllDecks } from '@/hooks';
+import { useDecks, useCreateDeck, useExportAllDecks, useCategories } from '@/hooks';
 import { useUIStore } from '@/stores/ui';
 import { ImportCSV } from '@/features/decks/components/ImportCSV';
 import DeckCard from '@/features/decks/components/DeckCard';
-import { Download, BookOpen, X } from 'lucide-react';
+import { Download, BookOpen, X, Filter, Tag } from 'lucide-react';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 
 export default function DecksPage() {
 	const t = useTranslations('DecksPage');
 	const [isCreating, setIsCreating] = useState(false);
 	const [newDeckName, setNewDeckName] = useState('');
+	const [category, setCategory] = useState('');
+	const [selectedFilter, setSelectedFilter] = useState<string | null>(null);
 	const [showImportModal, setShowImportModal] = useState(false);
 
 	const { data: decks, isLoading } = useDecks();
+	const { data: categories } = useCategories();
 	const createDeckMutation = useCreateDeck();
 	const exportAllDecksMutation = useExportAllDecks();
 	const { openModal } = useUIStore();
+
+	// Filter decks by selected category
+	const filteredDecks = decks?.filter((deck) => {
+		if (!selectedFilter) return true;
+		return deck.category === selectedFilter;
+	}) || [];
 
 	const handleCreateDeck = async (e: React.FormEvent) => {
 		e.preventDefault();
 		if (!newDeckName.trim()) return;
 
 		try {
-			await createDeckMutation.mutateAsync(newDeckName.trim());
+			await createDeckMutation.mutateAsync({
+				name: newDeckName.trim(),
+				category: category.trim() || null,
+			});
 			setNewDeckName('');
+			setCategory('');
 			setIsCreating(false);
 		} catch (error) {
 			console.error('Failed to create deck:', error);
@@ -126,26 +141,76 @@ export default function DecksPage() {
 								disabled={createDeckMutation.isPending}
 							/>
 						</div>
+						<div>
+							<label htmlFor="category" className="block text-sm font-medium mb-2">
+								Category (Optional)
+							</label>
+							<input
+								id="category"
+								type="text"
+								value={category}
+								onChange={(e) => setCategory(e.target.value)}
+								placeholder="e.g., Languages, Science, History..."
+								className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
+								disabled={createDeckMutation.isPending}
+								maxLength={50}
+							/>
+							<p className="text-xs text-muted-foreground mt-1">
+								Organize your decks by category
+							</p>
+						</div>
 						<div className="flex gap-3">
-							<button
+							<Button
 								type="submit"
 								disabled={!newDeckName.trim() || createDeckMutation.isPending}
 								className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
 							>
 								{createDeckMutation.isPending ? t('creating') : t('create')}
-							</button>
-							<button
-								type="button"
+							</Button>
+							<Button
+								type="reset"
 								onClick={() => {
 									setIsCreating(false);
 									setNewDeckName('');
+									setCategory('');
 								}}
-								className="bg-muted0 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
+								className="bg-muted0 hover:bg-gray-600  px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
 							>
 								{t('cancel')}
-							</button>
+							</Button>
 						</div>
 					</form>
+				</div>
+			)}
+
+			{/* Category filter */}
+			{categories && categories.length > 0 && decks && decks.length > 0 && (
+				<div className="flex flex-wrap items-center gap-2 bg-card border rounded-lg p-4">
+					<Filter className="w-4 h-4 text-muted-foreground" />
+					<Badge
+						variant={!selectedFilter ? "default" : "outline"}
+						className="cursor-pointer hover:bg-primary/10"
+						onClick={() => setSelectedFilter(null)}
+					>
+						All ({decks?.length || 0})
+					</Badge>
+					{categories.map((cat) => (
+						<Badge
+							key={cat}
+							variant={selectedFilter === cat ? "default" : "outline"}
+							className="cursor-pointer hover:bg-primary/10 gap-1"
+							onClick={() => setSelectedFilter(cat)}
+						>
+							<Tag className="w-3 h-3" />
+							{cat} ({decks?.filter(d => d.category === cat).length || 0})
+							{selectedFilter === cat && (
+								<X className="w-3 h-3 ml-1" onClick={(e) => {
+									e.stopPropagation();
+									setSelectedFilter(null);
+								}} />
+							)}
+						</Badge>
+					))}
 				</div>
 			)}
 
@@ -165,13 +230,27 @@ export default function DecksPage() {
 						</button>
 					)}
 				</div>
+			) : filteredDecks.length === 0 && selectedFilter ? (
+				<div className="text-center py-16 bg-card border rounded-lg">
+					<Filter className="w-16 h-16 mb-4 text-gray-400 mx-auto" />
+					<h3 className="text-xl font-semibold mb-2">No decks in {selectedFilter}</h3>
+					<p className="text-muted-foreground mb-6">
+						No decks found in this category. Try selecting a different category or create a new deck.
+					</p>
+					<button
+						onClick={() => setSelectedFilter(null)}
+						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
+					>
+						Clear Filter
+					</button>
+				</div>
 			) : (
 				<div className="space-y-4">
-					{decks.map((deck) => (
+					{filteredDecks.map((deck) => (
 						<DeckCard
 							key={deck.id}
 							deck={deck}
-							onEdit={(d) => openModal('renameDeck', { deckId: d.id, currentName: d.name })}
+							onEdit={(d) => openModal('renameDeck', { deckId: d.id, deckName: d.name, category: d.category })}
 							onDelete={handleDeleteDeck}
 						/>
 					))}

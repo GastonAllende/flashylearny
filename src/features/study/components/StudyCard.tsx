@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import type { Card } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
 import { CardFace } from './CardFace';
@@ -20,6 +21,7 @@ export default function StudyCard({
 	isFlipped: controlledFlipped,
 	className = ''
 }: StudyCardProps) {
+	const t = useTranslations('StudyCard');
 	const [isFlipped, setIsFlipped] = useState(controlledFlipped ?? false);
 	const [isAnimating, setIsAnimating] = useState(false);
 
@@ -59,7 +61,7 @@ export default function StudyCard({
 				role="button"
 				tabIndex={0}
 				onKeyDown={(e) => e.key === 'Enter' && handleFlip()}
-				aria-label={isFlipped ? "Showing answer. Click to show question." : "Showing question. Click to show answer."}
+				aria-label={isFlipped ? t('indicatorAnswer') : t('indicatorQuestion')}
 			>
 				{/* Card Inner */}
 				<div
@@ -73,11 +75,11 @@ export default function StudyCard({
 					<div className="absolute inset-0 backface-hidden">
 						<CardFace
 							content={card.question}
-							label="Question"
+							label={t('question')}
 							icon={<HelpCircle className="w-6 h-6" />}
 							bgColor="bg-blue-500"
 							textColor="text-blue-50"
-							hint="Tap to reveal answer"
+							hint={t('tapToReveal')}
 						/>
 					</div>
 
@@ -85,11 +87,11 @@ export default function StudyCard({
 					<div className="absolute inset-0 backface-hidden rotate-y-180">
 						<CardFace
 							content={card.answer}
-							label="Answer"
+							label={t('answer')}
 							icon={<Lightbulb className="w-6 h-6" />}
 							bgColor="bg-green-500"
 							textColor="text-green-50"
-							hint="How well did you know this?"
+							hint={t('howWell')}
 						/>
 					</div>
 				</div>
@@ -99,7 +101,7 @@ export default function StudyCard({
 					variant="secondary"
 					className="absolute top-4 right-4 bg-black/20 text-white pointer-events-none"
 				>
-					{isFlipped ? 'Answer' : 'Question'}
+					{isFlipped ? t('indicatorAnswer') : t('indicatorQuestion')}
 				</Badge>
 			</div>
 
@@ -108,33 +110,33 @@ export default function StudyCard({
 				<div className="space-y-4">
 					<div className="text-center mb-4">
 						<h3 className="text-lg font-semibold mb-2">
-							How well did you know this?
+							{t('howWell')}
 						</h3>
 						<p className="text-muted-foreground text-sm">
-							Be honest - it helps us show you the right cards at the right time
+							{t('beHonest')}
 						</p>
 					</div>
 
 					<div className="space-y-3 sm:space-y-0 sm:grid sm:grid-cols-3 sm:gap-4">
 						<ResponseButton
-							label="I didn't know it"
-							description="Show this more often"
+							label={t('responses.didnt.label')}
+							description={t('responses.didnt.description')}
 							icon={<Frown className="w-6 h-6 sm:w-8 sm:h-8" />}
 							color="red"
 							onClick={() => handleResponse('didnt')}
 						/>
 
 						<ResponseButton
-							label="Almost knew it"
-							description="Show occasionally"
+							label={t('responses.almost.label')}
+							description={t('responses.almost.description')}
 							icon={<Brain className="w-6 h-6 sm:w-8 sm:h-8" />}
 							color="yellow"
 							onClick={() => handleResponse('almost')}
 						/>
 
 						<ResponseButton
-							label="I knew it!"
-							description="Show less often"
+							label={t('responses.knew.label')}
+							description={t('responses.knew.description')}
 							icon={<PartyPopper className="w-6 h-6 sm:w-8 sm:h-8" />}
 							color="green"
 							onClick={() => handleResponse('knew')}
@@ -147,7 +149,7 @@ export default function StudyCard({
 			{!isFlipped && (
 				<div className="text-center">
 					<p className="text-muted-foreground text-sm flex items-center justify-center gap-1">
-						<Lightbulb className="w-4 h-4" /> Tap the card to reveal the answer
+						<Lightbulb className="w-4 h-4" /> {t('tapToRevealShort')}
 					</p>
 				</div>
 			)}

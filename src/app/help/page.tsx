@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { BookOpen, Lightbulb, CheckCircle, X, Settings, Keyboard, ArrowRight, ArrowLeft } from 'lucide-react';
+import { BookOpen, Lightbulb, CheckCircle, X, Settings, Keyboard, ArrowRight, ArrowLeft, Rocket } from 'lucide-react';
 
 export default function HelpPage() {
 	const t = useTranslations('HelpPage');
@@ -18,7 +18,7 @@ export default function HelpPage() {
 				{/* Getting Started */}
 				<section className="bg-card border rounded-lg p-8">
 					<h2 className="text-2xl font-semibold mb-6 flex items-center gap-3">
-						<span className="text-3xl">🚀</span>
+						<Rocket className="w-8 h-8 text-blue-600" />
 						{t('gettingStarted.title')}
 					</h2>
 

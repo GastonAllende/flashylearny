@@ -80,7 +80,10 @@ export default function PrivacyPage() {
 							</div>
 
 							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
-								<h3 className="font-semibold mb-2">{t('dataStorage.security.title')}</h3>
+								<h3 className="font-semibold mb-2 flex items-center gap-2">
+									<Lock className="w-5 h-5" />
+									{t('dataStorage.security.title')}
+								</h3>
 								<p className="text-sm text-muted-foreground">
 									{t('dataStorage.security.description')}
 								</p>

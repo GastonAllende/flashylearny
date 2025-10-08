@@ -95,10 +95,11 @@ User Interaction
 interface Deck {
   id: string;          // UUID (crypto.randomUUID)
   name: string;
+  category: string | null;  // Optional category for organization
   createdAt: number;   // Unix timestamp
   updatedAt: number;   // Unix timestamp
 }
-// Indexes: id (primary), name, updatedAt
+// Indexes: id (primary), name, category, updatedAt
 ```
 
 #### Card Entity
@@ -135,6 +136,11 @@ All operations use Dexie transactions for ACID guarantees.
 - Deleting a deck deletes all its cards and all progress records for those cards
 - Deleting a card deletes its progress record
 - All updates touch the parent deck's `updatedAt` timestamp
+
+**Category Operations**:
+- `getDecksByCategory(category)` - Filter decks by category (null for uncategorized)
+- `getAllCategories()` - Get all unique categories
+- `updateDeckCategory(deckId, category)` - Update a deck's category
 
 **Progress Rules**:
 - Missing progress record = NEW status
@@ -406,6 +412,34 @@ deckName,question,answer
 }
 ```
 
+### 6. Category Organization
+
+**Location**: `src/features/decks/components/DeckList.tsx`, `src/features/decks/components/DeckCard.tsx`
+
+**Features**:
+- Optional category field when creating decks
+- Visual category badges on deck cards
+- Category filter UI with badge-based selection
+- Category counts displayed in filter badges
+- "All" filter shows all decks regardless of category
+
+**Database Operations**:
+- `getDecksByCategory(category)` - Filter decks by category (null for uncategorized decks)
+- `getAllCategories()` - Get all unique categories across all decks
+- `updateDeckCategory(deckId, category)` - Update or remove a deck's category
+
+**UI Behavior**:
+1. User creates deck with optional category field in `CreateDeckForm`
+2. Category badge appears next to deck name in `DeckCard` (if category exists)
+3. Filter UI appears in `DeckList` when categories exist
+4. Clicking category badge filters decks to show only that category
+5. Click "All" badge or X icon to clear filter
+6. Empty state shown when filter returns no results
+
+**Migration**:
+- Existing decks automatically migrated to have `category: null`
+- Database version 2 adds category field and index
+
 ## React Query Integration
 
 ### Query Client Configuration (lib/react-query.ts)
@@ -504,8 +538,9 @@ The root `/hooks/index.ts` re-exports all hooks for backward compatibility.
   - Returns: `{ data: Deck[], isLoading, error }`
 
 **Mutations**:
-- `useCreateDeck()` - Create new deck
-  - Invalidates: `['decks']`
+- `useCreateDeck()` - Create new deck with optional category
+  - Accepts: `{ name: string, category?: string | null }`
+  - Invalidates: `['decks']`, `['categories']`
   - Returns: `{ mutate, mutateAsync, isPending }`
 
 - `useRenameDeck()` - Rename deck
@@ -520,6 +555,19 @@ The root `/hooks/index.ts` re-exports all hooks for backward compatibility.
 
 - `useExportDeck()` - Export deck to CSV
   - Side effect only (triggers download)
+
+- `useUpdateDeckCategory()` - Update a deck's category
+  - Accepts: `{ deckId: string, category: string | null }`
+  - Invalidates: `['decks']`, `['categories']`
+
+**Category Queries**:
+- `useDecksByCategory(category)` - Fetch decks filtered by category
+  - Query key: `['decks', 'category', category]`
+  - Returns: `{ data: Deck[], isLoading, error }`
+
+- `useCategories()` - Fetch all unique categories
+  - Query key: `['categories']`
+  - Returns: `{ data: string[], isLoading, error }`
 
 ### Card Hooks (src/features/cards/hooks/use-cards.ts)
 
@@ -596,9 +644,9 @@ The root `/hooks/index.ts` re-exports all hooks for backward compatibility.
 Feature-specific components are located in `src/features/[feature-name]/components/`:
 
 **Deck Components** (`src/features/decks/components/`):
-- `DeckList` - Grid of deck cards
-- `DeckCard` - Individual deck card with stats and actions
-- `CreateDeckForm` - Form for creating new decks
+- `DeckList` - Grid of deck cards with category filtering
+- `DeckCard` - Individual deck card with stats, category badge, and actions
+- `CreateDeckForm` - Form for creating new decks with optional category
 - `ImportCSV` - CSV import functionality
 
 **Card Components** (`src/features/cards/components/`):

@@ -1,6 +1,7 @@
 export interface Deck {
   id: string;
   name: string;
+  category: string | null;  // Subject/category (e.g., "C#", "JavaScript", "Math")
   createdAt: number;
   updatedAt: number;
 }
