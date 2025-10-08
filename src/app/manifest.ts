@@ -2,7 +2,7 @@ import { MetadataRoute } from "next";
 
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: "FlashyLearny - Study Decks & Flashcards",
+    name: "FlashyLearny",
     short_name: "FlashyLearny",
     start_url: "/",
     display: "standalone",
