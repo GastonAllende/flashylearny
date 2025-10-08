@@ -7,7 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     start_url: "/",
     display: "standalone",
     background_color: "#ffffff",
-    theme_color: "#0ea5e9",
+    theme_color: "#000000",
     description: "Study decks and flashcards offline-first. Create, manage, and study your flashcard collections with spaced repetition.",
     orientation: "portrait-primary",
     scope: "/",
