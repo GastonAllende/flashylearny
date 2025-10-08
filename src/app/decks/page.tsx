@@ -182,7 +182,7 @@ export default function DecksPage() {
 				<Alert variant="destructive">
 					<Crown className="h-4 w-4" />
 					<AlertDescription>
-						You&apos;rereached the maximum of {subscription.limits.maxDecks} decks on the free plan.
+						You&apos;ve reached the maximum of {subscription.limits.maxDecks} decks on the free plan.
 						{' '}
 						<button
 							onClick={() => openModal('paywall', { context: 'deck_limit' })}

@@ -505,5 +505,58 @@
 			"viewStats": "Visa Statistik",
 			"backToAll": "Tillbaka till Alla Kortlekar"
 		}
+	},
+	"AuthPage": {
+		"login": {
+			"title": "Välkommen tillbaka",
+			"subtitle": "Logga in på ditt FlashyLearny-konto",
+			"email": "E-post",
+			"emailPlaceholder": "du@exempel.com",
+			"password": "Lösenord",
+			"passwordPlaceholder": "••••••••",
+			"forgotPassword": "Glömt lösenordet?",
+			"signIn": "Logga in",
+			"signingIn": "Loggar in...",
+			"noAccount": "Har du inget konto?",
+			"signUp": "Registrera dig",
+			"unexpectedError": "Ett oväntat fel uppstod"
+		},
+		"signup": {
+			"title": "Skapa ett konto",
+			"subtitle": "Registrera dig för att börja lära med FlashyLearny",
+			"email": "E-post",
+			"emailPlaceholder": "du@exempel.com",
+			"password": "Lösenord",
+			"passwordPlaceholder": "••••••••",
+			"confirmPassword": "Bekräfta Lösenord",
+			"confirmPasswordPlaceholder": "••••••••",
+			"signUp": "Registrera dig",
+			"creatingAccount": "Skapar konto...",
+			"hasAccount": "Har du redan ett konto?",
+			"signIn": "Logga in",
+			"successMessage": "Konto skapat framgångsrikt! Kontrollera din e-post för att bekräfta ditt konto. Omdirigerar...",
+			"passwordsNoMatch": "Lösenorden matchar inte",
+			"passwordTooShort": "Lösenordet måste vara minst 6 tecken",
+			"unexpectedError": "Ett oväntat fel uppstod"
+		},
+		"reset": {
+			"title": "Återställ lösenord",
+			"subtitle": "Ange din e-post för att få en återställningslänk",
+			"email": "E-post",
+			"emailPlaceholder": "du@exempel.com",
+			"sendResetLink": "Skicka återställningslänk",
+			"sendingResetLink": "Skickar återställningslänk...",
+			"backToLogin": "Tillbaka till inloggning",
+			"successMessage": "Kontrollera din e-post för en lösenordsåterställningslänk. Länken upphör att gälla om 1 timme.",
+			"unexpectedError": "Ett oväntat fel uppstod"
+		},
+		"callback": {
+			"title": "Loggar in dig...",
+			"errorTitle": "Autentiseringsfel",
+			"subtitle": "Vänta medan vi slutför din inloggning",
+			"errorSubtitle": "Det uppstod ett problem med autentiseringen",
+			"noCodeError": "Ingen auktoriseringskod mottogs",
+			"unexpectedError": "Ett oväntat fel uppstod"
+		}
 	}
 }

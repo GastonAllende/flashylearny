@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { supabase } from '@/lib/supabase';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
 
 export default function AuthCallbackPage() {
+  const t = useTranslations('AuthPage.callback');
   const [error, setError] = useState('');
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -37,10 +39,10 @@ export default function AuthCallbackPage() {
           // Redirect to decks page
           router.push('/decks');
         } else {
-          setError('No authorization code received');
+          setError(t('noCodeError'));
         }
       } catch (err) {
-        setError('An unexpected error occurred');
+        setError(t('unexpectedError'));
       }
     };
 
@@ -52,10 +54,10 @@ export default function AuthCallbackPage() {
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
           <CardTitle className="text-2xl font-bold">
-            {error ? 'Authentication Error' : 'Signing you in...'}
+            {error ? t('errorTitle') : t('title')}
           </CardTitle>
           <CardDescription>
-            {error ? 'There was a problem with authentication' : 'Please wait while we complete your sign in'}
+            {error ? t('errorSubtitle') : t('subtitle')}
           </CardDescription>
         </CardHeader>
         <CardContent className="flex flex-col items-center justify-center space-y-4">

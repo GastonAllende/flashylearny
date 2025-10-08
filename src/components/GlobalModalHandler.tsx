@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useUIStore } from '@/stores/ui';
-import { useDeleteDeck, useDeleteCard, useRenameDeck, useResetDeckProgress, useUpdateDeck } from '@/hooks';
+import { useDeleteDeck, useDeleteCard, useResetDeckProgress, useUpdateDeck } from '@/hooks';
 import { DeleteDeckDialog, DeleteCardDialog, ResetProgressDialog } from './ConfirmDialog';
 import { PaywallModal } from './PaywallModal';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from './ui/dialog';
@@ -20,7 +20,6 @@ export default function GlobalModalHandler() {
 	const { modal, closeModal } = useUIStore();
 	const deleteDeckMutation = useDeleteDeck();
 	const deleteCardMutation = useDeleteCard();
-	const renameDeckMutation = useRenameDeck();
 	const updateDeckMutation = useUpdateDeck();
 	const resetDeckProgressMutation = useResetDeckProgress();
 	const [newDeckName, setNewDeckName] = useState('');

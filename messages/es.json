@@ -505,5 +505,58 @@
 			"viewStats": "Ver Estadísticas",
 			"backToAll": "Volver a Todos los Mazos"
 		}
+	},
+	"AuthPage": {
+		"login": {
+			"title": "Bienvenido de vuelta",
+			"subtitle": "Inicia sesión en tu cuenta de FlashyLearny",
+			"email": "Correo electrónico",
+			"emailPlaceholder": "tu@ejemplo.com",
+			"password": "Contraseña",
+			"passwordPlaceholder": "••••••••",
+			"forgotPassword": "¿Olvidaste tu contraseña?",
+			"signIn": "Iniciar sesión",
+			"signingIn": "Iniciando sesión...",
+			"noAccount": "¿No tienes una cuenta?",
+			"signUp": "Registrarse",
+			"unexpectedError": "Ocurrió un error inesperado"
+		},
+		"signup": {
+			"title": "Crear una cuenta",
+			"subtitle": "Regístrate para comenzar a aprender con FlashyLearny",
+			"email": "Correo electrónico",
+			"emailPlaceholder": "tu@ejemplo.com",
+			"password": "Contraseña",
+			"passwordPlaceholder": "••••••••",
+			"confirmPassword": "Confirmar Contraseña",
+			"confirmPasswordPlaceholder": "••••••••",
+			"signUp": "Registrarse",
+			"creatingAccount": "Creando cuenta...",
+			"hasAccount": "¿Ya tienes una cuenta?",
+			"signIn": "Iniciar sesión",
+			"successMessage": "¡Cuenta creada exitosamente! Revisa tu correo para confirmar tu cuenta. Redirigiendo...",
+			"passwordsNoMatch": "Las contraseñas no coinciden",
+			"passwordTooShort": "La contraseña debe tener al menos 6 caracteres",
+			"unexpectedError": "Ocurrió un error inesperado"
+		},
+		"reset": {
+			"title": "Restablecer contraseña",
+			"subtitle": "Ingresa tu correo para recibir un enlace de restablecimiento",
+			"email": "Correo electrónico",
+			"emailPlaceholder": "tu@ejemplo.com",
+			"sendResetLink": "Enviar enlace de restablecimiento",
+			"sendingResetLink": "Enviando enlace de restablecimiento...",
+			"backToLogin": "Volver al inicio de sesión",
+			"successMessage": "Revisa tu correo para un enlace de restablecimiento de contraseña. El enlace expirará en 1 hora.",
+			"unexpectedError": "Ocurrió un error inesperado"
+		},
+		"callback": {
+			"title": "Iniciando sesión...",
+			"errorTitle": "Error de Autenticación",
+			"subtitle": "Por favor espera mientras completamos tu inicio de sesión",
+			"errorSubtitle": "Hubo un problema con la autenticación",
+			"noCodeError": "No se recibió código de autorización",
+			"unexpectedError": "Ocurrió un error inesperado"
+		}
 	}
 }

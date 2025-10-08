@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
@@ -17,20 +18,13 @@ import {
 import { Menu, X, BookOpen, User, LogOut, Crown, Settings } from "lucide-react";
 import ThemeToggle from "@/components/ThemeToggle";
 import LanguageSelector from "@/components/LanguageSelector";
-import { useUIStore } from "@/stores/ui";
 import { useAuth } from "@/contexts/AuthContext";
 
 export default function Header() {
 	const [open, setOpen] = useState(false);
-	const { openModal } = useUIStore();
 	const { user, profile, signOut, loading } = useAuth();
 	const router = useRouter();
 	const t = useTranslations('Header');
-
-	const handleCreateDeck = () => {
-		openModal('createDeck');
-		setOpen(false);
-	};
 
 	const handleSignOut = async () => {
 		await signOut();
@@ -44,15 +38,16 @@ export default function Header() {
 				<div className="flex items-center gap-6">
 					<Link
 						href="/"
-						className="font-bold text-lg tracking-tight text-blue-600 hover:text-blue-700 transition-colors"
+						className="flex items-center gap-2 font-bold text-lg tracking-tight text-primary hover:text-primary/80 transition-colors"
 					>
+						<Image src="/icon.svg" alt="FlashyLearny" width={24} height={24} />
 						FlashyLearny
 					</Link>
 					{user && (
 						<div className="hidden md:flex items-center gap-6 text-sm font-medium">
 							<Link
 								href="/decks"
-								className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+								className="text-muted-foreground hover:text-primary/80 transition-colors"
 							>
 								{t('decks')}
 							</Link>

@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,6 +13,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
 
 export default function SignupPage() {
+  const t = useTranslations('AuthPage.signup');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
@@ -28,13 +30,13 @@ export default function SignupPage() {
 
     // Validate passwords match
     if (password !== confirmPassword) {
-      setError('Passwords do not match');
+      setError(t('passwordsNoMatch'));
       return;
     }
 
     // Validate password length
     if (password.length < 6) {
-      setError('Password must be at least 6 characters');
+      setError(t('passwordTooShort'));
       return;
     }
 
@@ -50,7 +52,7 @@ export default function SignupPage() {
         setTimeout(() => router.push('/auth/login'), 2000);
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError(t('unexpectedError'));
     } finally {
       setLoading(false);
     }
@@ -60,9 +62,9 @@ export default function SignupPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Create an account</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t('title')}</CardTitle>
           <CardDescription>
-            Sign up to start learning with FlashyLearny
+            {t('subtitle')}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
@@ -75,16 +77,16 @@ export default function SignupPage() {
             {success && (
               <Alert>
                 <AlertDescription>
-                  Account created successfully! Check your email to confirm your account. Redirecting...
+                  {t('successMessage')}
                 </AlertDescription>
               </Alert>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('email')}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t('emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -92,11 +94,11 @@ export default function SignupPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('password')}</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="••••••••"
+                placeholder={t('passwordPlaceholder')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -105,11 +107,11 @@ export default function SignupPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="confirmPassword">Confirm Password</Label>
+              <Label htmlFor="confirmPassword">{t('confirmPassword')}</Label>
               <Input
                 id="confirmPassword"
                 type="password"
-                placeholder="••••••••"
+                placeholder={t('confirmPasswordPlaceholder')}
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
@@ -123,16 +125,16 @@ export default function SignupPage() {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating account...
+                  {t('creatingAccount')}
                 </>
               ) : (
-                'Sign up'
+                t('signUp')
               )}
             </Button>
             <p className="text-center text-sm text-muted-foreground">
-              Already have an account?{' '}
+              {t('hasAccount')}{' '}
               <Link href="/auth/login" className="text-primary hover:underline">
-                Sign in
+                {t('signIn')}
               </Link>
             </p>
           </CardFooter>

@@ -149,10 +149,7 @@ export default function AboutPage() {
 			</div>
 
 			<div className="text-center">
-				<Link
-					href="/decks"
-					className="inline-flex items-center justify-center whitespace-nowrap rounded-md font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 bg-primary text-primary-foreground hover:bg-primary/90 h-11 px-8 text-lg"
-				>
+				<Link href="/decks" className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors duration-200">
 					{t('cta')}
 				</Link>
 			</div>

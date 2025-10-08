@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -11,6 +12,7 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2, ArrowLeft } from 'lucide-react';
 
 export default function ResetPasswordPage() {
+  const t = useTranslations('AuthPage.reset');
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState(false);
@@ -31,7 +33,7 @@ export default function ResetPasswordPage() {
         setSuccess(true);
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError(t('unexpectedError'));
     } finally {
       setLoading(false);
     }
@@ -41,9 +43,9 @@ export default function ResetPasswordPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Reset password</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t('title')}</CardTitle>
           <CardDescription>
-            Enter your email to receive a password reset link
+            {t('subtitle')}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
@@ -56,16 +58,16 @@ export default function ResetPasswordPage() {
             {success && (
               <Alert>
                 <AlertDescription>
-                  Check your email for a password reset link. The link will expire in 1 hour.
+                  {t('successMessage')}
                 </AlertDescription>
               </Alert>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('email')}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t('emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -78,10 +80,10 @@ export default function ResetPasswordPage() {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Sending reset link...
+                  {t('sendingResetLink')}
                 </>
               ) : (
-                'Send reset link'
+                t('sendResetLink')
               )}
             </Button>
             <Link
@@ -89,7 +91,7 @@ export default function ResetPasswordPage() {
               className="flex items-center justify-center text-sm text-muted-foreground hover:text-primary"
             >
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to login
+              {t('backToLogin')}
             </Link>
           </CardFooter>
         </form>

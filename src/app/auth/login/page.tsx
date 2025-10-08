@@ -1,8 +1,8 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -12,12 +12,12 @@ import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Loader2 } from 'lucide-react';
 
 export default function LoginPage() {
+  const t = useTranslations('AuthPage.login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const { signIn } = useAuth();
-  const router = useRouter();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -35,7 +35,7 @@ export default function LoginPage() {
         window.location.href = '/decks';
       }
     } catch (err) {
-      setError('An unexpected error occurred');
+      setError(t('unexpectedError'));
       setLoading(false);
     }
   };
@@ -44,9 +44,9 @@ export default function LoginPage() {
     <div className="flex min-h-screen items-center justify-center p-4">
       <Card className="w-full max-w-md">
         <CardHeader className="space-y-1">
-          <CardTitle className="text-2xl font-bold">Welcome back</CardTitle>
+          <CardTitle className="text-2xl font-bold">{t('title')}</CardTitle>
           <CardDescription>
-            Sign in to your FlashyLearny account
+            {t('subtitle')}
           </CardDescription>
         </CardHeader>
         <form onSubmit={handleSubmit}>
@@ -57,11 +57,11 @@ export default function LoginPage() {
               </Alert>
             )}
             <div className="space-y-2">
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t('email')}</Label>
               <Input
                 id="email"
                 type="email"
-                placeholder="you@example.com"
+                placeholder={t('emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -69,11 +69,11 @@ export default function LoginPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="password">Password</Label>
+              <Label htmlFor="password">{t('password')}</Label>
               <Input
                 id="password"
                 type="password"
-                placeholder="••••••••"
+                placeholder={t('passwordPlaceholder')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
@@ -85,7 +85,7 @@ export default function LoginPage() {
                 href="/auth/reset"
                 className="text-sm text-muted-foreground hover:text-primary"
               >
-                Forgot password?
+                {t('forgotPassword')}
               </Link>
             </div>
           </CardContent>
@@ -94,16 +94,16 @@ export default function LoginPage() {
               {loading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Signing in...
+                  {t('signingIn')}
                 </>
               ) : (
-                'Sign in'
+                t('signIn')
               )}
             </Button>
             <p className="text-center text-sm text-muted-foreground">
-              Don&apos;t have an account?{' '}
+              {t('noAccount')}{' '}
               <Link href="/auth/signup" className="text-primary hover:underline">
-                Sign up
+                {t('signUp')}
               </Link>
             </p>
           </CardFooter>

@@ -102,7 +102,7 @@ export function CardsTab({ deckId, cards, onDeleteCard }: CardsTabProps) {
 				<Alert>
 					<AlertCircle className="h-4 w-4" />
 					<AlertDescription>
-						You're using {currentCardCount} of {subscription.limits.maxCardsPerDeck} cards in this deck.
+						You&apos;re using {currentCardCount} of {subscription.limits.maxCardsPerDeck} cards in this deck.
 						{remaining === 1 ? ' 1 card remaining.' : ` ${remaining} cards remaining.`}
 						{' '}
 						<button
@@ -120,7 +120,7 @@ export function CardsTab({ deckId, cards, onDeleteCard }: CardsTabProps) {
 				<Alert variant="destructive">
 					<Crown className="h-4 w-4" />
 					<AlertDescription>
-						You've reached the maximum of {subscription.limits.maxCardsPerDeck} cards per deck on the free plan.
+						You&apos;ve reached the maximum of {subscription.limits.maxCardsPerDeck} cards per deck on the free plan.
 						{' '}
 						<button
 							onClick={() => openModal('paywall', { context: 'card_limit' })}

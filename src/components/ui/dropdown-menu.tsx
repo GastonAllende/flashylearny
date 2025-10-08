@@ -117,7 +117,7 @@ function DropdownMenuItem({
   };
 
   if (asChild && React.isValidElement(children)) {
-    return React.cloneElement(children as React.ReactElement<any>, {
+    return React.cloneElement(children as React.ReactElement<{ onClick?: (e: React.MouseEvent<HTMLDivElement>) => void }>, {
       onClick: handleClick,
     });
   }

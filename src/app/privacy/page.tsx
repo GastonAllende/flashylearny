@@ -209,7 +209,7 @@ export default function PrivacyPage() {
 			<div className="text-center">
 				<Link
 					href="/decks"
-					className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-200 inline-block"
+					className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-200 inline-block"
 				>
 					{t('cta')}
 				</Link>

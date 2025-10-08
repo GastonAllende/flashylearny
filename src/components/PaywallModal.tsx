@@ -3,7 +3,7 @@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Crown, Check, X } from 'lucide-react';
+import { Crown, Check } from 'lucide-react';
 import { useUIStore } from '@/stores/ui';
 import { PRICING } from '@/lib/subscription';
 

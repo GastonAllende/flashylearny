@@ -505,5 +505,58 @@
 			"viewStats": "View Stats",
 			"backToAll": "Back to All Decks"
 		}
+	},
+	"AuthPage": {
+		"login": {
+			"title": "Welcome back",
+			"subtitle": "Sign in to your FlashyLearny account",
+			"email": "Email",
+			"emailPlaceholder": "you@example.com",
+			"password": "Password",
+			"passwordPlaceholder": "••••••••",
+			"forgotPassword": "Forgot password?",
+			"signIn": "Sign in",
+			"signingIn": "Signing in...",
+			"noAccount": "Don't have an account?",
+			"signUp": "Sign up",
+			"unexpectedError": "An unexpected error occurred"
+		},
+		"signup": {
+			"title": "Create an account",
+			"subtitle": "Sign up to start learning with FlashyLearny",
+			"email": "Email",
+			"emailPlaceholder": "you@example.com",
+			"password": "Password",
+			"passwordPlaceholder": "••••••••",
+			"confirmPassword": "Confirm Password",
+			"confirmPasswordPlaceholder": "••••••••",
+			"signUp": "Sign up",
+			"creatingAccount": "Creating account...",
+			"hasAccount": "Already have an account?",
+			"signIn": "Sign in",
+			"successMessage": "Account created successfully! Check your email to confirm your account. Redirecting...",
+			"passwordsNoMatch": "Passwords do not match",
+			"passwordTooShort": "Password must be at least 6 characters",
+			"unexpectedError": "An unexpected error occurred"
+		},
+		"reset": {
+			"title": "Reset password",
+			"subtitle": "Enter your email to receive a password reset link",
+			"email": "Email",
+			"emailPlaceholder": "you@example.com",
+			"sendResetLink": "Send reset link",
+			"sendingResetLink": "Sending reset link...",
+			"backToLogin": "Back to login",
+			"successMessage": "Check your email for a password reset link. The link will expire in 1 hour.",
+			"unexpectedError": "An unexpected error occurred"
+		},
+		"callback": {
+			"title": "Signing you in...",
+			"errorTitle": "Authentication Error",
+			"subtitle": "Please wait while we complete your sign in",
+			"errorSubtitle": "There was a problem with authentication",
+			"noCodeError": "No authorization code received",
+			"unexpectedError": "An unexpected error occurred"
+		}
 	}
 }
