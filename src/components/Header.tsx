@@ -68,12 +68,6 @@ export default function Header() {
 						>
 							<BookOpen className="h-4 w-4" /> {t('decks')}
 						</Link>
-						<button
-							onClick={handleCreateDeck}
-							className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 text-left flex items-center gap-2"
-						>
-							<Plus className="h-4 w-4" /> {t('createDeck')}
-						</button>
 						<div className="flex items-center justify-between pt-2 border-t border">
 							<div className="flex items-center gap-2">
 								<LanguageSelector />

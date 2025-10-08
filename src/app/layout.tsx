@@ -22,13 +22,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "FlashyLearny - Study Decks & Flashcards",
+  title: "FlashyLearny",
   description: "Study decks and flashcards offline-first. Create, manage, and study your flashcard collections with spaced repetition.",
   manifest: "/manifest.json",
   icons: {
     icon: [
       { url: "/icon.svg", type: "image/svg+xml" },
-      { url: "/favicon.png", sizes: "any" }
+      { url: "/favicon.ico", sizes: "any" }
     ],
     apple: [
       { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" }
