@@ -558,5 +558,64 @@
 			"noCodeError": "Ingen auktoriseringskod mottogs",
 			"unexpectedError": "Ett oväntat fel uppstod"
 		}
+	},
+	"Pricing": {
+		"free": "Gratis",
+		"pro": "Pro",
+		"monthly": "Månadsvis",
+		"yearly": "Årligen",
+		"perMonth": "per månad",
+		"perYear": "per år",
+		"save17": "Spara 17%",
+		"upgradeToPro": "Uppgradera till Pro",
+		"upgradeToProAmount": "Uppgradera till Pro - ${amount}",
+		"manageSubscription": "Hantera Prenumeration",
+		"processing": "Bearbetar...",
+		"maybeLater": "Kanske Senare",
+		"proFeatures": "Pro-funktioner:",
+		"features": {
+			"unlimitedDecks": "Obegränsade kortlekar",
+			"unlimitedCards": "Obegränsade kort per kortlek",
+			"prioritySupport": "Prioriterad support",
+			"earlyAccess": "Tidig tillgång till nya funktioner",
+			"adFree": "Reklamfri upplevelse"
+		},
+		"limits": {
+			"deckLimit": "Kortleksgräns Nådd",
+			"cardLimit": "Kortgräns Nådd",
+			"deckLimitWarning": "Få Kortlekar Kvar",
+			"cardLimitWarning": "Få Kort Kvar",
+			"deckLimitDesc": "Du har nått maximalt 5 kortlekar på gratisplanen. Uppgradera till Pro för obegränsade kortlekar och kort.",
+			"cardLimitDesc": "Du har nått maximalt 50 kort per kortlek på gratisplanen. Uppgradera till Pro för obegränsade kort.",
+			"deckLimitWarningDesc": "Du närmar dig gränsen på 5 kortlekar på gratisplanen. Uppgradera till Pro för obegränsade kortlekar och kort.",
+			"cardLimitWarningDesc": "Du närmar dig gränsen på 50 kort per kortlek på gratisplanen. Uppgradera till Pro för obegränsade kort.",
+			"upgradeMessage": "Lås upp obegränsade kortlekar och kort med FlashyLearny Pro."
+		}
+	},
+	"Billing": {
+		"title": "Fakturering & Prenumeration",
+		"subtitle": "Hantera din prenumeration och faktureringsinformation",
+		"backToDecks": "Tillbaka till Kortlekar",
+		"currentPlan": "Nuvarande Plan",
+		"freePlan": "Gratisplan",
+		"proPlan": "Pro-plan",
+		"status": "Status",
+		"active": "Aktiv",
+		"canceled": "Avbruten",
+		"pastDue": "Förfallen",
+		"free": "Gratis",
+		"proPlanFeatures": "Du har tillgång till alla Pro-funktioner",
+		"freePlanLimits": "Begränsad till 5 kortlekar och 50 kort per kortlek",
+		"planFeatures": "Din Plan Inkluderar:",
+		"subscriptionStatus": "Prenumerationsstatus:",
+		"pastDueWarning": "Din betalning är förfallen. Vänligen uppdatera din betalningsmetod för att fortsätta använda Pro-funktioner.",
+		"noSubscription": "Ingen prenumeration hittades. Vänligen uppgradera till Pro först.",
+		"manageSubscription": "Hantera Prenumeration",
+		"upgradeToPro": "Uppgradera till Pro - ${amount}",
+		"loading": "Laddar...",
+		"proBenefitsTitle": "Pro-planens Fördelar",
+		"proBenefitsSubtitle": "Lås upp obegränsad inlärningspotential",
+		"welcomeToPro": "Välkommen till FlashyLearny Pro! 🎉",
+		"checkoutCanceled": "Betalning avbruten"
 	}
 }

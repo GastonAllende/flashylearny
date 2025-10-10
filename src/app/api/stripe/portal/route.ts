@@ -4,7 +4,8 @@ import { stripe } from '@/lib/stripe';
 
 export async function POST(request: NextRequest) {
   try {
-    console.log('Portal request received');
+    const { locale } = await request.json();
+    console.log('Portal request received with locale:', locale);
 
     // Get user from Supabase auth
     const supabase = createServerClient(
@@ -60,10 +61,15 @@ export async function POST(request: NextRequest) {
 
     console.log('Creating Stripe portal session for customer:', profile.stripe_customer_id);
 
+    // Validate and map locale (Stripe supports: en, es, sv, and many more)
+    const supportedLocales = ['en', 'es', 'sv'];
+    const stripeLocale = locale && supportedLocales.includes(locale) ? locale : 'en';
+
     // Create Stripe billing portal session
     const session = await stripe.billingPortal.sessions.create({
       customer: profile.stripe_customer_id,
       return_url: `${process.env.NEXT_PUBLIC_APP_URL}/settings/billing`,
+      locale: stripeLocale as 'en' | 'es' | 'sv',
     });
 
     console.log('Portal session created:', session.id);

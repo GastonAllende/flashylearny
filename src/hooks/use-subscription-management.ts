@@ -1,9 +1,11 @@
 import { useMutation } from '@tanstack/react-query';
 import { toast } from 'sonner';
 import { useAuth } from '@/contexts/AuthContext';
+import { useLocale } from 'next-intl';
 
 export function useSubscriptionManagement() {
   const { profile } = useAuth();
+  const locale = useLocale();
 
   const openPortalMutation = useMutation({
     mutationFn: async () => {
@@ -12,6 +14,7 @@ export function useSubscriptionManagement() {
         headers: {
           'Content-Type': 'application/json',
         },
+        body: JSON.stringify({ locale }),
       });
 
       if (!response.ok) {

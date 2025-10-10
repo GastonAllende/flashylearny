@@ -13,6 +13,7 @@ import { useSubscriptionManagement } from '@/hooks/use-subscription-management';
 import { useUIStore } from '@/stores/ui';
 import { toast } from 'sonner';
 import { PRICING } from '@/lib/subscription';
+import { useTranslations } from 'next-intl';
 
 export default function BillingPage() {
   const router = useRouter();
@@ -20,6 +21,8 @@ export default function BillingPage() {
   const { loading: authLoading } = useAuth();
   const { openBillingPortal, isLoading: portalLoading, subscriptionStatus, isProUser } = useSubscriptionManagement();
   const { openModal } = useUIStore();
+  const t = useTranslations('Billing');
+  const tPricing = useTranslations('Pricing');
 
   // Handle success/cancel redirects from Stripe
   useEffect(() => {
@@ -27,14 +30,14 @@ export default function BillingPage() {
     const canceled = searchParams.get('canceled');
 
     if (success === 'true') {
-      toast.success('Welcome to FlashyLearny Pro! 🎉');
+      toast.success(t('welcomeToPro'));
       // Clear query params
       window.history.replaceState({}, '', '/settings/billing');
     } else if (canceled === 'true') {
-      toast.info('Checkout canceled');
+      toast.info(t('checkoutCanceled'));
       window.history.replaceState({}, '', '/settings/billing');
     }
-  }, [searchParams]);
+  }, [searchParams, t]);
 
   if (authLoading) {
     return (
@@ -61,11 +64,11 @@ export default function BillingPage() {
           className="mb-4"
         >
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to Decks
+          {t('backToDecks')}
         </Button>
-        <h1 className="text-3xl font-bold">Billing & Subscription</h1>
+        <h1 className="text-3xl font-bold">{t('title')}</h1>
         <p className="text-muted-foreground mt-2">
-          Manage your subscription and billing information
+          {t('subtitle')}
         </p>
       </div>
 
@@ -78,20 +81,20 @@ export default function BillingPage() {
                 {isProUser ? (
                   <>
                     <Crown className="h-5 w-5 text-yellow-500" />
-                    Pro Plan
+                    {t('proPlan')}
                   </>
                 ) : (
-                  'Free Plan'
+                  t('freePlan')
                 )}
               </CardTitle>
               <CardDescription>
                 {isProUser
-                  ? 'You have access to all Pro features'
-                  : 'Limited to 5 decks and 50 cards per deck'}
+                  ? t('proPlanFeatures')
+                  : t('freePlanLimits')}
               </CardDescription>
             </div>
             <Badge variant={isProUser ? 'default' : 'secondary'} className="text-sm">
-              {isProUser ? 'Active' : 'Free'}
+              {isProUser ? t('active') : t('free')}
             </Badge>
           </div>
         </CardHeader>
@@ -108,13 +111,13 @@ export default function BillingPage() {
                   <XCircle className="h-4 w-4 text-red-500" />
                 )}
                 <span className="text-sm font-medium">
-                  Status: <span className="capitalize">{subscriptionStatus}</span>
+                  {t('subscriptionStatus')} <span className="capitalize">{subscriptionStatus === 'active' ? t('active') : subscriptionStatus === 'canceled' ? t('canceled') : t('pastDue')}</span>
                 </span>
               </div>
               {subscriptionStatus === 'past_due' && (
                 <Alert variant="destructive" className="mt-2">
                   <AlertDescription>
-                    Your payment is past due. Please update your payment method to continue using Pro features.
+                    {t('pastDueWarning')}
                   </AlertDescription>
                 </Alert>
               )}
@@ -123,28 +126,28 @@ export default function BillingPage() {
 
           {/* Plan Features */}
           <div className="space-y-3 mb-6">
-            <h3 className="font-semibold text-sm">Your Plan Includes:</h3>
+            <h3 className="font-semibold text-sm">{t('planFeatures')}</h3>
             {isProUser ? (
               <ul className="space-y-2 text-sm text-muted-foreground">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Unlimited decks</span>
+                  <span>{tPricing('features.unlimitedDecks')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Unlimited cards per deck</span>
+                  <span>{tPricing('features.unlimitedCards')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Priority support</span>
+                  <span>{tPricing('features.prioritySupport')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Early access to new features</span>
+                  <span>{tPricing('features.earlyAccess')}</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-4 w-4 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Ad-free experience</span>
+                  <span>{tPricing('features.adFree')}</span>
                 </li>
               </ul>
             ) : (
@@ -176,19 +179,19 @@ export default function BillingPage() {
                 {portalLoading ? (
                   <>
                     <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                    Loading...
+                    {t('loading')}
                   </>
                 ) : (
                   <>
                     <CreditCard className="mr-2 h-4 w-4" />
-                    Manage Subscription
+                    {t('manageSubscription')}
                   </>
                 )}
               </Button>
             ) : (
               <Button onClick={handleUpgrade} className="w-full">
                 <Crown className="mr-2 h-4 w-4" />
-                Upgrade to Pro - ${PRICING.pro.monthly}/month
+                {t('upgradeToPro', { amount: `${PRICING.pro.monthly}/month` })}
               </Button>
             )}
           </div>
@@ -199,26 +202,26 @@ export default function BillingPage() {
       {!isProUser && (
         <Card>
           <CardHeader>
-            <CardTitle>Pro Plan Benefits</CardTitle>
+            <CardTitle>{t('proBenefitsTitle')}</CardTitle>
             <CardDescription>
-              Unlock unlimited learning potential
+              {t('proBenefitsSubtitle')}
             </CardDescription>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-2 gap-4">
               <div className="border rounded-lg p-4">
-                <p className="text-sm font-medium mb-1">Monthly</p>
+                <p className="text-sm font-medium mb-1">{tPricing('monthly')}</p>
                 <p className="text-2xl font-bold">${PRICING.pro.monthly}</p>
-                <p className="text-xs text-muted-foreground">per month</p>
+                <p className="text-xs text-muted-foreground">{tPricing('perMonth')}</p>
               </div>
               <div className="border rounded-lg p-4 relative">
                 <Badge className="absolute -top-2 right-2 bg-primary text-xs">
-                  Save 17%
+                  {tPricing('save17')}
                 </Badge>
-                <p className="text-sm font-medium mb-1">Yearly</p>
+                <p className="text-sm font-medium mb-1">{tPricing('yearly')}</p>
                 <p className="text-2xl font-bold">${PRICING.pro.yearly}</p>
                 <p className="text-xs text-muted-foreground">
-                  per year (${(PRICING.pro.yearly / 12).toFixed(2)}/month)
+                  {tPricing('perYear')} (${(PRICING.pro.yearly / 12).toFixed(2)}/month)
                 </p>
               </div>
             </div>

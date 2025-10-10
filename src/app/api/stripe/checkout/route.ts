@@ -4,9 +4,9 @@ import { stripe, STRIPE_PRICES } from '@/lib/stripe';
 
 export async function POST(request: NextRequest) {
   try {
-    const { priceId } = await request.json();
+    const { priceId, locale } = await request.json();
 
-    console.log('Checkout request received with priceId:', priceId);
+    console.log('Checkout request received with priceId:', priceId, 'locale:', locale);
     console.log('Available price IDs:', STRIPE_PRICES);
 
     // Validate price ID
@@ -18,6 +18,10 @@ export async function POST(request: NextRequest) {
         { status: 400 }
       );
     }
+
+    // Validate and map locale (Stripe supports: en, es, sv, and many more)
+    const supportedLocales = ['en', 'es', 'sv'];
+    const stripeLocale = locale && supportedLocales.includes(locale) ? locale : 'en';
 
     // Get user from Supabase auth
     const supabase = createServerClient(
@@ -82,6 +86,7 @@ export async function POST(request: NextRequest) {
       ],
       success_url: `${process.env.NEXT_PUBLIC_APP_URL}/decks?success=true`,
       cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/decks?canceled=true`,
+      locale: stripeLocale as 'en' | 'es' | 'sv',
       metadata: {
         supabase_user_id: user.id,
       },

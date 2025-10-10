@@ -558,5 +558,64 @@
 			"noCodeError": "No authorization code received",
 			"unexpectedError": "An unexpected error occurred"
 		}
+	},
+	"Pricing": {
+		"free": "Free",
+		"pro": "Pro",
+		"monthly": "Monthly",
+		"yearly": "Yearly",
+		"perMonth": "per month",
+		"perYear": "per year",
+		"save17": "Save 17%",
+		"upgradeToPro": "Upgrade to Pro",
+		"upgradeToProAmount": "Upgrade to Pro - ${amount}",
+		"manageSubscription": "Manage Subscription",
+		"processing": "Processing...",
+		"maybeLater": "Maybe Later",
+		"proFeatures": "Pro Features:",
+		"features": {
+			"unlimitedDecks": "Unlimited decks",
+			"unlimitedCards": "Unlimited cards per deck",
+			"prioritySupport": "Priority support",
+			"earlyAccess": "Early access to new features",
+			"adFree": "Ad-free experience"
+		},
+		"limits": {
+			"deckLimit": "Deck Limit Reached",
+			"cardLimit": "Card Limit Reached",
+			"deckLimitWarning": "Running Low on Decks",
+			"cardLimitWarning": "Running Low on Cards",
+			"deckLimitDesc": "You've reached the maximum of 5 decks on the free plan. Upgrade to Pro for unlimited decks and cards.",
+			"cardLimitDesc": "You've reached the maximum of 50 cards per deck on the free plan. Upgrade to Pro for unlimited cards.",
+			"deckLimitWarningDesc": "You're approaching the 5 deck limit on the free plan. Upgrade to Pro for unlimited decks and cards.",
+			"cardLimitWarningDesc": "You're approaching the 50 cards per deck limit on the free plan. Upgrade to Pro for unlimited cards.",
+			"upgradeMessage": "Unlock unlimited decks and cards with FlashyLearny Pro."
+		}
+	},
+	"Billing": {
+		"title": "Billing & Subscription",
+		"subtitle": "Manage your subscription and billing information",
+		"backToDecks": "Back to Decks",
+		"currentPlan": "Current Plan",
+		"freePlan": "Free Plan",
+		"proPlan": "Pro Plan",
+		"status": "Status",
+		"active": "Active",
+		"canceled": "Canceled",
+		"pastDue": "Past Due",
+		"free": "Free",
+		"proPlanFeatures": "You have access to all Pro features",
+		"freePlanLimits": "Limited to 5 decks and 50 cards per deck",
+		"planFeatures": "Your Plan Includes:",
+		"subscriptionStatus": "Subscription Status:",
+		"pastDueWarning": "Your payment is past due. Please update your payment method to continue using Pro features.",
+		"noSubscription": "No subscription found. Please upgrade to Pro first.",
+		"manageSubscription": "Manage Subscription",
+		"upgradeToPro": "Upgrade to Pro - ${amount}",
+		"loading": "Loading...",
+		"proBenefitsTitle": "Pro Plan Benefits",
+		"proBenefitsSubtitle": "Unlock unlimited learning potential",
+		"welcomeToPro": "Welcome to FlashyLearny Pro! 🎉",
+		"checkoutCanceled": "Checkout canceled"
 	}
 }

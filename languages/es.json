@@ -558,5 +558,64 @@
 			"noCodeError": "No se recibió código de autorización",
 			"unexpectedError": "Ocurrió un error inesperado"
 		}
+	},
+	"Pricing": {
+		"free": "Gratis",
+		"pro": "Pro",
+		"monthly": "Mensual",
+		"yearly": "Anual",
+		"perMonth": "por mes",
+		"perYear": "por año",
+		"save17": "Ahorra 17%",
+		"upgradeToPro": "Actualizar a Pro",
+		"upgradeToProAmount": "Actualizar a Pro - ${amount}",
+		"manageSubscription": "Administrar Suscripción",
+		"processing": "Procesando...",
+		"maybeLater": "Quizás Más Tarde",
+		"proFeatures": "Características Pro:",
+		"features": {
+			"unlimitedDecks": "Mazos ilimitados",
+			"unlimitedCards": "Tarjetas ilimitadas por mazo",
+			"prioritySupport": "Soporte prioritario",
+			"earlyAccess": "Acceso anticipado a nuevas funciones",
+			"adFree": "Experiencia sin anuncios"
+		},
+		"limits": {
+			"deckLimit": "Límite de Mazos Alcanzado",
+			"cardLimit": "Límite de Tarjetas Alcanzado",
+			"deckLimitWarning": "Quedando Pocos Mazos",
+			"cardLimitWarning": "Quedando Pocas Tarjetas",
+			"deckLimitDesc": "Has alcanzado el máximo de 5 mazos en el plan gratuito. Actualiza a Pro para mazos y tarjetas ilimitados.",
+			"cardLimitDesc": "Has alcanzado el máximo de 50 tarjetas por mazo en el plan gratuito. Actualiza a Pro para tarjetas ilimitadas.",
+			"deckLimitWarningDesc": "Te estás acercando al límite de 5 mazos en el plan gratuito. Actualiza a Pro para mazos y tarjetas ilimitados.",
+			"cardLimitWarningDesc": "Te estás acercando al límite de 50 tarjetas por mazo en el plan gratuito. Actualiza a Pro para tarjetas ilimitadas.",
+			"upgradeMessage": "Desbloquea mazos y tarjetas ilimitados con FlashyLearny Pro."
+		}
+	},
+	"Billing": {
+		"title": "Facturación y Suscripción",
+		"subtitle": "Administra tu suscripción e información de facturación",
+		"backToDecks": "Volver a Mazos",
+		"currentPlan": "Plan Actual",
+		"freePlan": "Plan Gratuito",
+		"proPlan": "Plan Pro",
+		"status": "Estado",
+		"active": "Activo",
+		"canceled": "Cancelado",
+		"pastDue": "Pago Vencido",
+		"free": "Gratis",
+		"proPlanFeatures": "Tienes acceso a todas las funciones Pro",
+		"freePlanLimits": "Limitado a 5 mazos y 50 tarjetas por mazo",
+		"planFeatures": "Tu Plan Incluye:",
+		"subscriptionStatus": "Estado de Suscripción:",
+		"pastDueWarning": "Tu pago está vencido. Por favor actualiza tu método de pago para continuar usando las funciones Pro.",
+		"noSubscription": "No se encontró suscripción. Por favor actualiza a Pro primero.",
+		"manageSubscription": "Administrar Suscripción",
+		"upgradeToPro": "Actualizar a Pro - ${amount}",
+		"loading": "Cargando...",
+		"proBenefitsTitle": "Beneficios del Plan Pro",
+		"proBenefitsSubtitle": "Desbloquea potencial de aprendizaje ilimitado",
+		"welcomeToPro": "¡Bienvenido a FlashyLearny Pro! 🎉",
+		"checkoutCanceled": "Pago cancelado"
 	}
 }

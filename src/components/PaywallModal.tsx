@@ -9,6 +9,7 @@ import { useUIStore } from '@/stores/ui';
 import { PRICING } from '@/lib/subscription';
 import { STRIPE_PRICES } from '@/lib/stripe';
 import { toast } from 'sonner';
+import { useTranslations, useLocale } from 'next-intl';
 
 interface PaywallModalProps {
 	isOpen: boolean;
@@ -19,34 +20,36 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 	const { closeModal } = useUIStore();
 	const [selectedPlan, setSelectedPlan] = useState<'monthly' | 'yearly'>('yearly');
 	const [isLoading, setIsLoading] = useState(false);
+	const t = useTranslations('Pricing');
+	const locale = useLocale();
 
 	const getTitle = () => {
 		switch (context) {
 			case 'deck_limit':
-				return 'Deck Limit Reached';
+				return t('limits.deckLimit');
 			case 'card_limit':
-				return 'Card Limit Reached';
+				return t('limits.cardLimit');
 			case 'deck_limit_warning':
-				return 'Running Low on Decks';
+				return t('limits.deckLimitWarning');
 			case 'card_limit_warning':
-				return 'Running Low on Cards';
+				return t('limits.cardLimitWarning');
 			default:
-				return 'Upgrade to Pro';
+				return t('upgradeToPro');
 		}
 	};
 
 	const getDescription = () => {
 		switch (context) {
 			case 'deck_limit':
-				return "You've reached the maximum of 5 decks on the free plan. Upgrade to Pro for unlimited decks and cards.";
+				return t('limits.deckLimitDesc');
 			case 'card_limit':
-				return "You've reached the maximum of 50 cards per deck on the free plan. Upgrade to Pro for unlimited cards.";
+				return t('limits.cardLimitDesc');
 			case 'deck_limit_warning':
-				return "You're approaching the 5 deck limit on the free plan. Upgrade to Pro for unlimited decks and cards.";
+				return t('limits.deckLimitWarningDesc');
 			case 'card_limit_warning':
-				return "You're approaching the 50 cards per deck limit on the free plan. Upgrade to Pro for unlimited cards.";
+				return t('limits.cardLimitWarningDesc');
 			default:
-				return 'Unlock unlimited decks and cards with FlashyLearny Pro.';
+				return t('limits.upgradeMessage');
 		}
 	};
 
@@ -63,7 +66,7 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 				headers: {
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify({ priceId }),
+				body: JSON.stringify({ priceId, locale }),
 			});
 
 			console.log('response', response);
@@ -88,11 +91,11 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 	};
 
 	const benefits = [
-		'Unlimited decks',
-		'Unlimited cards per deck',
-		'Priority support',
-		'Early access to new features',
-		'Ad-free experience',
+		t('features.unlimitedDecks'),
+		t('features.unlimitedCards'),
+		t('features.prioritySupport'),
+		t('features.earlyAccess'),
+		t('features.adFree'),
 	];
 
 	return (
@@ -120,9 +123,9 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 								}`}
 						>
 							<div className="text-center">
-								<p className="text-sm text-muted-foreground mb-1">Monthly</p>
+								<p className="text-sm text-muted-foreground mb-1">{t('monthly')}</p>
 								<p className="text-3xl font-bold">${PRICING.pro.monthly}</p>
-								<p className="text-xs text-muted-foreground">per month</p>
+								<p className="text-xs text-muted-foreground">{t('perMonth')}</p>
 							</div>
 						</button>
 
@@ -133,12 +136,12 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 								}`}
 						>
 							<Badge className="absolute -top-2 left-1/2 transform -translate-x-1/2 bg-primary">
-								Save 17%
+								{t('save17')}
 							</Badge>
 							<div className="text-center">
-								<p className="text-sm text-muted-foreground mb-1">Yearly</p>
+								<p className="text-sm text-muted-foreground mb-1">{t('yearly')}</p>
 								<p className="text-3xl font-bold">${PRICING.pro.yearly}</p>
-								<p className="text-xs text-muted-foreground">per year</p>
+								<p className="text-xs text-muted-foreground">{t('perYear')}</p>
 								<p className="text-xs text-primary mt-1">${(PRICING.pro.yearly / 12).toFixed(2)}/month</p>
 							</div>
 						</button>
@@ -146,7 +149,7 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 
 					{/* Benefits List */}
 					<div className="space-y-2">
-						<p className="font-semibold text-sm">Pro Features:</p>
+						<p className="font-semibold text-sm">{t('proFeatures')}</p>
 						<ul className="space-y-2">
 							{benefits.map((benefit, index) => (
 								<li key={index} className="flex items-center gap-2 text-sm">
@@ -163,19 +166,19 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 							{isLoading ? (
 								<>
 									<div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
-									Processing...
+									{t('processing')}
 								</>
 							) : (
 								<>
 									<Crown className="mr-2 h-5 w-5" />
-									Upgrade to Pro - ${selectedPlan === 'monthly' ? PRICING.pro.monthly : PRICING.pro.yearly}
-									{selectedPlan === 'yearly' && '/year'}
-									{selectedPlan === 'monthly' && '/month'}
+									{t('upgradeToProAmount', {
+										amount: `${selectedPlan === 'monthly' ? PRICING.pro.monthly : PRICING.pro.yearly}${selectedPlan === 'yearly' ? '/year' : '/month'}`
+									})}
 								</>
 							)}
 						</Button>
 						<Button onClick={closeModal} variant="outline" size="lg" className="w-full" disabled={isLoading}>
-							Maybe Later
+							{t('maybeLater')}
 						</Button>
 					</div>
 				</div>
