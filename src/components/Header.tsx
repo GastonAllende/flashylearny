@@ -88,14 +88,12 @@ export default function Header() {
 											Settings
 										</Link>
 									</DropdownMenuItem>
-									{profile?.tier === 'free' && (
-										<DropdownMenuItem asChild>
-											<Link href="/settings/billing" className="cursor-pointer">
-												<Crown className="h-4 w-4 mr-2" />
-												Upgrade to Pro
-											</Link>
-										</DropdownMenuItem>
-									)}
+									<DropdownMenuItem asChild>
+										<Link href="/settings/billing" className="cursor-pointer">
+											<Crown className="h-4 w-4 mr-2" />
+											{profile?.tier === 'pro' ? 'Billing' : 'Upgrade to Pro'}
+										</Link>
+									</DropdownMenuItem>
 									<DropdownMenuSeparator />
 									<DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-600">
 										<LogOut className="h-4 w-4 mr-2" />
@@ -155,15 +153,13 @@ export default function Header() {
 								>
 									<Settings className="h-4 w-4" /> Settings
 								</Link>
-								{profile?.tier === 'free' && (
-									<Link
-										href="/settings/billing"
-										className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
-										onClick={() => setOpen(false)}
-									>
-										<Crown className="h-4 w-4" /> Upgrade to Pro
-									</Link>
-								)}
+								<Link
+									href="/settings/billing"
+									className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
+									onClick={() => setOpen(false)}
+								>
+									<Crown className="h-4 w-4" /> {profile?.tier === 'pro' ? 'Billing' : 'Upgrade to Pro'}
+								</Link>
 							</>
 						) : (
 							!loading && (

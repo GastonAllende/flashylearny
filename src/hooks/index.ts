@@ -1,5 +1,6 @@
 // Global hooks (not feature-specific)
 export * from './use-migrations';
+export * from './use-subscription-management';
 
 // Re-export all feature hooks for backward compatibility
 // Decks

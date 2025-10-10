@@ -57,7 +57,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const messages = await getMessages();
+  const languages = await getMessages();
 
   return (
     <html lang="en" suppressHydrationWarning>
@@ -81,7 +81,7 @@ export default async function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={languages}>
           <ThemeProvider
             attribute="class"
             defaultTheme="system"
