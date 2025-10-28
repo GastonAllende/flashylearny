@@ -8,12 +8,10 @@ interface CardFaceProps {
 	content: string;
 	label: string;
 	icon: React.ReactNode;
-	bgColor: string;
-	textColor: string;
 	hint: string;
 }
 
-export function CardFace({ content, label, icon, bgColor, textColor, hint }: CardFaceProps) {
+export function CardFace({ content, label, icon, hint }: CardFaceProps) {
 	return (
 		<Card className={cn(
 			"w-full h-full rounded-2xl shadow-xl flex flex-col justify-center items-center p-8 relative",

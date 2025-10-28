@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { Spinner } from '@/components/ui/spinner';
 import { Crown, Check } from 'lucide-react';
 import { useUIStore } from '@/stores/ui';
 import { PRICING } from '@/lib/subscription';
@@ -104,7 +105,7 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 				<DialogHeader>
 					<div className="flex items-center justify-between mb-2">
 						<DialogTitle className="text-2xl flex items-center gap-2">
-							<Crown className="h-6 w-6 text-yellow-500" />
+							<Crown className="h-6 w-6 text-primary" />
 							{getTitle()}
 						</DialogTitle>
 					</div>
@@ -153,7 +154,7 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 						<ul className="space-y-2">
 							{benefits.map((benefit, index) => (
 								<li key={index} className="flex items-center gap-2 text-sm">
-									<Check className="h-4 w-4 text-green-500 flex-shrink-0" />
+									<Check className="h-4 w-4 text-primary flex-shrink-0" />
 									<span>{benefit}</span>
 								</li>
 							))}
@@ -165,7 +166,7 @@ export function PaywallModal({ isOpen, context = 'deck_limit' }: PaywallModalPro
 						<Button onClick={handleUpgrade} size="lg" className="w-full" disabled={isLoading}>
 							{isLoading ? (
 								<>
-									<div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2"></div>
+									<Spinner size="sm" />
 									{t('processing')}
 								</>
 							) : (

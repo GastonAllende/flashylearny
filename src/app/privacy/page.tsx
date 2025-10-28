@@ -1,6 +1,9 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { Lock, Smartphone, Save, CheckCircle, Database, AlertTriangle, X } from 'lucide-react';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Button } from '@/components/ui/button';
 
 export default function PrivacyPage() {
 	const t = useTranslations('PrivacyPage');
@@ -9,33 +12,32 @@ export default function PrivacyPage() {
 		<div className="max-w-4xl mx-auto space-y-8">
 			<div className="text-center space-y-4">
 				<h1 className="text-4xl font-bold">{t('title')}</h1>
-				<p className="text-xl text-gray-600 dark:text-gray-300">
+				<p className="text-xl text-muted-foreground">
 					{t('subtitle')}
 				</p>
-				<p className="text-sm text-gray-500 dark:text-gray-400">
+				<p className="text-sm text-muted-foreground">
 					{t('lastUpdated')}
 				</p>
 			</div>
 
 			<div className="grid gap-8">
 				{/* Overview */}
-				<section className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-4 text-blue-900 dark:text-blue-100 flex items-center gap-2">
-						<Lock className="w-6 h-6" />
-						{t('overview.title')}
-					</h2>
-					<p className="text-blue-800 dark:text-blue-200 leading-relaxed">
+				<Alert>
+					<Lock className="h-4 w-4" />
+					<AlertTitle className="text-xl">{t('overview.title')}</AlertTitle>
+					<AlertDescription className="leading-relaxed">
 						{t('overview.description')}
-					</p>
-				</section>
+					</AlertDescription>
+				</Alert>
 
 				{/* Data Collection */}
-				<section className="bg-card border rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-6">{t('dataCollection.title')}</h2>
-
-					<div className="space-y-6">
-						<div className="border-l-4 border-green-500 pl-4">
-							<h3 className="font-semibold text-green-700 dark:text-green-400 mb-2 flex items-center gap-2">
+				<Card>
+					<CardHeader>
+						<h2 className="text-2xl font-semibold">{t('dataCollection.title')}</h2>
+					</CardHeader>
+					<CardContent className="space-y-6">
+						<div className="border-l-4 border-primary pl-4">
+							<h3 className="font-semibold text-primary mb-2 flex items-center gap-2">
 								<CheckCircle className="w-5 h-5" />
 								{t('dataCollection.storedLocally.title')}
 							</h3>
@@ -44,13 +46,13 @@ export default function PrivacyPage() {
 									<li key={index}>• {item}</li>
 								))}
 							</ul>
-							<p className="text-sm text-gray-500 dark:text-gray-500 mt-2">
+							<p className="text-sm text-muted-foreground mt-2">
 								<strong>{t('dataCollection.storedLocally.note')}</strong>
 							</p>
 						</div>
 
-						<div className="border-l-4 border-red-500 pl-4">
-							<h3 className="font-semibold text-red-700 dark:text-red-400 mb-2 flex items-center gap-2">
+						<div className="border-l-4 border-destructive pl-4">
+							<h3 className="font-semibold text-destructive mb-2 flex items-center gap-2">
 								<X className="w-5 h-5" />
 								{t('dataCollection.notCollected.title')}
 							</h3>
@@ -60,92 +62,99 @@ export default function PrivacyPage() {
 								))}
 							</ul>
 						</div>
-					</div>
-				</section>
+					</CardContent>
+				</Card>
 
 				{/* Data Storage */}
-				<section className="bg-card border rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-6">{t('dataStorage.title')}</h2>
-
-					<div className="grid md:grid-cols-2 gap-6">
+				<Card>
+					<CardHeader>
+						<h2 className="text-2xl font-semibold">{t('dataStorage.title')}</h2>
+					</CardHeader>
+					<CardContent className="grid md:grid-cols-2 gap-4">
 						<div className="space-y-4">
-							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
-								<h3 className="font-semibold mb-2 flex items-center gap-2">
-									<Database className="w-5 h-5" />
-									{t('dataStorage.localStorage.title')}
-								</h3>
-								<p className="text-sm text-muted-foreground">
-									{t('dataStorage.localStorage.description')}
-								</p>
-							</div>
+							<Card>
+								<CardContent className="pt-6">
+									<h3 className="font-semibold mb-2 flex items-center gap-2">
+										<Database className="w-5 h-5" />
+										{t('dataStorage.localStorage.title')}
+									</h3>
+									<p className="text-sm text-muted-foreground">
+										{t('dataStorage.localStorage.description')}
+									</p>
+								</CardContent>
+							</Card>
 
-							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
-								<h3 className="font-semibold mb-2 flex items-center gap-2">
-									<Lock className="w-5 h-5" />
-									{t('dataStorage.security.title')}
-								</h3>
-								<p className="text-sm text-muted-foreground">
-									{t('dataStorage.security.description')}
-								</p>
-							</div>
+							<Card>
+								<CardContent className="pt-6">
+									<h3 className="font-semibold mb-2 flex items-center gap-2">
+										<Lock className="w-5 h-5" />
+										{t('dataStorage.security.title')}
+									</h3>
+									<p className="text-sm text-muted-foreground">
+										{t('dataStorage.security.description')}
+									</p>
+								</CardContent>
+							</Card>
 						</div>
 
 						<div className="space-y-4">
-							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
-								<h3 className="font-semibold mb-2 flex items-center gap-2">
-									<Smartphone className="w-5 h-5" />
-									{t('dataStorage.deviceAccess.title')}
-								</h3>
-								<p className="text-sm text-muted-foreground">
-									{t('dataStorage.deviceAccess.description')}
-								</p>
-							</div>
+							<Card>
+								<CardContent className="pt-6">
+									<h3 className="font-semibold mb-2 flex items-center gap-2">
+										<Smartphone className="w-5 h-5" />
+										{t('dataStorage.deviceAccess.title')}
+									</h3>
+									<p className="text-sm text-muted-foreground">
+										{t('dataStorage.deviceAccess.description')}
+									</p>
+								</CardContent>
+							</Card>
 
-							<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
-								<h3 className="font-semibold mb-2 flex items-center gap-2">
-									<Save className="w-5 h-5" />
-									{t('dataStorage.dataBackup.title')}
-								</h3>
-								<p className="text-sm text-muted-foreground">
-									{t('dataStorage.dataBackup.description')}
-								</p>
-							</div>
+							<Card>
+								<CardContent className="pt-6">
+									<h3 className="font-semibold mb-2 flex items-center gap-2">
+										<Save className="w-5 h-5" />
+										{t('dataStorage.dataBackup.title')}
+									</h3>
+									<p className="text-sm text-muted-foreground">
+										{t('dataStorage.dataBackup.description')}
+									</p>
+								</CardContent>
+							</Card>
 						</div>
-					</div>
-				</section>
+					</CardContent>
+				</Card>
 
 				{/* Third-Party Services */}
-				<section className="bg-card border rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-6">{t('thirdPartyServices.title')}</h2>
-
-					<div className="space-y-4">
-						<div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 p-4 rounded-lg">
-							<h3 className="font-semibold text-yellow-900 dark:text-yellow-100 mb-2 flex items-center gap-2">
-								<AlertTriangle className="w-5 h-5" />
-								{t('thirdPartyServices.hosting.title')}
-							</h3>
-							<p className="text-yellow-800 dark:text-yellow-200 text-sm">
+				<Card>
+					<CardHeader>
+						<h2 className="text-2xl font-semibold">{t('thirdPartyServices.title')}</h2>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<Alert variant="destructive">
+							<AlertTriangle className="h-4 w-4" />
+							<AlertTitle>{t('thirdPartyServices.hosting.title')}</AlertTitle>
+							<AlertDescription className="text-sm">
 								{t('thirdPartyServices.hosting.description')}
-							</p>
-						</div>
+							</AlertDescription>
+						</Alert>
 
-						<div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4 rounded-lg">
-							<h3 className="font-semibold text-green-900 dark:text-green-100 mb-2 flex items-center gap-2">
-								<CheckCircle className="w-5 h-5" />
-								{t('thirdPartyServices.noAnalytics.title')}
-							</h3>
-							<p className="text-green-800 dark:text-green-200 text-sm">
+						<Alert>
+							<CheckCircle className="h-4 w-4" />
+							<AlertTitle>{t('thirdPartyServices.noAnalytics.title')}</AlertTitle>
+							<AlertDescription className="text-sm">
 								{t('thirdPartyServices.noAnalytics.description')}
-							</p>
-						</div>
-					</div>
-				</section>
+							</AlertDescription>
+						</Alert>
+					</CardContent>
+				</Card>
 
 				{/* Your Rights */}
-				<section className="bg-card border rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-6">{t('yourRights.title')}</h2>
-
-					<div className="grid md:grid-cols-2 gap-6">
+				<Card>
+					<CardHeader>
+						<h2 className="text-2xl font-semibold">{t('yourRights.title')}</h2>
+					</CardHeader>
+					<CardContent className="grid md:grid-cols-2 gap-6">
 						<div className="space-y-4">
 							<h3 className="font-semibold text-lg">{t('yourRights.dataControl.title')}</h3>
 							<ul className="space-y-2 text-muted-foreground">
@@ -163,56 +172,61 @@ export default function PrivacyPage() {
 								))}
 							</ul>
 						</div>
-					</div>
-				</section>
+					</CardContent>
+				</Card>
 
 				{/* Data Deletion */}
-				<section className="bg-card border rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-6">{t('dataDeletion.title')}</h2>
-
-					<div className="space-y-4">
+				<Card>
+					<CardHeader>
+						<h2 className="text-2xl font-semibold">{t('dataDeletion.title')}</h2>
+					</CardHeader>
+					<CardContent className="space-y-4">
 						<p className="text-foreground">
 							{t('dataDeletion.description')}
 						</p>
 
-						<div className="bg-muted dark:bg-gray-700 p-4 rounded-lg">
-							<h3 className="font-semibold mb-2">{t('dataDeletion.howToDelete.title')}</h3>
-							<ol className="list-decimal list-inside space-y-1 text-sm text-muted-foreground">
-								{t.raw('dataDeletion.howToDelete.steps').map((step: string, index: number) => (
-									<li key={index}>{step}</li>
-								))}
-							</ol>
-						</div>
-					</div>
-				</section>
+						<Card>
+							<CardContent className="pt-6">
+								<h3 className="font-semibold mb-2">{t('dataDeletion.howToDelete.title')}</h3>
+								<ol className="list-decimal list-inside space-y-1 text-sm text-muted-foreground">
+									{t.raw('dataDeletion.howToDelete.steps').map((step: string, index: number) => (
+										<li key={index}>{step}</li>
+									))}
+								</ol>
+							</CardContent>
+						</Card>
+					</CardContent>
+				</Card>
 
 				{/* Contact */}
-				<section className="bg-card border rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-6">{t('contact.title')}</h2>
+				<Card>
+					<CardHeader>
+						<h2 className="text-2xl font-semibold">{t('contact.title')}</h2>
+					</CardHeader>
+					<CardContent className="space-y-4">
+						<p className="text-foreground">
+							{t('contact.description')}
+						</p>
 
-					<p className="text-foreground mb-4">
-						{t('contact.description')}
-					</p>
+						<ul className="space-y-2 text-muted-foreground">
+							{t.raw('contact.methods').map((method: string, index: number) => (
+								<li key={index}>• {method}</li>
+							))}
+						</ul>
 
-					<ul className="space-y-2 text-muted-foreground">
-						{t.raw('contact.methods').map((method: string, index: number) => (
-							<li key={index}>• {method}</li>
-						))}
-					</ul>
-
-					<p className="text-sm text-gray-500 dark:text-gray-500 mt-4">
-						{t('contact.updateNote')}
-					</p>
-				</section>
+						<p className="text-sm text-muted-foreground">
+							{t('contact.updateNote')}
+						</p>
+					</CardContent>
+				</Card>
 			</div>
 
 			<div className="text-center">
-				<Link
-					href="/decks"
-					className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-lg text-lg font-semibold transition-colors duration-200 inline-block"
-				>
-					{t('cta')}
-				</Link>
+				<Button asChild size="lg" className="px-8 py-6 text-lg">
+					<Link href="/decks">
+						{t('cta')}
+					</Link>
+				</Button>
 			</div>
 		</div>
 	);

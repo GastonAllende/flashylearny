@@ -60,7 +60,7 @@ export default function Header() {
 					{user ? (
 						<>
 							{profile?.tier === 'pro' && (
-								<Badge variant="default" className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
+								<Badge variant="default" className="bg-primary">
 									<Crown className="h-3 w-3 mr-1" />
 									PRO
 								</Badge>
@@ -95,7 +95,7 @@ export default function Header() {
 										</Link>
 									</DropdownMenuItem>
 									<DropdownMenuSeparator />
-									<DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-red-600">
+									<DropdownMenuItem onClick={handleSignOut} className="cursor-pointer text-destructive">
 										<LogOut className="h-4 w-4 mr-2" />
 										Sign out
 									</DropdownMenuItem>
@@ -133,7 +133,7 @@ export default function Header() {
 										</span>
 									</div>
 									{profile?.tier === 'pro' && (
-										<Badge variant="default" className="bg-gradient-to-r from-yellow-500 to-orange-500 text-white">
+										<Badge variant="default" className="bg-primary">
 											<Crown className="h-3 w-3 mr-1" />
 											PRO
 										</Badge>
@@ -141,21 +141,21 @@ export default function Header() {
 								</div>
 								<Link
 									href="/decks"
-									className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
+									className="text-foreground hover:text-primary transition-colors font-medium py-2 flex items-center gap-2"
 									onClick={() => setOpen(false)}
 								>
 									<BookOpen className="h-4 w-4" /> {t('decks')}
 								</Link>
 								<Link
 									href="/settings"
-									className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
+									className="text-foreground hover:text-primary transition-colors font-medium py-2 flex items-center gap-2"
 									onClick={() => setOpen(false)}
 								>
 									<Settings className="h-4 w-4" /> Settings
 								</Link>
 								<Link
 									href="/settings/billing"
-									className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2 flex items-center gap-2"
+									className="text-foreground hover:text-primary transition-colors font-medium py-2 flex items-center gap-2"
 									onClick={() => setOpen(false)}
 								>
 									<Crown className="h-4 w-4" /> {profile?.tier === 'pro' ? 'Billing' : 'Upgrade to Pro'}
@@ -165,7 +165,7 @@ export default function Header() {
 							!loading && (
 								<Link
 									href="/auth/login"
-									className="text-foreground hover:text-blue-600 dark:hover:text-blue-400 transition-colors font-medium py-2"
+									className="text-foreground hover:text-primary transition-colors font-medium py-2"
 									onClick={() => setOpen(false)}
 								>
 									Sign in
@@ -180,7 +180,7 @@ export default function Header() {
 							{user && (
 								<button
 									onClick={handleSignOut}
-									className="text-red-600 hover:text-red-700 transition-colors font-medium flex items-center gap-2"
+									className="text-destructive hover:text-destructive/80 transition-colors font-medium flex items-center gap-2"
 								>
 									<LogOut className="h-4 w-4" /> Sign out
 								</button>

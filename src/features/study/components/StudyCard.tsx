@@ -77,8 +77,6 @@ export default function StudyCard({
 							content={card.question}
 							label={t('question')}
 							icon={<HelpCircle className="w-6 h-6" />}
-							bgColor="bg-blue-500"
-							textColor="text-blue-50"
 							hint={t('tapToReveal')}
 						/>
 					</div>
@@ -89,8 +87,6 @@ export default function StudyCard({
 							content={card.answer}
 							label={t('answer')}
 							icon={<Lightbulb className="w-6 h-6" />}
-							bgColor="bg-green-500"
-							textColor="text-green-50"
 							hint={t('howWell')}
 						/>
 					</div>

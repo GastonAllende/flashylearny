@@ -7,10 +7,13 @@ import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useCards, useDeckCompletion, useDeckProgress, useDeckAnalytics, useDeleteDeck, useExportDeck, useDecks } from '@/hooks';
 import { useUIStore } from '@/stores/ui';
 import { DeleteDeckDialog } from '@/components/ConfirmDialog';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { CardsTab } from '@/features/cards/components/CardsTab';
 import { StudyTab } from '@/features/study/components/StudyTab';
 import { StatsTab } from '@/features/stats/components/StatsTab';
 import { Brain, Trash2, CreditCard, BarChart3, RotateCcw, ArrowLeft, Plus, Download } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 type TabType = 'cards' | 'study' | 'stats';
 
@@ -78,7 +81,7 @@ export default function DeckDetailPage() {
 	if (cardsLoading) {
 		return (
 			<div className="flex items-center justify-center min-h-[50vh]">
-				<div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+				<Spinner size="xl" className="text-primary" />
 			</div>
 		);
 	}
@@ -90,7 +93,7 @@ export default function DeckDetailPage() {
 				{/* Back button */}
 				<Link
 					href="/decks"
-					className="inline-flex items-center gap-2 text-blue-600 hover:text-blue-700 transition-colors duration-200 text-sm"
+					className="inline-flex items-center gap-2 text-primary hover:text-primary/80 transition-colors duration-200 text-sm"
 				>
 					<ArrowLeft className="h-4 w-4" /> {t('backToDecks')}
 				</Link>
@@ -104,9 +107,9 @@ export default function DeckDetailPage() {
 								<span>{t('complete', { value: completion.completion })}</span>
 								<span>{t('cardsSummary', { total: completion.total, mastered: completion.mastered })}</span>
 							</div>
-							<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 w-full">
+							<div className="bg-muted rounded-full h-3 w-full">
 								<div
-									className="bg-green-500 h-3 rounded-full transition-all duration-300"
+									className="bg-primary h-3 rounded-full transition-all duration-300"
 									style={{ width: `${completion.completion}%` }}
 								/>
 							</div>
@@ -120,64 +123,69 @@ export default function DeckDetailPage() {
 					<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-2">
 						<Link
 							href={`/decks/${deckId}/edit-card`}
-							className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+							className={cn(buttonVariants(), "py-3 sm:py-2 text-sm font-semibold")}
 						>
 							<Plus className="h-4 w-4" />
 							{t('addCard')}
 						</Link>
 						{cards && cards.length > 0 && (
-							<button
+							<Button
 								onClick={handleStartStudy}
-								className="bg-green-600 hover:bg-green-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+								variant="secondary"
+								className="py-3 sm:py-2 text-sm font-semibold"
 							>
 								<Brain className="h-4 w-4" />
 								{t('startStudy')}
-							</button>
+							</Button>
 						)}
 					</div>
 
 					{/* Secondary actions - only show if cards exist */}
 					{cards && cards.length > 0 && (
 						<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-2">
-							<button
+							<Button
 								onClick={() => openModal('renameDeck', { deckId, deckName: currentDeckName, category: currentDeckCategory })}
-								className="bg-gray-200 hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600 text-foreground px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+								variant="outline"
+								className="py-3 sm:py-2 text-sm font-medium"
 								title={t('renameTitle')}
 							>
 								<CreditCard className="h-4 w-4" />
 								{t('rename')}
-							</button>
-							<button
+							</Button>
+							<Button
 								onClick={() => openModal('resetProgress', { deckId })}
-								className="bg-yellow-600 hover:bg-yellow-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+								variant="secondary"
+								className="py-3 sm:py-2 text-sm font-medium"
 								title={t('resetTitle')}
 							>
 								<RotateCcw className="h-4 w-4" />
 								{t('reset')}
-							</button>
+							</Button>
 						</div>
 					)}
 
 					{/* Tertiary actions */}
 					<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-2">
 						{cards && cards.length > 0 && (
-							<button
+							<Button
 								onClick={handleExportDeck}
 								disabled={exportDeckMutation.isPending}
-								className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+								variant="secondary"
+								className="py-3 sm:py-2 text-sm font-medium"
 							>
 								<Download className="h-4 w-4" />
 								{t('export')}
-							</button>
+							</Button>
 						)}
-						<button
+						<Button
 							onClick={() => setShowDeleteDialog(true)}
-							className="bg-red-600 hover:bg-red-700 text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+							variant="destructive"
+							className="py-3 sm:py-2 text-sm font-medium"
 							disabled={deleteDeckMutation.isPending}
 						>
 							<Trash2 className="h-4 w-4" />
 							{t('delete')}
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>
@@ -194,8 +202,8 @@ export default function DeckDetailPage() {
 							key={tab.id}
 							onClick={() => setActiveTab(tab.id as TabType)}
 							className={`flex-1 py-4 px-2 border-b-2 font-medium text-sm transition-colors duration-200 flex items-center justify-center gap-2 ${activeTab === tab.id
-								? 'border-blue-500 text-blue-600 dark:text-blue-400'
-								: 'border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300'
+								? 'border-primary text-primary'
+								: 'border-transparent text-muted-foreground hover:text-foreground'
 								}`}
 						>
 							<tab.icon className="h-4 w-4" />

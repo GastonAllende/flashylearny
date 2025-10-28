@@ -49,15 +49,15 @@ export default function ConfirmDialog({
 	const variantStyles = {
 		danger: {
 			icon: <AlertTriangle className="w-6 h-6" />,
-			iconBg: 'bg-red-100 dark:bg-red-900',
+			iconBg: 'bg-destructive/10',
 		},
 		warning: {
 			icon: <AlertTriangle className="w-6 h-6" />,
-			iconBg: 'bg-yellow-100 dark:bg-yellow-900',
+			iconBg: 'bg-secondary/20',
 		},
 		info: {
 			icon: <Info className="w-6 h-6" />,
-			iconBg: 'bg-blue-100 dark:bg-blue-900',
+			iconBg: 'bg-primary/10',
 		}
 	};
 

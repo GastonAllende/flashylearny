@@ -8,8 +8,11 @@ import { useCreateCard, useUpdateCard, useCards } from '@/hooks';
 import { useSubscription } from '@/hooks/use-subscription';
 import { useUIStore } from '@/stores/ui';
 import type { Card } from '@/lib/types';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { Save, Plus, Lightbulb, ArrowLeft, X } from 'lucide-react';
 import { toast } from 'sonner';
+import { cn } from '@/lib/utils';
 
 export default function EditCardPage() {
 	const t = useTranslations('EditCard');
@@ -94,7 +97,7 @@ export default function EditCardPage() {
 	if (cardsLoading) {
 		return (
 			<div className="flex items-center justify-center min-h-[50vh]">
-				<div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+				<Spinner size="xl" className="text-primary" />
 			</div>
 		);
 	}
@@ -103,14 +106,14 @@ export default function EditCardPage() {
 	if (isEditing && !currentCard && !cardsLoading) {
 		return (
 			<div className="max-w-2xl mx-auto text-center py-16">
-				<X className="w-16 h-16 mb-4 text-red-400 mx-auto" />
+				<X className="w-16 h-16 mb-4 text-destructive mx-auto" />
 				<h3 className="text-xl font-semibold mb-2">{t('cardNotFoundTitle')}</h3>
 				<p className="text-muted-foreground mb-4">
 					{t('cardNotFoundDescription')}
 				</p>
 				<Link
 					href={`/decks/${deckId}`}
-					className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+					className={cn(buttonVariants(), "inline-flex")}
 				>
 					<ArrowLeft className="w-4 h-4 mr-2" />
 					{t('backToDeck')}
@@ -126,7 +129,7 @@ export default function EditCardPage() {
 				<div className="flex items-center gap-3 mb-4">
 					<Link
 						href={`/decks/${deckId}`}
-						className="text-blue-600 hover:text-blue-700 transition-colors duration-200"
+						className="text-primary hover:text-primary/80 transition-colors duration-200"
 					>
 						<span className="inline-flex items-center gap-2"><ArrowLeft className="h-4 w-4" /> {t('backToDeck')}</span>
 					</Link>
@@ -145,7 +148,7 @@ export default function EditCardPage() {
 					{/* Question Field */}
 					<div>
 						<label htmlFor="question" className="block text-sm font-medium mb-2">
-							{t('questionLabel')} <span className="text-red-500">*</span>
+							{t('questionLabel')} <span className="text-destructive">*</span>
 						</label>
 						<textarea
 							id="question"
@@ -153,11 +156,11 @@ export default function EditCardPage() {
 							onChange={(e) => setQuestion(e.target.value)}
 							placeholder={t('questionPlaceholder')}
 							rows={4}
-							className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
+							className="w-full px-4 py-3 border border-input rounded-lg bg-background focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none resize-none"
 							disabled={isLoading}
 							required
 						/>
-						<p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+						<p className="text-sm text-muted-foreground mt-1">
 							{t('questionHelp')}
 						</p>
 					</div>
@@ -165,7 +168,7 @@ export default function EditCardPage() {
 					{/* Answer Field */}
 					<div>
 						<label htmlFor="answer" className="block text-sm font-medium mb-2">
-							{t('answerLabel')} <span className="text-red-500">*</span>
+							{t('answerLabel')} <span className="text-destructive">*</span>
 						</label>
 						<textarea
 							id="answer"
@@ -173,11 +176,11 @@ export default function EditCardPage() {
 							onChange={(e) => setAnswer(e.target.value)}
 							placeholder={t('answerPlaceholder')}
 							rows={4}
-							className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white resize-none"
+							className="w-full px-4 py-3 border border-input rounded-lg bg-background focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] focus-visible:outline-none resize-none"
 							disabled={isLoading}
 							required
 						/>
-						<p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+						<p className="text-sm text-muted-foreground mt-1">
 							{t('answerHelp')}
 						</p>
 					</div>
@@ -187,14 +190,14 @@ export default function EditCardPage() {
 						<div className="border-t border pt-6">
 							<h3 className="font-medium mb-4">{t('preview')}</h3>
 							<div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-								<div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-									<h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">{t('front')}</h4>
+								<div className="bg-secondary border rounded-lg p-4">
+									<h4 className="font-medium mb-2">{t('front')}</h4>
 									<p className="text-foreground whitespace-pre-wrap">
 										{question || t('questionPreviewPlaceholder')}
 									</p>
 								</div>
-								<div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
-									<h4 className="font-medium text-green-900 dark:text-green-100 mb-2">{t('back')}</h4>
+								<div className="bg-secondary border rounded-lg p-4">
+									<h4 className="font-medium mb-2">{t('back')}</h4>
 									<p className="text-foreground whitespace-pre-wrap">
 										{answer || t('answerPreviewPlaceholder')}
 									</p>
@@ -205,14 +208,14 @@ export default function EditCardPage() {
 
 					{/* Actions */}
 					<div className="flex flex-col sm:flex-row gap-3 pt-6 border-t border">
-						<button
+						<Button
 							type="submit"
 							disabled={!question.trim() || !answer.trim() || isLoading}
-							className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2"
+							className="px-6 py-3 sm:py-2 font-semibold"
 						>
 							{isLoading ? (
 								<>
-									<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+									<Spinner size="sm" />
 									{isEditing ? t('updating') : t('creating')}
 								</>
 							) : (
@@ -221,27 +224,28 @@ export default function EditCardPage() {
 									{isEditing ? t('updateCard') : t('createCard')}
 								</>
 							)}
-						</button>
+						</Button>
 
-						<button
+						<Button
 							type="button"
+							variant="secondary"
 							onClick={handleCancel}
 							disabled={isLoading}
-							className="bg-muted0 hover:bg-gray-600 disabled:bg-gray-400 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+							className="px-6 py-3 sm:py-2 font-semibold"
 						>
 							{t('cancel')}
-						</button>
+						</Button>
 					</div>
 				</form>
 			</div>
 
 			{/* Tips */}
-			<div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
-				<h3 className="font-medium text-yellow-900 dark:text-yellow-100 mb-2 flex items-center gap-2">
+			<div className="bg-secondary border rounded-lg p-4">
+				<h3 className="font-medium mb-2 flex items-center gap-2">
 					<Lightbulb className="w-5 h-5" />
 					{t('tipsTitle')}
 				</h3>
-				<ul className="text-sm text-yellow-800 dark:text-yellow-200 space-y-1">
+				<ul className="text-sm text-muted-foreground space-y-1">
 					<li>• {t('tip1')}</li>
 					<li>• {t('tip2')}</li>
 					<li>• {t('tip3')}</li>

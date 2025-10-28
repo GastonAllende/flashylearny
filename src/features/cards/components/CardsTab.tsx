@@ -9,7 +9,8 @@ import { useSubscription } from '@/hooks/use-subscription';
 import { useUIStore } from '@/stores/ui';
 import { Badge } from '@/components/ui/badge';
 import { Alert, AlertDescription } from '@/components/ui/alert';
-import { Button } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 interface CardsTabProps {
 	deckId: string;
@@ -45,7 +46,7 @@ export function CardsTab({ deckId, cards, onDeleteCard }: CardsTabProps) {
 				{canCreate ? (
 					<Link
 						href={`/decks/${deckId}/edit-card`}
-						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 inline-flex items-center gap-2 text-base sm:text-sm"
+						className={cn(buttonVariants(), "py-3 sm:py-2 text-base sm:text-sm font-semibold")}
 					>
 						<Plus className="h-5 w-5" />
 						{t('addCard')}
@@ -79,7 +80,7 @@ export function CardsTab({ deckId, cards, onDeleteCard }: CardsTabProps) {
 				{canCreate ? (
 					<Link
 						href={`/decks/${deckId}/edit-card`}
-						className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center gap-2 text-sm"
+						className={cn(buttonVariants(), "text-sm font-semibold")}
 					>
 						<Plus className="h-4 w-4" />
 						{t('addCard')}

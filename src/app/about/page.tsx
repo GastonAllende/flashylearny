@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
 import { Brain, Smartphone, BarChart3, Moon, Save, FolderOpen } from 'lucide-react';
 
 export default function AboutPage() {
@@ -25,12 +26,14 @@ export default function AboutPage() {
 					</CardContent>
 				</Card>
 
-				<section className="bg-card border border rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-6">{t('keyFeatures.title')}</h2>
-					<div className="grid md:grid-cols-2 gap-6">
+				<Card>
+					<CardHeader>
+						<h2 className="text-2xl font-semibold">{t('keyFeatures.title')}</h2>
+					</CardHeader>
+					<CardContent className="grid md:grid-cols-2 gap-6">
 						<div className="space-y-4">
 							<div className="flex items-start gap-3">
-								<Brain className="w-6 h-6 text-blue-600 mt-1" />
+								<Brain className="w-6 h-6 text-primary mt-1" />
 								<div>
 									<h3 className="font-semibold">{t('keyFeatures.smartLearning.title')}</h3>
 									<p className="text-muted-foreground text-sm">
@@ -40,7 +43,7 @@ export default function AboutPage() {
 							</div>
 
 							<div className="flex items-start gap-3">
-								<Smartphone className="w-6 h-6 text-green-600 mt-1" />
+								<Smartphone className="w-6 h-6 text-primary mt-1" />
 								<div>
 									<h3 className="font-semibold">{t('keyFeatures.offlineFirst.title')}</h3>
 									<p className="text-muted-foreground text-sm">
@@ -50,7 +53,7 @@ export default function AboutPage() {
 							</div>
 
 							<div className="flex items-start gap-3">
-								<BarChart3 className="w-6 h-6 text-purple-600 mt-1" />
+								<BarChart3 className="w-6 h-6 text-secondary mt-1" />
 								<div>
 									<h3 className="font-semibold">{t('keyFeatures.progressTracking.title')}</h3>
 									<p className="text-muted-foreground text-sm">
@@ -62,7 +65,7 @@ export default function AboutPage() {
 
 						<div className="space-y-4">
 							<div className="flex items-start gap-3">
-								<Moon className="w-6 h-6 text-indigo-600 mt-1" />
+								<Moon className="w-6 h-6 text-primary mt-1" />
 								<div>
 									<h3 className="font-semibold">{t('keyFeatures.darkMode.title')}</h3>
 									<p className="text-muted-foreground text-sm">
@@ -72,7 +75,7 @@ export default function AboutPage() {
 							</div>
 
 							<div className="flex items-start gap-3">
-								<Save className="w-6 h-6 text-orange-600 mt-1" />
+								<Save className="w-6 h-6 text-secondary mt-1" />
 								<div>
 									<h3 className="font-semibold">{t('keyFeatures.localStorage.title')}</h3>
 									<p className="text-muted-foreground text-sm">
@@ -82,7 +85,7 @@ export default function AboutPage() {
 							</div>
 
 							<div className="flex items-start gap-3">
-								<FolderOpen className="w-6 h-6 text-teal-600 mt-1" />
+								<FolderOpen className="w-6 h-6 text-muted-foreground mt-1" />
 								<div>
 									<h3 className="font-semibold">{t('keyFeatures.importExport.title')}</h3>
 									<p className="text-muted-foreground text-sm">
@@ -91,14 +94,16 @@ export default function AboutPage() {
 								</div>
 							</div>
 						</div>
-					</div>
-				</section>
+					</CardContent>
+				</Card>
 
-				<section className="bg-card border border rounded-lg p-8">
-					<h2 className="text-2xl font-semibold mb-4">{t('howItWorks.title')}</h2>
-					<div className="space-y-4">
+				<Card>
+					<CardHeader>
+						<h2 className="text-2xl font-semibold">{t('howItWorks.title')}</h2>
+					</CardHeader>
+					<CardContent className="space-y-4">
 						<div className="flex items-start gap-4">
-							<div className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">1</div>
+							<div className="bg-primary/20 text-primary rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">1</div>
 							<div>
 								<h3 className="font-semibold">{t('howItWorks.step1.title')}</h3>
 								<p className="text-muted-foreground text-sm">{t('howItWorks.step1.description')}</p>
@@ -106,7 +111,7 @@ export default function AboutPage() {
 						</div>
 
 						<div className="flex items-start gap-4">
-							<div className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">2</div>
+							<div className="bg-primary/20 text-primary rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">2</div>
 							<div>
 								<h3 className="font-semibold">{t('howItWorks.step2.title')}</h3>
 								<p className="text-muted-foreground text-sm">{t('howItWorks.step2.description')}</p>
@@ -114,7 +119,7 @@ export default function AboutPage() {
 						</div>
 
 						<div className="flex items-start gap-4">
-							<div className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">3</div>
+							<div className="bg-primary/20 text-primary rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">3</div>
 							<div>
 								<h3 className="font-semibold">{t('howItWorks.step3.title')}</h3>
 								<p className="text-muted-foreground text-sm">{t('howItWorks.step3.description')}</p>
@@ -122,14 +127,14 @@ export default function AboutPage() {
 						</div>
 
 						<div className="flex items-start gap-4">
-							<div className="bg-blue-100 dark:bg-blue-900 text-blue-700 dark:text-blue-300 rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">4</div>
+							<div className="bg-primary/20 text-primary rounded-full w-8 h-8 flex items-center justify-center font-semibold text-sm">4</div>
 							<div>
 								<h3 className="font-semibold">{t('howItWorks.step4.title')}</h3>
 								<p className="text-muted-foreground text-sm">{t('howItWorks.step4.description')}</p>
 							</div>
 						</div>
-					</div>
-				</section>
+					</CardContent>
+				</Card>
 
 				<Card>
 					<CardContent className="p-8">
@@ -149,9 +154,11 @@ export default function AboutPage() {
 			</div>
 
 			<div className="text-center">
-				<Link href="/decks" className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg text-lg font-semibold transition-colors duration-200">
-					{t('cta')}
-				</Link>
+				<Button asChild size="lg" className="px-8 py-6 text-lg">
+					<Link href="/decks">
+						{t('cta')}
+					</Link>
+				</Button>
 			</div>
 		</div>
 	);

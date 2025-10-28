@@ -10,6 +10,9 @@ import DeckCard from '@/features/decks/components/DeckCard';
 import { Download, BookOpen, X, Filter, Tag, Crown, AlertCircle } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { Spinner } from '@/components/ui/spinner';
+import { Card, CardContent } from '@/components/ui/card';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { toast } from 'sonner';
@@ -95,7 +98,7 @@ export default function DecksPage() {
 	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center min-h-[50vh]">
-				<div className="animate-spin rounded-full h-32 w-32 border-b-2 border-blue-600"></div>
+				<Spinner size="xl" className="text-primary" />
 			</div>
 		);
 	}
@@ -122,38 +125,40 @@ export default function DecksPage() {
 				<div className="flex flex-col sm:flex-row sm:items-center gap-3">
 					{/* Create Deck Button - Primary action */}
 					{!isCreating && (
-						<button
+						<Button
 							onClick={handleCreateClick}
 							disabled={!canCreate}
-							className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-4 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+							className="py-3 sm:py-2 text-sm font-semibold"
 						>
 							{!canCreate && <Crown className="w-4 h-4" />}
 							<span className="text-base sm:text-sm">+</span>
 							{t('createDeck')}
-						</button>
+						</Button>
 					)}
 
 					{/* Secondary actions - only show if decks exist */}
 					{decks && decks.length > 0 && (
 						<div className="grid grid-cols-2 gap-3 sm:flex sm:gap-3">
-							<button
+							<Button
 								onClick={handleExportAllDecks}
 								disabled={exportAllDecksMutation.isPending}
-								className="bg-purple-600 hover:bg-purple-700 disabled:bg-gray-400 text-white px-3 py-3 sm:px-3 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+								variant="secondary"
+								className="py-3 sm:py-2 text-sm font-medium"
 							>
 								<span>📤</span>
 								<span className="hidden sm:inline">{exportAllDecksMutation.isPending ? t('exporting') : t('exportAll')}</span>
 								<span className="sm:hidden">{t('export')}</span>
-							</button>
+							</Button>
 
-							<button
+							<Button
 								onClick={() => setShowImportModal(true)}
-								className="bg-green-600 hover:bg-green-700 text-white px-3 py-3 sm:px-3 sm:py-2 rounded-lg font-medium transition-colors duration-200 flex items-center justify-center gap-2 text-sm"
+								variant="secondary"
+								className="py-3 sm:py-2 text-sm font-medium"
 							>
 								<Download className="w-4 h-4" />
 								<span className="hidden sm:inline">{t('importCsv')}</span>
 								<span className="sm:hidden">{t('import')}</span>
-							</button>
+							</Button>
 						</div>
 					)}
 				</div>
@@ -195,19 +200,19 @@ export default function DecksPage() {
 			)}
 
 			{isCreating && (
-				<div className="bg-card border rounded-lg p-6">
-					<form onSubmit={handleCreateDeck} className="space-y-4">
+				<Card>
+					<CardContent className="pt-6">
+						<form onSubmit={handleCreateDeck} className="space-y-4">
 						<div>
 							<label htmlFor="deckName" className="block text-sm font-medium mb-2">
 								{t('deckNameLabel')}
 							</label>
-							<input
+							<Input
 								id="deckName"
 								type="text"
 								value={newDeckName}
 								onChange={(e) => setNewDeckName(e.target.value)}
 								placeholder={t('deckNamePlaceholder')}
-								className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
 								autoFocus
 								disabled={createDeckMutation.isPending}
 							/>
@@ -216,13 +221,12 @@ export default function DecksPage() {
 							<label htmlFor="category" className="block text-sm font-medium mb-2">
 								Category (Optional)
 							</label>
-							<input
+							<Input
 								id="category"
 								type="text"
 								value={category}
 								onChange={(e) => setCategory(e.target.value)}
 								placeholder="e.g., Languages, Science, History..."
-								className="w-full px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent dark:bg-gray-700 dark:text-white"
 								disabled={createDeckMutation.isPending}
 								maxLength={50}
 							/>
@@ -234,30 +238,33 @@ export default function DecksPage() {
 							<Button
 								type="submit"
 								disabled={!newDeckName.trim() || createDeckMutation.isPending}
-								className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
+								className="px-6 font-semibold"
 							>
 								{createDeckMutation.isPending ? t('creating') : t('create')}
 							</Button>
 							<Button
 								type="reset"
+								variant="secondary"
 								onClick={() => {
 									setIsCreating(false);
 									setNewDeckName('');
 									setCategory('');
 								}}
-								className="bg-muted0 hover:bg-gray-600  px-6 py-2 rounded-lg font-semibold transition-colors duration-200"
+								className="px-6 font-semibold"
 							>
 								{t('cancel')}
 							</Button>
 						</div>
 					</form>
-				</div>
-			)}
+				</CardContent>
+			</Card>
+		)}
 
 			{/* Category filter */}
 			{categories && categories.length > 0 && decks && decks.length > 0 && (
-				<div className="flex flex-wrap items-center gap-2 bg-card border rounded-lg p-4">
-					<Filter className="w-4 h-4 text-muted-foreground" />
+				<Card>
+					<CardContent className="p-4 flex flex-wrap items-center gap-2">
+						<Filter className="w-4 h-4 text-muted-foreground" />
 					<Badge
 						variant={!selectedFilter ? "default" : "outline"}
 						className="cursor-pointer hover:bg-primary/10"
@@ -282,41 +289,44 @@ export default function DecksPage() {
 							)}
 						</Badge>
 					))}
-				</div>
+					</CardContent>
+				</Card>
 			)}
 
 			{!decks || decks.length === 0 ? (
 				<div className="text-center py-16">
-					<BookOpen className="w-16 h-16 mb-4 text-gray-400" />
+					<BookOpen className="w-16 h-16 mb-4 text-muted-foreground" />
 					<h3 className="text-xl font-semibold mb-2">{t('emptyTitle')}</h3>
 					<p className="text-muted-foreground mb-6">
 						{t('emptyDescription')}
 					</p>
 					{!isCreating && (
-						<button
+						<Button
 							onClick={handleCreateClick}
 							disabled={!canCreate}
-							className="bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm inline-flex items-center gap-2"
+							className="py-3 sm:py-2 text-base sm:text-sm font-semibold"
 						>
 							{!canCreate && <Crown className="w-4 h-4" />}
 							{t('emptyCta')}
-						</button>
+						</Button>
 					)}
 				</div>
 			) : filteredDecks.length === 0 && selectedFilter ? (
-				<div className="text-center py-16 bg-card border rounded-lg">
-					<Filter className="w-16 h-16 mb-4 text-gray-400 mx-auto" />
+				<Card>
+					<CardContent className="pt-16 pb-16 text-center">
+						<Filter className="w-16 h-16 mb-4 text-muted-foreground mx-auto" />
 					<h3 className="text-xl font-semibold mb-2">No decks in {selectedFilter}</h3>
 					<p className="text-muted-foreground mb-6">
 						No decks found in this category. Try selecting a different category or create a new deck.
 					</p>
-					<button
+					<Button
 						onClick={() => setSelectedFilter(null)}
-						className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
+						className="py-3 sm:py-2 text-base sm:text-sm font-semibold"
 					>
 						Clear Filter
-					</button>
-				</div>
+					</Button>
+					</CardContent>
+				</Card>
 			) : (
 				<div className="space-y-4">
 					{filteredDecks.map((deck) => (

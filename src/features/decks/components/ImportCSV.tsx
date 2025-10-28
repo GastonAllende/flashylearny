@@ -3,6 +3,7 @@
 import { useState, useRef } from 'react';
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { useImportCSV } from '@/hooks';
 import { CheckCircle, Folder, X, Download } from 'lucide-react';
 
@@ -78,10 +79,10 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 				className={`
           border-2 border-dashed rounded-lg p-8 text-center transition-colors duration-200
           ${isDragOver
-						? 'border-blue-400 bg-blue-50 dark:bg-blue-900/20'
-						: 'border hover:border-gray-400 dark:hover:border-gray-500'
+						? 'border-primary/50 bg-primary/5'
+						: 'border-border hover:border-primary/30'
 					}
-          ${selectedFile ? 'bg-green-50 dark:bg-green-900/20 border-green-400' : ''}
+          ${selectedFile ? 'bg-primary/10 border-primary' : ''}
         `}
 				onDrop={handleDrop}
 				onDragOver={handleDragOver}
@@ -97,10 +98,10 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 
 				{selectedFile ? (
 					<div className="space-y-3">
-						<CheckCircle className="w-10 h-10 text-green-600" />
+						<CheckCircle className="w-10 h-10 text-primary" />
 						<div>
-							<h3 className="font-medium text-green-800 dark:text-green-200">{t('fileSelected')}</h3>
-							<p className="text-sm text-green-600 dark:text-green-300 mt-1">
+							<h3 className="font-medium text-foreground">{t('fileSelected')}</h3>
+							<p className="text-sm text-muted-foreground mt-1">
 								{selectedFile.name} ({(selectedFile.size / 1024).toFixed(1)} KB)
 							</p>
 						</div>
@@ -115,15 +116,15 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 					</div>
 				) : (
 					<div className="space-y-3">
-						<Folder className="w-10 h-10 text-gray-600" />
+						<Folder className="w-10 h-10 text-muted-foreground" />
 						<div>
 							<h3 className="font-medium">{t('dropHere')}</h3>
-							<p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+							<p className="text-sm text-muted-foreground mt-1">
 								{t('or')}{' '}
 								<button
 									type="button"
 									onClick={() => fileInputRef.current?.click()}
-									className="text-blue-600 hover:text-blue-700 underline"
+									className="text-primary hover:text-primary/80 underline"
 								>
 									{t('browseFiles')}
 								</button>
@@ -134,28 +135,28 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 			</div>
 
 			{/* File Format Info */}
-			<div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
-				<h4 className="font-medium text-blue-900 dark:text-blue-100 mb-2">{t('csvFormat')}</h4>
-				<p className="text-sm text-blue-800 dark:text-blue-200 mb-2">
+			<div className="bg-secondary/10 border border-secondary/30 rounded-lg p-4">
+				<h4 className="font-medium text-foreground mb-2">{t('csvFormat')}</h4>
+				<p className="text-sm text-muted-foreground mb-2">
 					{t('columnsIntro')}
 				</p>
-				<div className="bg-white dark:bg-blue-950/20 rounded border font-mono text-xs p-2 mb-2">
+				<div className="bg-background rounded border border-border font-mono text-xs p-2 mb-2">
 					deckName,question,answer
 				</div>
-				<ul className="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-					<li>• <strong>deckName:</strong> {t('colDeckName')}</li>
-					<li>• <strong>question:</strong> {t('colQuestion')}</li>
-					<li>• <strong>answer:</strong> {t('colAnswer')}</li>
+				<ul className="text-sm text-muted-foreground space-y-1">
+					<li>• <strong className="text-foreground">deckName:</strong> {t('colDeckName')}</li>
+					<li>• <strong className="text-foreground">question:</strong> {t('colQuestion')}</li>
+					<li>• <strong className="text-foreground">answer:</strong> {t('colAnswer')}</li>
 				</ul>
 			</div>
 
 			{/* Error Display */}
 			{importMutation.error && (
-				<div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
-					<h4 className="font-medium text-red-900 dark:text-red-100 mb-1 flex items-center gap-2">
+				<div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4">
+					<h4 className="font-medium text-destructive mb-1 flex items-center gap-2">
 						<X className="w-4 h-4" /> {t('importFailed')}
 					</h4>
-					<p className="text-sm text-red-800 dark:text-red-200">
+					<p className="text-sm text-destructive/90">
 						{importMutation.error instanceof Error ? importMutation.error.message : t('unknownError')}
 					</p>
 				</div>
@@ -170,7 +171,7 @@ export function ImportCSV({ onSuccess, onCancel }: ImportCSVProps) {
 				>
 					{importMutation.isPending ? (
 						<>
-							<div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white"></div>
+							<Spinner size="sm" />
 							{t('importing')}
 						</>
 					) : (
@@ -210,7 +211,7 @@ Math Facts,What is the square root of 64?,8`;
 						a.click();
 						URL.revokeObjectURL(url);
 					}}
-					className="text-sm text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 underline"
+					className="text-sm text-muted-foreground hover:text-foreground underline"
 				>
 					{t('downloadSample')}
 				</button>

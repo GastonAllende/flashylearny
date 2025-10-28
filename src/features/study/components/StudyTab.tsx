@@ -4,10 +4,13 @@ import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { useUIStore } from '@/stores/ui';
 import { useStudySession } from '@/hooks';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import StudyCard from '@/features/study/components/StudyCard';
 import { StudyCompletionView } from './StudyCompletionView';
 import type { Card } from '@/lib/types';
 import { Brain, Shuffle, ClipboardList } from 'lucide-react';
+import { cn } from '@/lib/utils';
 
 interface StudyTabProps {
 	deckId: string;
@@ -42,7 +45,7 @@ export function StudyTab({ deckId, cards }: StudyTabProps) {
 				<p className="text-muted-foreground mb-6">{t('studyEmptyDescription')}</p>
 				<Link
 					href={`/decks/${deckId}/edit-card`}
-					className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
+					className={cn(buttonVariants(), "py-3 sm:py-2 text-base sm:text-sm font-semibold")}
 				>
 					{t('addCards')}
 				</Link>
@@ -65,18 +68,19 @@ export function StudyTab({ deckId, cards }: StudyTabProps) {
 					{t('readyDescription', { count: cards.length })}
 				</p>
 				<div className="space-y-3 max-w-sm mx-auto">
-					<button
+					<Button
 						onClick={() => startSession(deckId, true)}
-						className="w-full bg-green-600 hover:bg-green-700 text-white px-6 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
+						variant="secondary"
+						className="w-full py-3 sm:py-2 text-base sm:text-sm font-semibold"
 					>
-						<span className="inline-flex items-center justify-center gap-2"><Shuffle className="h-5 w-5" /> {t('shuffled')}</span>
-					</button>
-					<button
+						<Shuffle className="h-5 w-5" /> {t('shuffled')}
+					</Button>
+					<Button
 						onClick={() => startSession(deckId, false)}
-						className="w-full bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 sm:px-4 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
+						className="w-full py-3 sm:py-2 text-base sm:text-sm font-semibold"
 					>
-						<span className="inline-flex items-center justify-center gap-2"><ClipboardList className="h-5 w-5" /> {t('ordered')}</span>
-					</button>
+						<ClipboardList className="h-5 w-5" /> {t('ordered')}
+					</Button>
 				</div>
 			</div>
 		);
@@ -93,16 +97,16 @@ export function StudyTab({ deckId, cards }: StudyTabProps) {
 					</h3>
 					<button
 						onClick={endStudySession}
-						className="text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 px-3 py-2 rounded transition-colors text-sm"
+						className="text-muted-foreground hover:text-foreground px-3 py-2 rounded transition-colors text-sm"
 					>
 						{t('progress.endSession')}
 					</button>
 				</div>
 
 				{/* Progress Bar */}
-				<div className="bg-gray-200 dark:bg-gray-700 rounded-full h-3 overflow-hidden">
+				<div className="bg-muted rounded-full h-3 overflow-hidden">
 					<div
-						className="bg-blue-500 h-full transition-all duration-300 ease-out"
+						className="bg-primary h-full transition-all duration-300 ease-out"
 						style={{ width: `${sessionProgress}%` }}
 					/>
 				</div>
@@ -110,15 +114,15 @@ export function StudyTab({ deckId, cards }: StudyTabProps) {
 				{/* Session Stats - Mobile responsive */}
 				<div className="grid grid-cols-4 gap-2 text-xs sm:text-sm">
 					<div className="text-center">
-						<div className="text-green-600 dark:text-green-400 font-semibold">{studySession.sessionStats.knownCards}</div>
+						<div className="text-foreground font-semibold">{studySession.sessionStats.knownCards}</div>
 						<div className="text-muted-foreground">{t('progress.known')}</div>
 					</div>
 					<div className="text-center">
-						<div className="text-yellow-600 dark:text-yellow-400 font-semibold">{studySession.sessionStats.almostCards}</div>
+						<div className="text-foreground font-semibold">{studySession.sessionStats.almostCards}</div>
 						<div className="text-muted-foreground">{t('progress.almost')}</div>
 					</div>
 					<div className="text-center">
-						<div className="text-red-600 dark:text-red-400 font-semibold">{studySession.sessionStats.unknownCards}</div>
+						<div className="text-foreground font-semibold">{studySession.sessionStats.unknownCards}</div>
 						<div className="text-muted-foreground">{t('progress.unknown')}</div>
 					</div>
 					<div className="text-center">
@@ -138,7 +142,7 @@ export function StudyTab({ deckId, cards }: StudyTabProps) {
 				/>
 			) : (
 				<div className="text-center py-16">
-					<div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-600 mx-auto"></div>
+					<Spinner size="xl" className="text-primary mx-auto" />
 					<p className="mt-4 text-muted-foreground">{t('progress.loadingCard')}</p>
 				</div>
 			)}
@@ -146,12 +150,12 @@ export function StudyTab({ deckId, cards }: StudyTabProps) {
 			{/* Card Controls */}
 			{!studySession.showAnswer && (
 				<div className="text-center">
-					<button
+					<Button
 						onClick={showAnswer}
-						className="w-full max-w-sm bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 sm:px-6 sm:py-2 rounded-lg font-semibold transition-colors duration-200 text-base sm:text-sm"
+						className="w-full max-w-sm py-3 sm:py-2 text-base sm:text-sm font-semibold"
 					>
 						{t('progress.showAnswer')}
-					</button>
+					</Button>
 				</div>
 			)}
 
@@ -159,7 +163,7 @@ export function StudyTab({ deckId, cards }: StudyTabProps) {
 			{isUpdatingProgress && (
 				<div className="fixed inset-0 bg-black bg-opacity-25 flex items-center justify-center z-50">
 					<div className="bg-card rounded-lg p-6 flex items-center gap-3">
-						<div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+						<Spinner size="md" className="text-primary" />
 						<span>{t('progress.updating')}</span>
 					</div>
 				</div>
