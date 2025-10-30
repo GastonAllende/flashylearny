@@ -67,7 +67,7 @@ export default function Header() {
 							)}
 							<DropdownMenu>
 								<DropdownMenuTrigger asChild>
-									<Button variant="outline" size="sm" className="flex items-center gap-2">
+									<Button variant="outline" size="sm" className="flex items-center gap-2 text-foreground hover:text-foreground">
 										<User className="h-4 w-4" />
 										{user.email?.split('@')[0]}
 									</Button>

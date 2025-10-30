@@ -42,7 +42,7 @@ export default function LanguageSelector() {
 					variant="outline"
 					size="sm"
 					disabled={isPending}
-					className="gap-2"
+					className="gap-2 text-foreground hover:text-foreground"
 				>
 					<Globe className="h-4 w-4" />
 					<span className="hidden sm:inline">{currentLanguage.flag} {currentLanguage.label}</span>
