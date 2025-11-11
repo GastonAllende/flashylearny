@@ -19,11 +19,11 @@ export default function AuthCallbackPage() {
       try {
         // Get the code from the URL
         const code = searchParams.get('code');
-        const error = searchParams.get('error');
+        const authError = searchParams.get('error');
         const errorDescription = searchParams.get('error_description');
 
-        if (error) {
-          setError(errorDescription || error);
+        if (authError) {
+          setError(errorDescription || authError);
           return;
         }
 
@@ -42,12 +42,14 @@ export default function AuthCallbackPage() {
           setError(t('noCodeError'));
         }
       } catch (err) {
-        setError(t('unexpectedError'));
+        const fallbackMessage = t('unexpectedError');
+        const message = err instanceof Error && err.message ? err.message : fallbackMessage;
+        setError(message);
       }
     };
 
     handleCallback();
-  }, [router, searchParams]);
+  }, [router, searchParams, t]);
 
   return (
     <div className="flex min-h-screen items-center justify-center p-4">
