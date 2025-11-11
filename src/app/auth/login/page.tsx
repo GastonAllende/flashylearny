@@ -35,7 +35,9 @@ export default function LoginPage() {
         window.location.href = '/decks';
       }
     } catch (err) {
-      setError(t('unexpectedError'));
+      const fallbackMessage = t('unexpectedError');
+      const message = err instanceof Error && err.message ? err.message : fallbackMessage;
+      setError(message);
       setLoading(false);
     }
   };

@@ -52,7 +52,9 @@ export default function SignupPage() {
         setTimeout(() => router.push('/auth/login'), 2000);
       }
     } catch (err) {
-      setError(t('unexpectedError'));
+      const fallbackMessage = t('unexpectedError');
+      const message = err instanceof Error && err.message ? err.message : fallbackMessage;
+      setError(message);
     } finally {
       setLoading(false);
     }

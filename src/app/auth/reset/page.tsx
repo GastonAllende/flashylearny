@@ -33,7 +33,9 @@ export default function ResetPasswordPage() {
         setSuccess(true);
       }
     } catch (err) {
-      setError(t('unexpectedError'));
+      const fallbackMessage = t('unexpectedError');
+      const message = err instanceof Error && err.message ? err.message : fallbackMessage;
+      setError(message);
     } finally {
       setLoading(false);
     }

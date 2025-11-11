@@ -8,7 +8,6 @@ import {
   getDeckAnalytics,
   resetDeckProgress,
 } from '@/lib/db';
-import type { Progress } from '@/lib/types';
 
 /**
  * Hook to fetch progress for a specific card
