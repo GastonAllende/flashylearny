@@ -323,13 +323,32 @@
 		"profile": "Profile",
 		"menu": "Menu"
 	},
-	"Footer": {
-		"about": "About",
-		"help": "Help",
-		"privacy": "Privacy",
-		"copyright": "© {year} FlashyLearny",
-		"madeWith": "Made with 💙 for learners"
-	},
+        "Footer": {
+                "about": "About",
+                "help": "Help",
+                "privacy": "Privacy",
+                "copyright": "© {year} FlashyLearny",
+                "madeWith": "Made with 💙 for learners"
+        },
+        "GlobalModalHandler": {
+                "renameDeck": {
+                        "title": "Edit Deck",
+                        "description": "Update the name and category for this deck.",
+                        "deckNameLabel": "Deck Name",
+                        "deckNamePlaceholder": "Deck name",
+                        "categoryLabel": "Category (Optional)",
+                        "categoryPlaceholder": "e.g., Languages, Science, History...",
+                        "categoryHelper": "Organize your decks by category",
+                        "cancel": "Cancel",
+                        "saving": "Saving...",
+                        "saveChanges": "Save Changes"
+                },
+                "fallbacks": {
+                        "unknownDeck": "Unknown Deck",
+                        "card": "this card",
+                        "deck": "this deck"
+                }
+        },
     "StudyCard": {
         "question": "Question",
         "answer": "Answer",
