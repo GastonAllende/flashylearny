@@ -82,6 +82,28 @@
 		},
 		"cta": "Börja Lära Dig Idag"
 	},
+	"ConfirmDialog": {
+		"confirm": "Bekräfta",
+		"cancel": "Avbryt",
+		"deleteDeck": {
+			"title": "Ta bort kortlek",
+			"message": "Är du säker på att du vill ta bort \"{deckName}\"? Denna åtgärd kan inte ångras och alla kort i denna kortlek kommer att tas bort permanent.",
+			"confirm": "Ta bort kortlek",
+			"cancel": "Behåll kortlek"
+		},
+		"deleteCard": {
+			"title": "Ta bort kort",
+			"message": "Är du säker på att du vill ta bort det här kortet: \"{cardQuestion}\"? Denna åtgärd kan inte ångras.",
+			"confirm": "Ta bort kort",
+			"cancel": "Behåll kort"
+		},
+		"resetProgress": {
+			"title": "Återställ framsteg",
+			"message": "Är du säker på att du vill återställa allt inlärningsframsteg för \"{deckName}\"? Alla kort kommer att markeras som nya och behöver studeras igen.",
+			"confirm": "Återställ framsteg",
+			"cancel": "Behåll framsteg"
+		}
+	},
 	"PrivacyPage": {
 		"title": "Integritetspolicy",
 		"subtitle": "Din integritet är viktig för oss",

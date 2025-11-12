@@ -82,6 +82,28 @@
 		},
 		"cta": "Start Learning Today"
 	},
+	"ConfirmDialog": {
+		"confirm": "Confirm",
+		"cancel": "Cancel",
+		"deleteDeck": {
+			"title": "Delete Deck",
+			"message": "Are you sure you want to delete \"{deckName}\"? This action cannot be undone and all cards in this deck will be permanently deleted.",
+			"confirm": "Delete Deck",
+			"cancel": "Keep Deck"
+		},
+		"deleteCard": {
+			"title": "Delete Card",
+			"message": "Are you sure you want to delete this card: \"{cardQuestion}\"? This action cannot be undone.",
+			"confirm": "Delete Card",
+			"cancel": "Keep Card"
+		},
+		"resetProgress": {
+			"title": "Reset Progress",
+			"message": "Are you sure you want to reset all learning progress for \"{deckName}\"? All cards will be marked as new and need to be studied again.",
+			"confirm": "Reset Progress",
+			"cancel": "Keep Progress"
+		}
+	},
 	"PrivacyPage": {
 		"title": "Privacy Policy",
 		"subtitle": "Your privacy is important to us",
