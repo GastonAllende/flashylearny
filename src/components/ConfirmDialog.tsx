@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useTranslations } from 'next-intl';
 import {
 	Dialog,
 	DialogContent,
@@ -25,17 +26,21 @@ interface ConfirmDialogProps {
 }
 
 export default function ConfirmDialog({
-	isOpen,
-	title,
-	message,
-	confirmLabel = 'Confirm',
-	cancelLabel = 'Cancel',
-	variant = 'danger',
-	onConfirm,
-	onCancel,
-	className = ''
+        isOpen,
+        title,
+        message,
+        confirmLabel,
+        cancelLabel,
+        variant = 'danger',
+        onConfirm,
+        onCancel,
+        className = ''
 }: ConfirmDialogProps) {
-	const confirmButtonRef = useRef<HTMLButtonElement>(null);
+        const confirmButtonRef = useRef<HTMLButtonElement>(null);
+        const t = useTranslations('ConfirmDialog');
+
+        const finalConfirmLabel = confirmLabel ?? t('confirm');
+        const finalCancelLabel = cancelLabel ?? t('cancel');
 
 	// Focus management
 	useEffect(() => {
@@ -84,94 +89,102 @@ export default function ConfirmDialog({
 					</div>
 				</DialogHeader>
 				<DialogFooter className="gap-2">
-					<Button variant="outline" onClick={onCancel}>
-						{cancelLabel}
-					</Button>
-					<Button
-						ref={confirmButtonRef}
-						variant={variant === 'danger' ? 'destructive' : 'default'}
-						onClick={onConfirm}
-					>
-						{confirmLabel}
-					</Button>
-				</DialogFooter>
-			</DialogContent>
-		</Dialog>
-	);
+                                        <Button variant="outline" onClick={onCancel}>
+                                                {finalCancelLabel}
+                                        </Button>
+                                        <Button
+                                                ref={confirmButtonRef}
+                                                variant={variant === 'danger' ? 'destructive' : 'default'}
+                                                onClick={onConfirm}
+                                        >
+                                                {finalConfirmLabel}
+                                        </Button>
+                                </DialogFooter>
+                        </DialogContent>
+                </Dialog>
+        );
 }
 
 // Preset confirm dialogs for common actions
 export function DeleteDeckDialog({
-	isOpen,
-	deckName,
-	onConfirm,
-	onCancel
+        isOpen,
+        deckName,
+        onConfirm,
+        onCancel
 }: {
-	isOpen: boolean;
-	deckName: string;
-	onConfirm: () => void;
-	onCancel: () => void;
+        isOpen: boolean;
+        deckName: string;
+        onConfirm: () => void;
+        onCancel: () => void;
 }) {
-	return (
-		<ConfirmDialog
-			isOpen={isOpen}
-			title="Delete Deck"
-			message={`Are you sure you want to delete "${deckName}"? This action cannot be undone and all cards in this deck will be permanently deleted.`}
-			confirmLabel="Delete Deck"
-			cancelLabel="Keep Deck"
-			variant="danger"
-			onConfirm={onConfirm}
-			onCancel={onCancel}
-		/>
-	);
+        const t = useTranslations('ConfirmDialog.deleteDeck');
+
+        return (
+                <ConfirmDialog
+                        isOpen={isOpen}
+                        title={t('title')}
+                        message={t('message', { deckName })}
+                        confirmLabel={t('confirm')}
+                        cancelLabel={t('cancel')}
+                        variant="danger"
+                        onConfirm={onConfirm}
+                        onCancel={onCancel}
+                />
+        );
 }
 
 export function DeleteCardDialog({
-	isOpen,
-	cardQuestion,
-	onConfirm,
-	onCancel
+        isOpen,
+        cardQuestion,
+        onConfirm,
+        onCancel
 }: {
-	isOpen: boolean;
-	cardQuestion: string;
-	onConfirm: () => void;
-	onCancel: () => void;
+        isOpen: boolean;
+        cardQuestion: string;
+        onConfirm: () => void;
+        onCancel: () => void;
 }) {
-	return (
-		<ConfirmDialog
-			isOpen={isOpen}
-			title="Delete Card"
-			message={`Are you sure you want to delete this card: "${cardQuestion.length > 50 ? cardQuestion.substring(0, 50) + '...' : cardQuestion}"? This action cannot be undone.`}
-			confirmLabel="Delete Card"
-			cancelLabel="Keep Card"
-			variant="danger"
-			onConfirm={onConfirm}
-			onCancel={onCancel}
-		/>
-	);
+        const t = useTranslations('ConfirmDialog.deleteCard');
+        const truncatedQuestion =
+                cardQuestion.length > 50 ? `${cardQuestion.substring(0, 50)}...` : cardQuestion;
+
+        return (
+                <ConfirmDialog
+                        isOpen={isOpen}
+                        title={t('title')}
+                        message={t('message', { cardQuestion: truncatedQuestion })}
+                        confirmLabel={t('confirm')}
+                        cancelLabel={t('cancel')}
+                        variant="danger"
+                        onConfirm={onConfirm}
+                        onCancel={onCancel}
+                />
+        );
 }
 
 export function ResetProgressDialog({
-	isOpen,
-	deckName,
-	onConfirm,
-	onCancel
+        isOpen,
+        deckName,
+        onConfirm,
+        onCancel
 }: {
-	isOpen: boolean;
-	deckName: string;
-	onConfirm: () => void;
-	onCancel: () => void;
+        isOpen: boolean;
+        deckName: string;
+        onConfirm: () => void;
+        onCancel: () => void;
 }) {
-	return (
-		<ConfirmDialog
-			isOpen={isOpen}
-			title="Reset Progress"
-			message={`Are you sure you want to reset all learning progress for "${deckName}"? All cards will be marked as new and need to be studied again.`}
-			confirmLabel="Reset Progress"
-			cancelLabel="Keep Progress"
-			variant="warning"
-			onConfirm={onConfirm}
-			onCancel={onCancel}
-		/>
-	);
+        const t = useTranslations('ConfirmDialog.resetProgress');
+
+        return (
+                <ConfirmDialog
+                        isOpen={isOpen}
+                        title={t('title')}
+                        message={t('message', { deckName })}
+                        confirmLabel={t('confirm')}
+                        cancelLabel={t('cancel')}
+                        variant="warning"
+                        onConfirm={onConfirm}
+                        onCancel={onCancel}
+                />
+        );
 }

@@ -82,6 +82,28 @@
 		},
 		"cta": "Comienza a Aprender Hoy"
 	},
+	"ConfirmDialog": {
+		"confirm": "Confirmar",
+		"cancel": "Cancelar",
+		"deleteDeck": {
+			"title": "Eliminar Mazo",
+			"message": "¿Seguro que quieres eliminar \"{deckName}\"? Esta acción no se puede deshacer y todas las tarjetas de este mazo se eliminarán permanentemente.",
+			"confirm": "Eliminar Mazo",
+			"cancel": "Mantener Mazo"
+		},
+		"deleteCard": {
+			"title": "Eliminar Tarjeta",
+			"message": "¿Seguro que quieres eliminar esta tarjeta: \"{cardQuestion}\"? Esta acción no se puede deshacer.",
+			"confirm": "Eliminar Tarjeta",
+			"cancel": "Mantener Tarjeta"
+		},
+		"resetProgress": {
+			"title": "Restablecer Progreso",
+			"message": "¿Seguro que quieres restablecer todo el progreso de aprendizaje de \"{deckName}\"? Todas las tarjetas se marcarán como nuevas y tendrás que estudiarlas de nuevo.",
+			"confirm": "Restablecer Progreso",
+			"cancel": "Mantener Progreso"
+		}
+	},
 	"PrivacyPage": {
 		"title": "Política de Privacidad",
 		"subtitle": "Tu privacidad es importante para nosotros",
