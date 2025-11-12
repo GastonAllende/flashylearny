@@ -323,13 +323,32 @@
 		"profile": "Profil",
 		"menu": "Meny"
 	},
-	"Footer": {
-		"about": "Om",
-		"help": "Hjälp",
-		"privacy": "Integritet",
-		"copyright": "© {year} FlashyLearny",
-		"madeWith": "Gjord med 💙 för elever"
-	},
+        "Footer": {
+                "about": "Om",
+                "help": "Hjälp",
+                "privacy": "Integritet",
+                "copyright": "© {year} FlashyLearny",
+                "madeWith": "Gjord med 💙 för elever"
+        },
+        "GlobalModalHandler": {
+                "renameDeck": {
+                        "title": "Redigera kortlek",
+                        "description": "Uppdatera namn och kategori för den här kortleken.",
+                        "deckNameLabel": "Kortleksnamn",
+                        "deckNamePlaceholder": "Kortleksnamn",
+                        "categoryLabel": "Kategori (valfritt)",
+                        "categoryPlaceholder": "t.ex. Språk, Vetenskap, Historia...",
+                        "categoryHelper": "Organisera dina kortlekar efter kategori",
+                        "cancel": "Avbryt",
+                        "saving": "Sparar...",
+                        "saveChanges": "Spara ändringar"
+                },
+                "fallbacks": {
+                        "unknownDeck": "Okänd kortlek",
+                        "card": "det här kortet",
+                        "deck": "den här kortleken"
+                }
+        },
     "StudyCard": {
         "question": "Fråga",
         "answer": "Svar",

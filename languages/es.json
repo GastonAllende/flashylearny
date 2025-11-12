@@ -323,13 +323,32 @@
 		"profile": "Perfil",
 		"menu": "Menú"
 	},
-	"Footer": {
-		"about": "Acerca de",
-		"help": "Ayuda",
-		"privacy": "Privacidad",
-		"copyright": "© {year} FlashyLearny",
-		"madeWith": "Hecho con 💙 para estudiantes"
-	},
+        "Footer": {
+                "about": "Acerca de",
+                "help": "Ayuda",
+                "privacy": "Privacidad",
+                "copyright": "© {year} FlashyLearny",
+                "madeWith": "Hecho con 💙 para estudiantes"
+        },
+        "GlobalModalHandler": {
+                "renameDeck": {
+                        "title": "Editar mazo",
+                        "description": "Actualiza el nombre y la categoría de este mazo.",
+                        "deckNameLabel": "Nombre del mazo",
+                        "deckNamePlaceholder": "Nombre del mazo",
+                        "categoryLabel": "Categoría (opcional)",
+                        "categoryPlaceholder": "p. ej., Idiomas, Ciencia, Historia...",
+                        "categoryHelper": "Organiza tus mazos por categoría",
+                        "cancel": "Cancelar",
+                        "saving": "Guardando...",
+                        "saveChanges": "Guardar cambios"
+                },
+                "fallbacks": {
+                        "unknownDeck": "Mazo desconocido",
+                        "card": "esta tarjeta",
+                        "deck": "este mazo"
+                }
+        },
     "StudyCard": {
         "question": "Pregunta",
         "answer": "Respuesta",

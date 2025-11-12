@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
 import { useUIStore } from '@/stores/ui';
 import { useDeleteDeck, useDeleteCard, useResetDeckProgress, useUpdateDeck } from '@/hooks';
 import { DeleteDeckDialog, DeleteCardDialog, ResetProgressDialog } from './ConfirmDialog';
@@ -16,8 +17,9 @@ import { Button } from './ui/button';
  * This component is rendered once at the app level and handles modal state
  */
 export default function GlobalModalHandler() {
-	const router = useRouter();
-	const { modal, closeModal } = useUIStore();
+        const t = useTranslations('GlobalModalHandler');
+        const router = useRouter();
+        const { modal, closeModal } = useUIStore();
 	const deleteDeckMutation = useDeleteDeck();
 	const deleteCardMutation = useDeleteCard();
 	const updateDeckMutation = useUpdateDeck();
@@ -88,76 +90,76 @@ export default function GlobalModalHandler() {
 
 	// Render appropriate modal based on type
 	switch (modal.type) {
-		case 'deleteDeck':
-			return (
-				<DeleteDeckDialog
-					isOpen={modal.isOpen}
-					deckName={modal.data?.deckName as string || 'Unknown Deck'}
-					onConfirm={handleDeleteDeck}
-					onCancel={closeModal}
-				/>
-			);
+                case 'deleteDeck':
+                        return (
+                                <DeleteDeckDialog
+                                        isOpen={modal.isOpen}
+                                        deckName={modal.data?.deckName as string || t('fallbacks.unknownDeck')}
+                                        onConfirm={handleDeleteDeck}
+                                        onCancel={closeModal}
+                                />
+                        );
 
-		case 'deleteCard':
-			return (
-				<DeleteCardDialog
-					isOpen={modal.isOpen}
-					cardQuestion={modal.data?.cardQuestion as string || 'this card'}
-					onConfirm={handleDeleteCard}
-					onCancel={closeModal}
-				/>
-			);
+                case 'deleteCard':
+                        return (
+                                <DeleteCardDialog
+                                        isOpen={modal.isOpen}
+                                        cardQuestion={modal.data?.cardQuestion as string || t('fallbacks.card')}
+                                        onConfirm={handleDeleteCard}
+                                        onCancel={closeModal}
+                                />
+                        );
 
-		case 'resetProgress':
-			return (
-				<ResetProgressDialog
-					isOpen={modal.isOpen}
-					deckName={(modal.data?.deckName as string) || 'this deck'}
-					onConfirm={handleResetProgress}
-					onCancel={closeModal}
-				/>
-			);
+                case 'resetProgress':
+                        return (
+                                <ResetProgressDialog
+                                        isOpen={modal.isOpen}
+                                        deckName={(modal.data?.deckName as string) || t('fallbacks.deck')}
+                                        onConfirm={handleResetProgress}
+                                        onCancel={closeModal}
+                                />
+                        );
 
-		case 'renameDeck':
-			return (
-				<Dialog open={modal.isOpen} onOpenChange={(open) => !open && closeModal()}>
-					<DialogContent>
-						<DialogHeader>
-							<DialogTitle>Edit Deck</DialogTitle>
-							<DialogDescription>Update the name and category for this deck.</DialogDescription>
-						</DialogHeader>
-						<div className="py-2 space-y-4">
-							<div className="space-y-2">
-								<Label htmlFor="deck-name">Deck Name</Label>
-								<Input
-									id="deck-name"
-									value={newDeckName}
-									onChange={(e) => setNewDeckName(e.target.value)}
-									placeholder="Deck name"
-								/>
-							</div>
-							<div className="space-y-2">
-								<Label htmlFor="deck-category">Category (Optional)</Label>
-								<Input
-									id="deck-category"
-									value={newCategory}
-									onChange={(e) => setNewCategory(e.target.value)}
-									placeholder="e.g., Languages, Science, History..."
-									maxLength={50}
-								/>
-								<p className="text-xs text-muted-foreground">
-									Organize your decks by category
-								</p>
-							</div>
-						</div>
-						<DialogFooter className="gap-2">
-							<Button variant="outline" onClick={closeModal}>Cancel</Button>
-							<Button onClick={handleRenameDeck} disabled={updateDeckMutation.isPending || !newDeckName.trim()}>
-								{updateDeckMutation.isPending ? 'Saving...' : 'Save Changes'}
-							</Button>
-						</DialogFooter>
-					</DialogContent>
-				</Dialog>
+                case 'renameDeck':
+                        return (
+                                <Dialog open={modal.isOpen} onOpenChange={(open) => !open && closeModal()}>
+                                        <DialogContent>
+                                                <DialogHeader>
+                                                        <DialogTitle>{t('renameDeck.title')}</DialogTitle>
+                                                        <DialogDescription>{t('renameDeck.description')}</DialogDescription>
+                                                </DialogHeader>
+                                                <div className="py-2 space-y-4">
+                                                        <div className="space-y-2">
+                                                                <Label htmlFor="deck-name">{t('renameDeck.deckNameLabel')}</Label>
+                                                                <Input
+                                                                        id="deck-name"
+                                                                        value={newDeckName}
+                                                                        onChange={(e) => setNewDeckName(e.target.value)}
+                                                                        placeholder={t('renameDeck.deckNamePlaceholder')}
+                                                                />
+                                                        </div>
+                                                        <div className="space-y-2">
+                                                                <Label htmlFor="deck-category">{t('renameDeck.categoryLabel')}</Label>
+                                                                <Input
+                                                                        id="deck-category"
+                                                                        value={newCategory}
+                                                                        onChange={(e) => setNewCategory(e.target.value)}
+                                                                        placeholder={t('renameDeck.categoryPlaceholder')}
+                                                                        maxLength={50}
+                                                                />
+                                                                <p className="text-xs text-muted-foreground">
+                                                                        {t('renameDeck.categoryHelper')}
+                                                                </p>
+                                                        </div>
+                                                </div>
+                                                <DialogFooter className="gap-2">
+                                                        <Button variant="outline" onClick={closeModal}>{t('renameDeck.cancel')}</Button>
+                                                        <Button onClick={handleRenameDeck} disabled={updateDeckMutation.isPending || !newDeckName.trim()}>
+                                                                {updateDeckMutation.isPending ? t('renameDeck.saving') : t('renameDeck.saveChanges')}
+                                                        </Button>
+                                                </DialogFooter>
+                                        </DialogContent>
+                                </Dialog>
 			);
 
 		case 'paywall':
