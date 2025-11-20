@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useTranslations } from 'next-intl';
-import InstallPrompt from "@/components/InstallPrompt";
+import InstallPrompt from "@/components/install-prompt";
 import { Button } from "@/components/ui/button";
 import { Brain, Smartphone, BarChart3 } from "lucide-react";
 

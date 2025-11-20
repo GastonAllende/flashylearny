@@ -4,8 +4,8 @@ import { useState, useEffect } from 'react';
 import { useTranslations } from 'next-intl';
 import type { Card } from '@/lib/types';
 import { Badge } from '@/components/ui/badge';
-import { CardFace } from './CardFace';
-import { ResponseButton } from './ResponseButton';
+import { CardFace } from './card-face';
+import { ResponseButton } from './response-button';
 import { HelpCircle, Lightbulb, Frown, Brain, PartyPopper } from 'lucide-react';
 
 interface StudyCardProps {

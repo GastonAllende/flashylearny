@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { useTranslations } from 'next-intl';
-import { CardItem } from './CardItem';
+import { CardItem } from './card-item';
 import type { Card } from '@/lib/types';
 import { CreditCard, Plus, Crown, AlertCircle } from 'lucide-react';
 import { useSubscription } from '@/hooks/use-subscription';

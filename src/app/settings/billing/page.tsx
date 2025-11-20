@@ -9,7 +9,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Separator } from '@/components/ui/separator';
 import { Crown, CreditCard, ArrowLeft, CheckCircle2, XCircle } from 'lucide-react';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 import { useSubscriptionManagement } from '@/hooks/use-subscription-management';
 import { useUIStore } from '@/stores/ui';
 import { toast } from 'sonner';
