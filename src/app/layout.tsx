@@ -3,12 +3,12 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { NextIntlClientProvider } from 'next-intl';
 import { getMessages } from 'next-intl/server';
 import "./globals.css";
-import RegisterSW from "@/components/RegisterSW";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import RegisterSW from "@/components/register-sw";
+import Header from "@/components/header";
+import Footer from "@/components/footer";
 import { ThemeProvider } from "@/components/theme-provider";
-import Providers from "@/components/Providers";
-import GlobalModalHandler from '@/components/GlobalModalHandler';
+import Providers from "@/components/providers";
+import GlobalModalHandler from '@/components/global-modal-handler';
 import { Toaster } from '@/components/ui/sonner';
 
 const geistSans = Geist({

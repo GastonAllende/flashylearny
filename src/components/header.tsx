@@ -16,9 +16,9 @@ import {
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Menu, X, BookOpen, User, LogOut, Crown, Settings } from "lucide-react";
-import ThemeToggle from "@/components/ThemeToggle";
-import LanguageSelector from "@/components/LanguageSelector";
-import { useAuth } from "@/contexts/AuthContext";
+import ThemeToggle from "@/components/theme-toggle";
+import LanguageSelector from "@/components/language-selector";
+import { useAuth } from "@/contexts/auth-context";
 
 export default function Header() {
 	const [open, setOpen] = useState(false);

@@ -6,12 +6,12 @@ import { useState, useEffect } from 'react';
 import { useParams, useRouter, useSearchParams } from 'next/navigation';
 import { useCards, useDeckCompletion, useDeckProgress, useDeckAnalytics, useDeleteDeck, useExportDeck, useDecks } from '@/hooks';
 import { useUIStore } from '@/stores/ui';
-import { DeleteDeckDialog } from '@/components/ConfirmDialog';
+import { DeleteDeckDialog } from '@/components/confirm-dialog';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { CardsTab } from '@/features/cards/components/CardsTab';
-import { StudyTab } from '@/features/study/components/StudyTab';
-import { StatsTab } from '@/features/stats/components/StatsTab';
+import { CardsTab } from '@/features/cards/components/cards-tab';
+import { StudyTab } from '@/features/study/components/study-tab';
+import { StatsTab } from '@/features/stats/components/stats-tab';
 import { Brain, Trash2, CreditCard, BarChart3, RotateCcw, ArrowLeft, Plus, Download } from 'lucide-react';
 import { cn } from '@/lib/utils';
 

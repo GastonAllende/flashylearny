@@ -15,7 +15,7 @@ import {
   getDecks,
   getCardsByDeck,
 } from '@/lib/db';
-import { useAuth } from '@/contexts/AuthContext';
+import { useAuth } from '@/contexts/auth-context';
 import { SUBSCRIPTION_LIMITS } from '@/lib/subscription';
 
 /**

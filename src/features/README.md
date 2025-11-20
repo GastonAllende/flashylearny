@@ -86,7 +86,7 @@ Handles CSV import/export functionality.
 ### Same Feature
 ```typescript
 // Within the same feature, use relative imports
-import { CardItem } from './CardItem';
+import { CardItem } from './card-item';
 ```
 
 ### Cross-Feature
